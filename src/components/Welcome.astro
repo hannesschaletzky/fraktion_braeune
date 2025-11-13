@@ -10,7 +10,7 @@ import background from '../assets/background.svg';
 			<h3>
 				Wir sind eine Freundesgruppe die gerne auf Beach Volleyball Events fährt :)
 				<br>
-				Folgt uns auf <a href="https://instagram.com/fraktion_braeune/" target="_blank" rel="noopener noreferrer">Instagram</a> für mehr Infos
+				<a href="https://instagram.com/fraktion_braeune/" target="_blank" rel="noopener noreferrer">-> Instagram</a>
 			</h3>
 			<img id="fraktion1" src={fraktion1.src} alt="" fetchpriority="high" />
 	</main>
@@ -28,14 +28,25 @@ import background from '../assets/background.svg';
 	}
 
 	#fraktion1 {
-		border-radius: 16px;
-		max-width: 60%;
-		object-fit: contain;
-		
-		box-shadow:
-			0 10px 15px -3px rgba(0, 0, 0, 0.1),
-			0 4px 6px -2px rgba(0, 0, 0, 0.05);
-	}
+  display: block;
+  margin: 2rem auto 0 auto; /* centers horizontally */
+  border-radius: 16px;
+  max-width: 90%; /* fills screen better on mobile */
+  max-height: 60vh;
+	height: auto;
+  object-fit: contain;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Optional: adjust layout for smaller screens */
+@media (max-width: 600px) {
+  #fraktion1 {
+    max-width: 95%;
+    margin-top: 1.5rem;
+  }
+}
 
 	#container {
 		font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
@@ -54,6 +65,11 @@ import background from '../assets/background.svg';
 
 	h3 {
 		text-align: center;
+	}
+
+	a {
+		text-decoration: none;
+		color: inherit; /* optional: keeps same text color as surrounding text */
 	}
 
 </style>
