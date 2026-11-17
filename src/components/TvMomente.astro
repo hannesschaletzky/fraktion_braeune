@@ -1,11 +1,11 @@
 ---
 const clips = [
-	{ name: 'friesenjung', titel: 'Friesenjung', kanal: 1, text: 'Der ganze Block springt, das Banner bebt.' },
-	{ name: 'dancecam', titel: 'Dance Cam', kanal: 2, text: 'Kamera drauf, Hüften los. „GEIL“ stand auf dem Schild, und es stimmte.' },
-	{ name: 'kisscam', titel: 'Kiss Cam', kanal: 3, text: 'Herzchen-Rahmen, ganze Tribüne schaut zu. Kein Druck.' },
-	{ name: 'taube', titel: 'Die Taube', kanal: 4, text: 'Fragt nicht. Macht einfach mit.' },
-	{ name: 'solotanz', titel: 'Solo-Einlage', kanal: 5, text: 'Goldkette, Sonnenbrille, eigene Show.' },
-	{ name: 'biertaufe', titel: 'Biertaufe', kanal: 6, text: 'Sieben Sekunden, die alles sagen.' },
+	{ name: 'friesenjung', titel: 'Friesenjung', kanal: 1 },
+	{ name: 'dancecam', titel: 'Dance Cam', kanal: 2 },
+	{ name: 'kisscam', titel: 'Kiss Cam', kanal: 3 },
+	{ name: 'taube', titel: 'Die Taube', kanal: 4 },
+	{ name: 'solotanz', titel: 'Solo-Einlage', kanal: 5 },
+	{ name: 'biertaufe', titel: 'Biertaufe', kanal: 6 },
 ];
 ---
 
@@ -26,7 +26,7 @@ const clips = [
 								loop
 								playsinline
 								preload="none"
-								aria-label={`${c.titel}: ${c.text}`}
+								aria-label={c.titel}
 							></video>
 							<span class="kanal" aria-hidden="true">CH {String(c.kanal).padStart(2, '0')}</span>
 							<button type="button" class="ton" aria-label={`${c.titel} mit Ton abspielen`} aria-pressed="false">🔇</button>
@@ -34,7 +34,6 @@ const clips = [
 						<div class="regler" aria-hidden="true"><i></i><i></i></div>
 					</div>
 					<p class="titel marker">{c.titel}</p>
-					<p class="unterzeile">{c.text}</p>
 				</li>
 			))}
 		</ul>
@@ -43,7 +42,7 @@ const clips = [
 </section>
 
 <script>
-	import { ruhigGewuenscht } from '../scripts/konfetti';
+	import { ruhigGewuenscht } from '../scripts/bewegung';
 
 	const geraete = [...document.querySelectorAll<HTMLElement>('.tv .geraet')];
 	const videos = geraete.map((g) => g.querySelector('video')!);
@@ -225,10 +224,6 @@ const clips = [
 		margin: 18px 0 0;
 		font-size: 1.5rem;
 		line-height: 1.1;
-	}
-	.unterzeile {
-		margin: 6px 0 0;
-		opacity: 0.85;
 	}
 	.quelle {
 		margin: 48px 0 0;

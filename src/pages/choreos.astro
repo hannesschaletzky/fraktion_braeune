@@ -1,0 +1,222 @@
+---
+import { Image, Picture } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import Lightbox from '../components/Lightbox.astro';
+import Fuss from '../components/Fuss.astro';
+import logo from '../assets/logo-bunt.png';
+import { choreos, slug } from '../data/choreos';
+import { grossUrl } from '../data/fotos';
+
+const gross = new Map<string, string>();
+for (const c of choreos) for (const f of c.fotos) gross.set(f.bild.src, await grossUrl(f));
+
+const neigungen = [-2, 1.5, -1, 2, -1.5, 1];
+const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 'var(--blau)', 'var(--glut)'];
+---
+
+<Layout titel="Choreos – Fraktion Bräune" beschreibung="Banner, Fahnen, Tafeln und Rauch: alle Choreos der Fraktion Bräune von 2023 bis heute.">
+	<header class="kopf">
+		<div class="wrap">
+			<a href="/" class="heim" aria-label="Zur Startseite">
+				<Image src={logo} widths={[300, 600]} sizes="200px" alt="Fraktion Bräune" class="logo" />
+			</a>
+			<h1>Unsere <span class="bunt">{[...'Choreos'].map((c) => <span>{c}</span>)}</span></h1>
+			<nav class="inhalt" aria-label="Choreos">
+				{choreos.map((c) => <a href={`#${slug(c)}`}>{c.titel}</a>)}
+			</nav>
+		</div>
+	</header>
+
+	<main class="wrap liste">
+		{choreos.map((c, i) => (
+			<article id={slug(c)} class:list={['choreo', { gespiegelt: i % 2 === 1 }]} style={`--schatten: ${farben[i % farben.length]}`}>
+				<div class:list={['fotos', { zwei: c.fotos.length > 1 }]}>
+					{c.fotos.map((f, j) => (
+						<button
+							type="button"
+							class="foto"
+							style={`--r: ${neigungen[(i + j) % neigungen.length]}deg`}
+							data-gross={gross.get(f.bild.src)}
+							data-alt={f.alt}
+							data-credit={f.credit ?? ''}
+							aria-label={`Groß anzeigen: ${f.alt}`}
+						>
+							<Picture src={f.bild} formats={['avif', 'webp']} widths={[480, 800, 1200]} sizes="(min-width: 900px) 600px, 92vw" alt="" loading={i < 2 ? 'eager' : 'lazy'} />
+						</button>
+					))}
+				</div>
+				<div class="info">
+					<p class="wann">
+						{c.jahr} · {c.ort}{c.zusatz && <span class="zusatz">{c.zusatz}</span>}
+					</p>
+					<h2 class="titel marker">{c.titel}</h2>
+					<ul class="zutaten" role="list">
+						{c.zutaten.map((z) => <li>{z}</li>)}
+					</ul>
+				</div>
+			</article>
+		))}
+		<p class="zurueck"><a href="/">← Zurück zur Startseite</a></p>
+	</main>
+
+	<Fuss />
+	<Lightbox />
+</Layout>
+
+<style>
+	.kopf {
+		padding: 32px 0 56px;
+		background:
+			radial-gradient(ellipse at 20% 0%, rgb(255 46 77 / 0.2), transparent 55%),
+			radial-gradient(ellipse at 90% 30%, rgb(47 212 122 / 0.14), transparent 50%),
+			var(--nacht);
+	}
+	.heim {
+		display: inline-block;
+	}
+	.logo {
+		width: 180px;
+		height: auto;
+		filter: drop-shadow(3px 4px 0 var(--tinte));
+		transition: transform 0.25s cubic-bezier(0.3, 1.8, 0.5, 1);
+	}
+	.heim:hover .logo {
+		transform: rotate(-3deg) scale(1.05);
+	}
+	h1 {
+		font-family: var(--display);
+		font-weight: 400;
+		text-transform: uppercase;
+		font-size: clamp(3.2rem, 12vw, 7rem);
+		line-height: 0.95;
+		margin: 40px 0 28px;
+	}
+	.inhalt {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+	}
+	.inhalt a {
+		font-size: 0.9rem;
+		font-weight: 700;
+		padding: 0.35em 0.9em;
+		border-radius: 999px;
+		border: 2px solid rgb(248 242 231 / 0.3);
+		text-decoration: none;
+		transition: background 0.2s, color 0.2s;
+	}
+	.inhalt a:hover {
+		background: var(--papier);
+		color: var(--tinte);
+	}
+
+	.liste {
+		display: grid;
+		gap: clamp(72px, 11vw, 128px);
+		padding-top: 72px;
+		padding-bottom: 96px;
+	}
+	.choreo {
+		display: grid;
+		gap: 28px;
+		align-items: center;
+		scroll-margin-top: 32px;
+	}
+	@media (min-width: 900px) {
+		.choreo {
+			grid-template-columns: 1.25fr 0.75fr;
+			gap: 56px;
+		}
+		.choreo.gespiegelt {
+			grid-template-columns: 0.75fr 1.25fr;
+		}
+		.gespiegelt .fotos {
+			order: 2;
+		}
+	}
+	.fotos {
+		display: grid;
+		gap: 14px;
+	}
+	.fotos.zwei {
+		grid-template-columns: 1.4fr 1fr;
+		align-items: center;
+	}
+	.foto {
+		all: unset;
+		box-sizing: border-box;
+		cursor: zoom-in;
+		padding: 10px;
+		background: var(--papier);
+		box-shadow: 0 16px 36px rgb(0 0 0 / 0.5);
+		transform: rotate(var(--r));
+		transition: transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1);
+	}
+	.foto:hover,
+	.foto:focus-visible {
+		transform: rotate(0) scale(1.04);
+		z-index: 1;
+	}
+	.foto:focus-visible {
+		outline: 3px solid var(--sonne);
+	}
+	.foto :global(img) {
+		width: 100%;
+		height: auto;
+		max-height: 72vh;
+		object-fit: cover;
+		display: block;
+	}
+	.wann {
+		margin: 0;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		font-size: 0.85rem;
+		opacity: 0.8;
+	}
+	.zusatz {
+		display: inline-block;
+		margin-left: 0.6em;
+		padding: 0.1em 0.5em;
+		background: var(--sonne);
+		color: var(--tinte);
+		letter-spacing: 0.04em;
+	}
+	.titel {
+		display: inline-block;
+		margin: 14px 0 0;
+		padding: 0.3em 0.7em;
+		background: var(--papier);
+		color: var(--tinte);
+		font-weight: 400;
+		font-size: clamp(1.4rem, 3vw, 2rem);
+		line-height: 1.15;
+		transform: rotate(-2deg);
+		box-shadow: 6px 6px 0 var(--schatten);
+	}
+	.gespiegelt .titel {
+		transform: rotate(1.5deg);
+	}
+	.zutaten {
+		list-style: none;
+		margin: 24px 0 0;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+	.zutaten li {
+		font-size: 0.85rem;
+		font-weight: 700;
+		padding: 0.3em 0.8em;
+		border-radius: 999px;
+		background: rgb(248 242 231 / 0.1);
+		border: 1px solid rgb(248 242 231 / 0.25);
+	}
+	.zurueck a {
+		font-family: var(--marker);
+		font-size: 1.2rem;
+		color: var(--sonne);
+	}
+</style>

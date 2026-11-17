@@ -35,6 +35,12 @@ const auswahl = {
 	'2026-dortmund-1': '2026_Dortmund/@kevinmtg.fotos_260829_200002_04664.jpg',
 	'2026-dortmund-2': '2026_Dortmund/@justus.fotos-20260827-DSC02124.jpg',
 	'2026-dortmund-3': '2026_Dortmund/@justus.fotos-20260827-DSC08365.jpg',
+	// Zusätzlich für die Choreo-Seite
+	'choreo-2024-abfahrt': '2024_Timmendorf/@justus.fotos-20240830-DSC03397.jpg',
+	'choreo-2024-purple': '2024_Timmendorf/@justus.fotos-20240831-DSC09393.jpg',
+	'choreo-berlin-eric': '2026_Berlin/78db66b7-9e3d-473a-bfb5-430a25c62850.JPG',
+	'choreo-berlin-toursieg': '2026_Berlin/e48435cb-1dec-4fc0-a437-494fc15f4b29.JPG',
+	'choreo-hamburg-legends': '2026_Elite_Hamburg/pwa202608094391.jpg',
 };
 
 const ziel = 'src/assets/fotos';

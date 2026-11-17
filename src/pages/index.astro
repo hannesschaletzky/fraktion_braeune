@@ -1,30 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
-import Ticker from '../components/Ticker.astro';
 import WerWirSind from '../components/WerWirSind.astro';
+import ChoreoWand from '../components/ChoreoWand.astro';
 import Chronik from '../components/Chronik.astro';
 import TvMomente from '../components/TvMomente.astro';
-import Lautstaerke from '../components/Lautstaerke.astro';
-import BallSpiel from '../components/BallSpiel.astro';
 import Fuss from '../components/Fuss.astro';
+import Lightbox from '../components/Lightbox.astro';
 ---
 
 <Layout>
 	<Hero />
-	<Ticker texte={['Auf geht’s, kämpfen und siegen', 'Bewusst genießen', 'Europas lauteste Beachvolleyball-Fans', 'Fan Group of the Year 2025']} />
 	<main>
 		<WerWirSind />
-		<Ticker
-			farbe="sonne"
-			richtung="rechts"
-			neigung={2}
-			texte={['Jetzt brennt der Pott', 'Unsere Helden aus Paris', 'One Last Dance', 'Christ · Grüne · Abfaaahrt', 'Kniet nieder']}
-		/>
+		<ChoreoWand />
 		<Chronik />
 		<TvMomente />
-		<Lautstaerke />
-		<BallSpiel />
 	</main>
 	<Fuss />
+	<Lightbox />
 </Layout>

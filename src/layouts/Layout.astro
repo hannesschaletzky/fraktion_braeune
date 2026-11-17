@@ -5,9 +5,15 @@ import '../styles/global.css';
 import { getImage } from 'astro:assets';
 import foto from '../assets/1.jpg';
 
-const titel = 'Fraktion Bräune – Europas lauteste Beachvolleyball-Fans';
-const beschreibung =
-	'Fahnen, Choreos, Pyro und immer gute Laune: Fraktion Bräune fährt zu den Events der Beach Tour und bringt die Tribüne zum Beben. Fangruppe des Jahres 2025.';
+interface Props {
+	titel?: string;
+	beschreibung?: string;
+}
+const {
+	titel = 'Fraktion Bräune – Europas lauteste Beachvolleyball-Fans',
+	beschreibung = 'Fahnen, Choreos, Pyro und immer gute Laune: Fraktion Bräune fährt zu den Events der German Beach Tour. Fan Group of the Year 2025.',
+} = Astro.props;
+const seite = new URL(Astro.url.pathname, Astro.site).href;
 const vorschau = await getImage({ src: foto, width: 1200, format: 'jpg' });
 const bildUrl = new URL(vorschau.src, Astro.site).href;
 ---
@@ -21,12 +27,12 @@ const bildUrl = new URL(vorschau.src, Astro.site).href;
 		<title>{titel}</title>
 		<meta name="description" content={beschreibung} />
 		<meta name="theme-color" content="#140d16" />
-		<link rel="canonical" href={Astro.site} />
+		<link rel="canonical" href={seite} />
 		<meta property="og:type" content="website" />
 		<meta property="og:locale" content="de_DE" />
 		<meta property="og:title" content={titel} />
 		<meta property="og:description" content={beschreibung} />
-		<meta property="og:url" content={Astro.site} />
+		<meta property="og:url" content={seite} />
 		<meta property="og:image" content={bildUrl} />
 		<meta name="twitter:card" content="summary_large_image" />
 	</head>
