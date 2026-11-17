@@ -12,7 +12,7 @@ const clips = [
 <section class="abschnitt tv" id="tv">
 	<div class="wrap">
 		<h2>Fanblock <span class="live">im TV</span></h2>
-		<p class="einleitung">Timmendorf 2023: Die Regie hat schnell gemerkt, wo die Party ist. Tipp auf einen Fernseher für Ton, das Eck-Symbol macht Vollbild.</p>
+		<p class="einleitung">Timmendorf 2023: Die Regie hat schnell gemerkt, wo die Party ist. Tipp aufs Bild hält an, 🔇 macht Ton an, das Eck-Symbol Vollbild.</p>
 
 		<ul class="geraete" role="list">
 			{clips.map((c, i) => (
@@ -29,6 +29,7 @@ const clips = [
 								aria-label={c.titel}
 							></video>
 							<span class="kanal" aria-hidden="true">CH {String(c.kanal).padStart(2, '0')}</span>
+							<span class="pausezeichen" aria-hidden="true">▶</span>
 							<button type="button" class="ton" aria-label={`${c.titel} mit Ton abspielen`} aria-pressed="false">🔇</button>
 							<button type="button" class="gross" aria-label={`${c.titel} im Vollbild abspielen`}>
 								<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
@@ -50,13 +51,20 @@ const clips = [
 	const geraete = [...document.querySelectorAll<HTMLElement>('.tv .geraet')];
 	const videos = geraete.map((g) => g.querySelector('video')!);
 	const ruhig = ruhigGewuenscht();
+	// Von Hand angehaltene Clips laufen nicht von selbst wieder los
+	const angehalten = new WeakSet<HTMLVideoElement>();
+
+	function weiter(v: HTMLVideoElement) {
+		angehalten.delete(v);
+		geraete[videos.indexOf(v)].classList.remove('pause');
+	}
 
 	// Stumm abspielen, solange sichtbar (nicht bei reduzierter Bewegung)
 	const beobachter = new IntersectionObserver(
 		(eintraege) => {
 			for (const e of eintraege) {
 				const v = e.target as HTMLVideoElement;
-				if (e.isIntersecting && (!ruhig || !v.muted)) v.play().catch(() => {});
+				if (e.isIntersecting && !angehalten.has(v) && (!ruhig || !v.muted)) v.play().catch(() => {});
 				else v.pause();
 			}
 		},
@@ -73,7 +81,7 @@ const clips = [
 			v.muted = true;
 			v.loop = true;
 			if (ruhig) v.pause();
-			else if (warZuEnde) v.play().catch(() => {});
+			else if (warZuEnde && !angehalten.has(v)) v.play().catch(() => {});
 			g.classList.remove('an');
 			const b = g.querySelector('.ton')!;
 			b.textContent = '🔇';
@@ -86,6 +94,7 @@ const clips = [
 		const knopf = g.querySelector<HTMLButtonElement>('.ton')!;
 		const umschalten = () => {
 			const an = v.muted;
+			weiter(v);
 			tonAus(v);
 			v.muted = !an;
 			// Mit Ton nur einmal durch: In der Schleife setzt der Kommentar mitten im Satz neu ein
@@ -106,6 +115,7 @@ const clips = [
 		// Vollbild: von vorn, mit Ton und Bedienelementen
 		g.querySelector('.gross')!.addEventListener('click', (e) => {
 			e.stopPropagation();
+			weiter(v);
 			tonAus(v);
 			v.muted = false;
 			v.loop = false;
@@ -131,7 +141,17 @@ const clips = [
 		});
 		v.addEventListener('fullscreenchange', vollbildEnde);
 		v.addEventListener('webkitendfullscreen', vollbildEnde);
-		g.querySelector('.schirm')!.addEventListener('click', umschalten);
+		// Tipp aufs Bild: anhalten bzw. weiterlaufen lassen
+		g.querySelector('.schirm')!.addEventListener('click', () => {
+			if (v.paused) {
+				weiter(v);
+				v.play().catch(() => {});
+			} else {
+				angehalten.add(v);
+				g.classList.add('pause');
+				v.pause();
+			}
+		});
 	});
 </script>
 
@@ -244,6 +264,23 @@ const clips = [
 		background: var(--papier);
 		font-size: 1.1rem;
 		cursor: pointer;
+	}
+	.pausezeichen {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		display: grid;
+		place-items: center;
+		font-size: 3rem;
+		color: var(--papier);
+		text-shadow: 0 2px 12px rgb(0 0 0 / 0.8);
+		background: rgb(0 0 0 / 0.35);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.2s;
+	}
+	.pause .pausezeichen {
+		opacity: 1;
 	}
 	.gross {
 		position: absolute;
