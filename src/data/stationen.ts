@@ -16,7 +16,6 @@ export const stationen: Station[] = [
 		motto: 'Jetzt brennt der Pott',
 		fotos: [
 			foto('2026-dortmund-1', 'Rote Fackelwand und Rauch vor dem Banner „Jetzt brennt der Pott“ am Spielfeldrand'),
-			foto('2026-dortmund-2', 'Fans oben ohne jubeln im roten Licht brennender Fackeln'),
 			foto('2026-dortmund-3', 'Fackeln und weißer Rauch hinter der Bande, der Block jubelt'),
 		],
 	},
