@@ -20,8 +20,6 @@ while IFS='|' read -r name datei start laenge; do
 done <<'LISTE'
 friesenjung|Friesenjung1.mov|0|14
 dancecam|harlemshake1.mov|6|16
-kisscam|kisscam.mov|4|16
 taube|taube3.mov|32|13
-solotanz|warsteinersolodance.mov|2|10
 biertaufe|Biertaufe.mov|0|7
 LISTE

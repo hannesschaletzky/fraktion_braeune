@@ -2,17 +2,15 @@
 const clips = [
 	{ name: 'friesenjung', titel: 'Friesenjung', kanal: 1 },
 	{ name: 'dancecam', titel: 'Dance Cam', kanal: 2 },
-	{ name: 'kisscam', titel: 'Kiss Cam', kanal: 3 },
-	{ name: 'taube', titel: 'Die Taube', kanal: 4 },
-	{ name: 'solotanz', titel: 'Solo-Einlage', kanal: 5 },
-	{ name: 'biertaufe', titel: 'Biertaufe', kanal: 6 },
+	{ name: 'taube', titel: 'Die Taube', kanal: 3 },
+	{ name: 'biertaufe', titel: 'Biertaufe', kanal: 4 },
 ];
 ---
 
 <section class="abschnitt tv" id="tv">
 	<div class="wrap">
 		<h2>Fanblock <span class="live">im TV</span></h2>
-		<p class="einleitung">Timmendorf 2023: Die Regie hat schnell gemerkt, wo die Party ist. Tipp auf einen Fernseher für Ton.</p>
+		<p class="einleitung">Timmendorf 2023: Die Regie hat schnell gemerkt, wo die Party ist. Tipp auf einen Fernseher für Ton, das Eck-Symbol macht Vollbild.</p>
 
 		<ul class="geraete" role="list">
 			{clips.map((c, i) => (
@@ -30,6 +28,9 @@ const clips = [
 							></video>
 							<span class="kanal" aria-hidden="true">CH {String(c.kanal).padStart(2, '0')}</span>
 							<button type="button" class="ton" aria-label={`${c.titel} mit Ton abspielen`} aria-pressed="false">🔇</button>
+							<button type="button" class="gross" aria-label={`${c.titel} im Vollbild abspielen`}>
+								<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+							</button>
 						</div>
 						<div class="regler" aria-hidden="true"><i></i><i></i></div>
 					</div>
@@ -93,6 +94,29 @@ const clips = [
 			e.stopPropagation();
 			umschalten();
 		});
+
+		// Vollbild: von vorn, mit Ton und Bedienelementen
+		g.querySelector('.gross')!.addEventListener('click', (e) => {
+			e.stopPropagation();
+			tonAus(v);
+			v.muted = false;
+			v.controls = true;
+			g.classList.add('an');
+			knopf.textContent = '🔊';
+			knopf.setAttribute('aria-pressed', 'true');
+			v.currentTime = 0;
+			v.play().catch(() => {});
+			const iosVideo = v as HTMLVideoElement & { webkitEnterFullscreen?: () => void };
+			if (v.requestFullscreen) v.requestFullscreen().catch(() => iosVideo.webkitEnterFullscreen?.());
+			else iosVideo.webkitEnterFullscreen?.();
+		});
+		const vollbildEnde = () => {
+			if (document.fullscreenElement === v) return;
+			v.controls = false;
+			tonAus();
+		};
+		v.addEventListener('fullscreenchange', vollbildEnde);
+		v.addEventListener('webkitendfullscreen', vollbildEnde);
 		g.querySelector('.schirm')!.addEventListener('click', umschalten);
 	});
 </script>
@@ -130,8 +154,13 @@ const clips = [
 		margin: 0;
 		padding: 0;
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
-		gap: 48px 32px;
+		grid-template-columns: 1fr;
+		gap: 48px 40px;
+	}
+	@media (min-width: 720px) {
+		.geraete {
+			grid-template-columns: 1fr 1fr;
+		}
 	}
 	.geraet {
 		transform: rotate(var(--r));
@@ -201,6 +230,35 @@ const clips = [
 		background: var(--papier);
 		font-size: 1.1rem;
 		cursor: pointer;
+	}
+	.gross {
+		position: absolute;
+		right: 56px;
+		bottom: 8px;
+		z-index: 1;
+		width: 40px;
+		height: 40px;
+		display: grid;
+		place-items: center;
+		padding: 0;
+		border-radius: 50%;
+		border: 2px solid var(--tinte);
+		background: var(--papier);
+		color: var(--tinte);
+		cursor: pointer;
+		transition: transform 0.2s cubic-bezier(0.3, 1.8, 0.5, 1);
+	}
+	.gross:hover {
+		transform: scale(1.12);
+	}
+	.gross svg {
+		width: 20px;
+		height: 20px;
+	}
+	/* Im Vollbild: ganzes Bild zeigen statt Röhren-Zuschnitt */
+	video:fullscreen {
+		object-fit: contain;
+		background: #000;
 	}
 	.an .ton {
 		background: var(--sonne);
