@@ -1,0 +1,62 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import logo from '../assets/logo-bunt.png';
+---
+
+<Layout titel="Seite nicht gefunden – Fraktion Bräune" beschreibung="Diese Seite gibt es nicht." nichtIndexieren>
+	<main class="fehler">
+		<a href="/" aria-label="Zur Startseite">
+			<Image src={logo} widths={[300, 600]} sizes="220px" alt="Fraktion Bräune" class="logo" />
+		</a>
+		<p class="zahl" aria-hidden="true">404</p>
+		<h1 class="marker">Ball im Aus.</h1>
+		<p>Diese Seite gibt es nicht. Vielleicht hat sie jemand ins Netz gehauen.</p>
+		<a class="zurueck" href="/">Zurück auf den Platz →</a>
+	</main>
+</Layout>
+
+<style>
+	.fehler {
+		min-height: 100svh;
+		display: grid;
+		place-content: center;
+		justify-items: center;
+		gap: 12px;
+		padding: 48px 16px;
+		text-align: center;
+		background: radial-gradient(ellipse at 50% 30%, rgb(255 46 77 / 0.2), transparent 60%), var(--nacht);
+	}
+	.logo {
+		width: 220px;
+		height: auto;
+		filter: drop-shadow(3px 4px 0 var(--tinte));
+	}
+	.zahl {
+		margin: 16px 0 0;
+		font-family: var(--display);
+		font-size: clamp(6rem, 25vw, 11rem);
+		line-height: 0.85;
+		color: transparent;
+		-webkit-text-stroke: 3px var(--sonne);
+	}
+	h1 {
+		margin: 0;
+		font-weight: 400;
+		font-size: clamp(1.8rem, 6vw, 2.6rem);
+		transform: rotate(-2deg);
+	}
+	.zurueck {
+		margin-top: 20px;
+		padding: 0.7em 1.4em;
+		border-radius: 999px;
+		border: 3px solid var(--tinte);
+		background: var(--sonne);
+		color: var(--tinte);
+		font-family: var(--display);
+		text-transform: uppercase;
+		font-size: 1.2rem;
+		text-decoration: none;
+		box-shadow: 5px 5px 0 var(--tinte);
+	}
+</style>

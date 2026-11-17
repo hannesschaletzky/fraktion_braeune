@@ -14,7 +14,12 @@ const neigungen = [-2, 1.5, -1, 2, -1.5, 1];
 const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 'var(--blau)', 'var(--glut)'];
 ---
 
-<Layout titel="Choreos – Fraktion Bräune" beschreibung="Banner, Fahnen, Tafeln und Rauch: alle Choreos der Fraktion Bräune von 2023 bis heute.">
+<Layout
+	titel="Unsere Choreos – Fraktion Bräune"
+	beschreibung="Banner, Fahnen, Papptafeln und Rauch: alle Choreos der Fraktion Bräune auf der German Beach Tour, von Timmendorf 2023 bis Dortmund 2026."
+	bild={choreos[0].fotos[0].bild}
+	bildAlt={choreos[0].fotos[0].alt}
+>
 	<header class="kopf">
 		<div class="wrap">
 			<a href="/" class="heim" aria-label="Zur Startseite">
@@ -50,7 +55,7 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 							data-credit={f.credit ?? ''}
 							aria-label={`Groß anzeigen: ${f.alt}`}
 						>
-							<Picture src={f.bild} formats={['avif', 'webp']} widths={[480, 800, 1200]} sizes="(min-width: 900px) 600px, 92vw" alt="" loading={i < 2 ? 'eager' : 'lazy'} />
+							<Picture src={f.bild} formats={['avif', 'webp']} widths={[480, 800, 1200]} sizes="(min-width: 900px) 600px, 92vw" alt={f.alt} loading={i < 2 ? 'eager' : 'lazy'} />
 						</button>
 					))}
 				</div>

@@ -21,7 +21,7 @@ const clips = [
 						<div class="schirm">
 							<video
 								src={`/videos/${c.name}.mp4`}
-								poster={`/videos/${c.name}.jpg`}
+								data-poster={`/videos/${c.name}.webp`}
 								muted
 								loop
 								playsinline
@@ -71,6 +71,20 @@ const clips = [
 		{ threshold: 0.4 },
 	);
 	videos.forEach((v) => beobachter.observe(v));
+
+	// Vorschaubilder erst laden, wenn die Fernseher in die Nähe kommen (spart beim Seitenaufruf ~500 KB)
+	const vorlader = new IntersectionObserver(
+		(eintraege, beob) => {
+			for (const e of eintraege) {
+				if (!e.isIntersecting) continue;
+				const v = e.target as HTMLVideoElement;
+				v.poster = v.dataset.poster!;
+				beob.unobserve(v);
+			}
+		},
+		{ rootMargin: '800px 0px' },
+	);
+	videos.forEach((v) => vorlader.observe(v));
 
 	function tonAus(ausser?: HTMLVideoElement) {
 		geraete.forEach((g, i) => {

@@ -20,7 +20,7 @@ while IFS='|' read -r name datei start laenge; do
     -vf "scale=854:-2" -c:v libx264 -preset slow -crf 28 -maxrate 1300k -bufsize 2600k -profile:v high -pix_fmt yuv420p \
     -af "afade=t=in:d=0.3,afade=t=out:st=$aus:d=0.5" \
     -c:a aac -b:a 96k -ac 2 -movflags +faststart -map_metadata -1 "$ziel/$name.mp4"
-  ffmpeg -nostdin -v error -y -ss "$(echo "$start + 1" | bc)" -i "$quelle/$datei" -frames:v 1 -vf "scale=960:-2" -q:v 5 "$ziel/$name.jpg"
+  ffmpeg -nostdin -v error -y -ss "$(echo "$start + 1" | bc)" -i "$quelle/$datei" -frames:v 1 -vf "scale=640:-2" -c:v libwebp -quality 72 "$ziel/$name.webp"
   echo "$name: $(( $(stat -f %z "$ziel/$name.mp4") / 1024 )) KB"
 done <<'LISTE'
 friesenjung|Friesenjung1.mov|0|14
