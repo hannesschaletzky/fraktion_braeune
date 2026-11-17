@@ -68,8 +68,12 @@ const clips = [
 		geraete.forEach((g, i) => {
 			const v = videos[i];
 			if (v === ausser) return;
+			// ended zuerst lesen: mit loop = true meldet der Browser nie "ended"
+			const warZuEnde = v.ended;
 			v.muted = true;
+			v.loop = true;
 			if (ruhig) v.pause();
+			else if (warZuEnde) v.play().catch(() => {});
 			g.classList.remove('an');
 			const b = g.querySelector('.ton')!;
 			b.textContent = '🔇';
@@ -84,6 +88,8 @@ const clips = [
 			const an = v.muted;
 			tonAus(v);
 			v.muted = !an;
+			// Mit Ton nur einmal durch: In der Schleife setzt der Kommentar mitten im Satz neu ein
+			v.loop = !an;
 			g.classList.toggle('an', an);
 			knopf.textContent = an ? '🔊' : '🔇';
 			knopf.setAttribute('aria-pressed', String(an));
@@ -102,6 +108,7 @@ const clips = [
 			e.stopPropagation();
 			tonAus(v);
 			v.muted = false;
+			v.loop = false;
 			v.controls = true;
 			g.classList.add('an');
 			knopf.textContent = '🔊';
@@ -117,6 +124,11 @@ const clips = [
 			v.controls = false;
 			tonAus();
 		};
+		// Clip mit Ton ist durch: im Vollbild am Ende stehen lassen, sonst stumm in die Schleife zurück
+		v.addEventListener('ended', () => {
+			if (document.fullscreenElement === v) return;
+			tonAus();
+		});
 		v.addEventListener('fullscreenchange', vollbildEnde);
 		v.addEventListener('webkitendfullscreen', vollbildEnde);
 		g.querySelector('.schirm')!.addEventListener('click', umschalten);
