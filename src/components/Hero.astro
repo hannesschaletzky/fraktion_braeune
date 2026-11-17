@@ -1,0 +1,339 @@
+---
+import { Image, Picture } from 'astro:assets';
+import foto from '../assets/1.jpg';
+import logo from '../assets/logo-bunt.png';
+---
+
+<header class="hero" id="hero">
+	<Picture
+		src={foto}
+		formats={['avif', 'webp']}
+		widths={[640, 1024, 1600, 2400]}
+		sizes="100vw"
+		alt=""
+		class="hero-bild"
+		loading="eager"
+		fetchpriority="high"
+	/>
+	<div class="verlauf" aria-hidden="true"></div>
+	<canvas class="rauch" id="rauch" aria-hidden="true"></canvas>
+
+	<div class="inhalt">
+		<h1>
+			<Image src={logo} widths={[500, 900, 1400, 2000]} sizes="(min-width: 900px) 760px, 88vw" alt="Fraktion Bräune" class="logo" loading="eager" />
+		</h1>
+		<p class="banner marker">Auf geht’s – kämpfen und siegen!</p>
+		<p class="claim">Europas lauteste Beachvolleyball-Fans</p>
+	</div>
+
+	<p class="tipp marker" id="tipp">Tipp ins Bild und zünde eine Fackel 🔥</p>
+	<a class="runter" href="#wir" aria-label="Weiter nach unten">↓</a>
+</header>
+
+<script>
+	import { ruhigGewuenscht } from '../scripts/konfetti';
+
+	type RGB = [number, number, number];
+	const FARBEN: RGB[] = [
+		[255, 70, 80], // rot
+		[60, 210, 120], // grün
+		[170, 100, 255], // lila
+		[255, 215, 70], // gelb
+		[70, 140, 255], // blau
+		[255, 110, 170], // pink
+	];
+	const ROT: RGB = [255, 70, 80];
+
+	interface Rauch { x: number; y: number; vx: number; vy: number; s: number; ds: number; a: number; da: number; bild: HTMLCanvasElement }
+	interface Funke { x: number; y: number; vx: number; vy: number; leben: number }
+	interface Fackel { x: number; y: number; farbe: RGB; leben: number; fest: boolean }
+
+	const hero = document.getElementById('hero')!;
+	const canvas = document.getElementById('rauch') as HTMLCanvasElement;
+	const ctx = canvas.getContext('2d')!;
+	const tipp = document.getElementById('tipp')!;
+
+	const sprites = new Map<string, HTMLCanvasElement>();
+	function sprite([r, g, b]: RGB) {
+		const key = `${r},${g},${b}`;
+		let c = sprites.get(key);
+		if (c) return c;
+		c = document.createElement('canvas');
+		c.width = c.height = 64;
+		const x = c.getContext('2d')!;
+		const gr = x.createRadialGradient(32, 32, 0, 32, 32, 32);
+		gr.addColorStop(0, `rgba(${r},${g},${b},1)`);
+		gr.addColorStop(0.5, `rgba(${r},${g},${b},0.4)`);
+		gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
+		x.fillStyle = gr;
+		x.fillRect(0, 0, 64, 64);
+		sprites.set(key, c);
+		return c;
+	}
+	const glut = sprite([255, 230, 170]);
+
+	let w = 0, h = 0;
+	function groesse() {
+		const dpr = Math.min(devicePixelRatio || 1, 1.5);
+		w = hero.clientWidth;
+		h = hero.clientHeight;
+		canvas.width = w * dpr;
+		canvas.height = h * dpr;
+		ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+		fackeln.filter((f) => f.fest).forEach((f, i) => {
+			f.x = i === 0 ? w * 0.08 : w * 0.92;
+			f.y = h - 30;
+		});
+	}
+
+	let rauch: Rauch[] = [];
+	let funken: Funke[] = [];
+	const fackeln: Fackel[] = [
+		{ x: 0, y: 0, farbe: ROT, leben: Infinity, fest: true },
+		{ x: 0, y: 0, farbe: ROT, leben: Infinity, fest: true },
+	];
+	let farbIndex = 0;
+	let t = 0;
+
+	function qualm(x: number, y: number, farbe: RGB, staerke = 1) {
+		if (rauch.length > 700) return;
+		rauch.push({
+			x: x + (Math.random() - 0.5) * 8,
+			y,
+			vx: (Math.random() - 0.5) * 0.9,
+			vy: -(0.7 + Math.random() * 1.3),
+			s: 18 + Math.random() * 22,
+			ds: 0.55 + Math.random() * 0.6,
+			a: 0.32 * staerke,
+			da: 0.0028 + Math.random() * 0.0025,
+			bild: sprite(farbe),
+		});
+	}
+
+	function zuenden(x: number, y: number) {
+		const farbe = FARBEN[farbIndex++ % FARBEN.length];
+		fackeln.push({ x, y, farbe, leben: 220, fest: false });
+		const lose = fackeln.filter((f) => !f.fest);
+		if (lose.length > 6) fackeln.splice(fackeln.indexOf(lose[0]), 1);
+		for (let i = 0; i < 30; i++) {
+			const winkel = Math.random() * Math.PI * 2;
+			const v = 2 + Math.random() * 5;
+			funken.push({ x, y, vx: Math.cos(winkel) * v, vy: Math.sin(winkel) * v - 2, leben: 30 + Math.random() * 30 });
+		}
+		tipp.classList.add('weg');
+	}
+
+	function schritt() {
+		t++;
+		const wind = Math.sin(t / 240) * 0.25 + 0.15;
+		ctx.clearRect(0, 0, w, h);
+
+		for (const f of fackeln) {
+			if (Math.random() < (f.fest ? 0.55 : 0.9)) qualm(f.x, f.y, f.farbe, f.fest ? 0.9 : 1);
+			if (!f.fest && Math.random() < 0.7) {
+				funken.push({ x: f.x, y: f.y, vx: (Math.random() - 0.5) * 3, vy: -(1 + Math.random() * 3), leben: 20 + Math.random() * 25 });
+			}
+			f.leben--;
+		}
+		for (let i = fackeln.length - 1; i >= 0; i--) if (fackeln[i].leben <= 0) fackeln.splice(i, 1);
+
+		ctx.globalCompositeOperation = 'source-over';
+		for (const r of rauch) {
+			r.vx += wind * 0.01;
+			r.x += r.vx;
+			r.y += r.vy;
+			r.vy *= 0.996;
+			r.s += r.ds;
+			r.a -= r.da;
+			if (r.a <= 0) continue;
+			ctx.globalAlpha = r.a;
+			ctx.drawImage(r.bild, r.x - r.s / 2, r.y - r.s / 2, r.s, r.s);
+		}
+		rauch = rauch.filter((r) => r.a > 0 && r.y > -r.s);
+
+		ctx.globalCompositeOperation = 'lighter';
+		for (const f of fackeln) {
+			const s = 46 + Math.random() * 22;
+			ctx.globalAlpha = 0.9;
+			ctx.drawImage(glut, f.x - s / 2, f.y - s / 2, s, s);
+			ctx.globalAlpha = 0.35;
+			ctx.drawImage(sprite(f.farbe), f.x - s * 1.4, f.y - s * 1.4, s * 2.8, s * 2.8);
+		}
+		ctx.fillStyle = '#ffd88a';
+		for (const p of funken) {
+			p.vy += 0.12;
+			p.x += p.vx;
+			p.y += p.vy;
+			p.leben--;
+			ctx.globalAlpha = Math.max(0, Math.min(1, p.leben / 20));
+			ctx.fillRect(p.x, p.y, 2.2, 2.2);
+		}
+		funken = funken.filter((p) => p.leben > 0);
+		ctx.globalAlpha = 1;
+		ctx.globalCompositeOperation = 'source-over';
+
+		if (laeuft) requestAnimationFrame(schritt);
+	}
+
+	let sichtbar = true;
+	let laeuft = false;
+	function steuern() {
+		const soll = sichtbar && !document.hidden && !ruhigGewuenscht();
+		if (soll && !laeuft) {
+			laeuft = true;
+			requestAnimationFrame(schritt);
+		} else if (!soll) laeuft = false;
+	}
+
+	if (ruhigGewuenscht()) {
+		tipp.hidden = true;
+	} else {
+		new ResizeObserver(groesse).observe(hero);
+		groesse();
+		new IntersectionObserver(([e]) => {
+			sichtbar = e.isIntersecting;
+			steuern();
+		}).observe(hero);
+		document.addEventListener('visibilitychange', steuern);
+
+		hero.addEventListener('pointerdown', (e) => {
+			if ((e.target as HTMLElement).closest('a')) return;
+			const r = hero.getBoundingClientRect();
+			zuenden(e.clientX - r.left, e.clientY - r.top);
+		});
+		// Mit der Maus zieht eine dünne Rauchfahne hinterher
+		let zuletzt = 0;
+		hero.addEventListener('pointermove', (e) => {
+			if (e.pointerType !== 'mouse' || e.timeStamp - zuletzt < 35) return;
+			zuletzt = e.timeStamp;
+			const r = hero.getBoundingClientRect();
+			qualm(e.clientX - r.left, e.clientY - r.top, FARBEN[farbIndex % FARBEN.length], 0.45);
+		});
+	}
+</script>
+
+<style>
+	.hero {
+		position: relative;
+		min-height: 100svh;
+		display: grid;
+		place-items: center;
+		overflow: hidden;
+		isolation: isolate;
+		cursor: crosshair;
+		touch-action: manipulation;
+		user-select: none;
+	}
+	.hero :global(.hero-bild) {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: 50% 40%;
+		z-index: -2;
+	}
+	.verlauf {
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background:
+			radial-gradient(ellipse at 50% 45%, rgb(20 13 22 / 0.1), rgb(20 13 22 / 0.5) 80%),
+			linear-gradient(180deg, rgb(20 13 22 / 0.35) 0%, rgb(20 13 22 / 0) 35%, rgb(20 13 22 / 0.45) 75%, var(--nacht) 100%);
+	}
+	.rauch {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+	}
+	.inhalt {
+		position: relative;
+		text-align: center;
+		padding: 96px 16px 140px;
+		pointer-events: none;
+	}
+	h1 {
+		margin: 0;
+	}
+	.logo {
+		width: min(760px, 88vw);
+		height: auto;
+		margin: 0 auto;
+		filter: drop-shadow(5px 6px 0 rgb(26 18 24 / 0.9)) drop-shadow(0 0 30px rgb(0 0 0 / 0.45));
+		animation:
+			reinplatzen 0.9s cubic-bezier(0.2, 1.6, 0.4, 1) both,
+			jubeln 4s ease-in-out 1s infinite;
+		transform-origin: 50% 80%;
+	}
+	.banner {
+		display: inline-block;
+		margin: 28px 0 0;
+		padding: 0.35em 1em;
+		background: var(--papier);
+		color: var(--tinte);
+		font-size: clamp(1.1rem, 3.6vw, 1.9rem);
+		line-height: 1.2;
+		transform: rotate(-3deg);
+		box-shadow: 6px 6px 0 var(--fackel);
+		animation: flattern 3.2s ease-in-out infinite;
+	}
+	.claim {
+		margin: 26px 0 0;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.18em;
+		font-size: clamp(0.78rem, 2vw, 1rem);
+		text-shadow: 0 2px 12px rgb(0 0 0 / 0.8);
+	}
+	.tipp {
+		position: absolute;
+		bottom: 76px;
+		left: 0;
+		right: 0;
+		margin: 0;
+		text-align: center;
+		color: var(--sonne);
+		font-size: 1.1rem;
+		text-shadow: 0 2px 10px rgb(0 0 0 / 0.9);
+		pointer-events: none;
+		animation: pulsieren 2s ease-in-out infinite;
+		transition: opacity 0.6s;
+	}
+	.tipp.weg {
+		opacity: 0;
+	}
+	.runter {
+		position: absolute;
+		bottom: 18px;
+		left: 50%;
+		translate: -50% 0;
+		font-size: 1.8rem;
+		text-decoration: none;
+		color: var(--papier);
+		padding: 4px 14px;
+		animation: huepfen 1.6s ease-in-out infinite;
+	}
+
+	@keyframes reinplatzen {
+		from { transform: scale(0.3) rotate(-8deg); opacity: 0; }
+		to { transform: scale(1) rotate(0); opacity: 1; }
+	}
+	@keyframes jubeln {
+		0%, 100% { transform: rotate(0) scale(1); }
+		20% { transform: rotate(-1.5deg) scale(1.02); }
+		40% { transform: rotate(1.2deg) scale(1); }
+		60% { transform: rotate(-0.6deg) scale(1.015); }
+	}
+	@keyframes flattern {
+		0%, 100% { transform: rotate(-3deg) skewX(0); }
+		50% { transform: rotate(-2deg) skewX(-3deg); }
+	}
+	@keyframes pulsieren {
+		50% { opacity: 0.55; }
+	}
+	@keyframes huepfen {
+		50% { translate: -50% 8px; }
+	}
+</style>

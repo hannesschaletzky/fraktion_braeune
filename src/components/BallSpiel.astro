@@ -1,0 +1,270 @@
+---
+---
+
+<section class="abschnitt spiel" id="spiel">
+	<div class="wrap">
+		<h2>Ball <span class="hoch">hochhalten</span></h2>
+		<p class="einleitung">Pritsch den Ball, bevor er im Sand landet. Mit der Tastatur: Leertaste.</p>
+
+		<div class="feld" id="feld" tabindex="0" role="application" aria-label="Ballspiel. Leertaste oder Tippen spielt den Ball.">
+			<div class="punkte">
+				<span>Pritscher <b id="spiel-zahl">0</b></span>
+				<span>Rekord <b id="spiel-rekord">0</b></span>
+			</div>
+			<p class="ansage marker" id="spiel-ansage" aria-live="polite">Tipp den Ball an!</p>
+			<div class="schatten" id="spiel-schatten"></div>
+			<svg class="ball" id="spiel-ball" viewBox="0 0 64 64" aria-hidden="true">
+				<circle cx="32" cy="32" r="29" fill="#f8f2e7" stroke="#1a1218" stroke-width="4"></circle>
+				<g fill="none" stroke="#1a1218" stroke-width="3.5" stroke-linecap="round">
+					<path d="M32 3c-6 12-6 26 0 29"></path>
+					<path d="M32 32c9-4 20-3 28 4"></path>
+					<path d="M32 32c-2 10-10 19-21 22"></path>
+				</g>
+				<path d="M8 18c8 2 16 8 24 14" fill="none" stroke="#ff2e4d" stroke-width="3.5" stroke-linecap="round"></path>
+				<path d="M56 18c-6 7-15 12-24 14" fill="none" stroke="#ffd23f" stroke-width="3.5" stroke-linecap="round"></path>
+			</svg>
+			<div class="sand"></div>
+		</div>
+	</div>
+</section>
+
+<script>
+	import { konfetti } from '../scripts/konfetti';
+
+	const feld = document.getElementById('feld')!;
+	const ball = document.getElementById('spiel-ball')!;
+	const schatten = document.getElementById('spiel-schatten')!;
+	const zahl = document.getElementById('spiel-zahl')!;
+	const rekordEl = document.getElementById('spiel-rekord')!;
+	const ansage = document.getElementById('spiel-ansage')!;
+
+	const SPRUECHE: Record<number, string> = {
+		5: 'Solide! 👌',
+		10: 'Center-Court-reif! 🏐',
+		20: 'Ab ins Nationalteam! 🇩🇪',
+		35: 'Weltklasse. Ernsthaft. 🔥',
+		50: 'Okay, du bist Profi. 🏆',
+	};
+
+	let rekord = 0;
+	try {
+		rekord = Number(localStorage.getItem('fb-rekord')) || 0;
+	} catch {}
+	rekordEl.textContent = String(rekord);
+
+	const R = 32; // Radius in px
+	let W = 0, H = 0, BODEN = 0;
+	let x = 0, y = 0, vx = 0, vy = 0, dreh = 0;
+	let zustand: 'bereit' | 'fliegt' | 'aus' = 'bereit';
+	let zaehler = 0;
+	let letzteZeit = 0;
+
+	function messen() {
+		W = feld.clientWidth;
+		H = feld.clientHeight;
+		BODEN = H - 46 - R;
+	}
+	function bereit() {
+		messen();
+		x = W / 2;
+		y = H * 0.45;
+		vx = vy = 0;
+		zustand = 'bereit';
+		zeichnen();
+	}
+	function zeichnen() {
+		ball.style.transform = `translate(${x - R}px, ${y - R}px) rotate(${dreh}deg)`;
+		const hoehe = Math.max(0, Math.min(1, (BODEN - y) / BODEN));
+		schatten.style.transform = `translateX(${x - 40}px) scale(${1 - hoehe * 0.6})`;
+		schatten.style.opacity = String(0.55 - hoehe * 0.35);
+	}
+
+	function treffen(px: number | null) {
+		if (zustand === 'aus') {
+			bereit();
+			zaehler = 0;
+			zahl.textContent = '0';
+			ansage.textContent = 'Tipp den Ball an!';
+			return;
+		}
+		// Getroffen, wenn nah genug am Ball (großzügig fürs Handy); Tastatur trifft immer
+		if (px !== null) {
+			const naehe = Math.abs(px - x);
+			if (naehe > R * 2.4) return;
+		}
+		const versatz = px === null ? (Math.random() - 0.5) * 2 * R : x - px;
+		vx = Math.max(-9, Math.min(9, versatz * 0.16 + (Math.random() - 0.5) * 1.5));
+		vy = -Math.min(17, Math.sqrt(2 * 0.5 * H * 0.7));
+		zaehler++;
+		zahl.textContent = String(zaehler);
+		if (SPRUECHE[zaehler]) ansage.textContent = SPRUECHE[zaehler];
+		else if (zustand === 'bereit') ansage.textContent = '';
+		if (zaehler === 50) konfetti(200);
+		if (zustand !== 'fliegt') {
+			zustand = 'fliegt';
+			letzteZeit = performance.now();
+			requestAnimationFrame(schritt);
+		}
+	}
+
+	function schritt(jetzt: number) {
+		if (zustand !== 'fliegt') return;
+		const f = Math.min(2.5, (jetzt - letzteZeit) / 16.67);
+		letzteZeit = jetzt;
+		vy += 0.5 * f;
+		x += vx * f;
+		y += vy * f;
+		dreh += vx * 2 * f;
+		if (x < R) { x = R; vx = Math.abs(vx) * 0.8; }
+		if (x > W - R) { x = W - R; vx = -Math.abs(vx) * 0.8; }
+		if (y < R) { y = R; vy = Math.abs(vy) * 0.5; }
+		if (y >= BODEN) {
+			y = BODEN;
+			zustand = 'aus';
+			zeichnen();
+			const neu = zaehler > rekord;
+			if (neu) {
+				rekord = zaehler;
+				rekordEl.textContent = String(rekord);
+				try {
+					localStorage.setItem('fb-rekord', String(rekord));
+				} catch {}
+				if (zaehler >= 10) konfetti(160);
+			}
+			ansage.textContent = neu && zaehler > 0
+				? `Neuer Rekord: ${zaehler}! Nochmal? Tipp ins Feld.`
+				: `Sand gefressen bei ${zaehler}. Nochmal? Tipp ins Feld.`;
+			feld.classList.add('staub');
+			setTimeout(() => feld.classList.remove('staub'), 500);
+			return;
+		}
+		zeichnen();
+		requestAnimationFrame(schritt);
+	}
+
+	feld.addEventListener('pointerdown', (e) => {
+		const r = feld.getBoundingClientRect();
+		treffen(e.clientX - r.left);
+	});
+	feld.addEventListener('keydown', (e) => {
+		if (e.key === ' ' || e.key === 'Enter') {
+			e.preventDefault();
+			treffen(null);
+		}
+	});
+	new ResizeObserver(() => {
+		const alt = W;
+		messen();
+		if (zustand !== 'fliegt') {
+			if (zustand === 'bereit' || !alt) bereit();
+			else { y = BODEN; x = Math.min(x, W - R); zeichnen(); }
+		}
+	}).observe(feld);
+</script>
+
+<style>
+	.spiel {
+		background: var(--nacht-2);
+	}
+	.hoch {
+		display: inline-block;
+		color: var(--sonne);
+		animation: hochhalten 1.4s ease-in-out infinite;
+	}
+	.einleitung {
+		max-width: 52ch;
+		margin: 0 0 40px;
+		font-size: 1.15rem;
+	}
+	.feld {
+		position: relative;
+		height: clamp(380px, 62vh, 540px);
+		border: 4px solid var(--tinte);
+		border-radius: 24px;
+		overflow: hidden;
+		background:
+			radial-gradient(circle at 80% 18%, rgb(255 210 63 / 0.55) 0 40px, transparent 41px),
+			linear-gradient(180deg, #ff9a5a 0%, #ff6f7d 35%, #8a4fd6 80%);
+		box-shadow: 8px 8px 0 var(--tinte);
+		cursor: pointer;
+		touch-action: manipulation;
+		user-select: none;
+		-webkit-user-select: none;
+	}
+	.feld:focus-visible {
+		outline: 4px solid var(--sonne);
+		outline-offset: 4px;
+	}
+	.sand {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 46px;
+		background:
+			radial-gradient(circle, rgb(0 0 0 / 0.12) 1px, transparent 1.5px) 0 0 / 9px 9px,
+			var(--sand);
+		border-top: 4px solid var(--tinte);
+	}
+	.staub .sand {
+		animation: staub 0.5s;
+	}
+	.punkte {
+		position: absolute;
+		top: 14px;
+		left: 16px;
+		right: 16px;
+		display: flex;
+		justify-content: space-between;
+		font-family: var(--display);
+		text-transform: uppercase;
+		font-size: clamp(1.1rem, 3vw, 1.5rem);
+		color: var(--papier);
+		text-shadow: 2px 2px 0 var(--tinte);
+		pointer-events: none;
+	}
+	.punkte b {
+		font-weight: 400;
+		color: var(--sonne);
+		margin-left: 0.3em;
+	}
+	.ansage {
+		position: absolute;
+		top: 30%;
+		left: 16px;
+		right: 16px;
+		margin: 0;
+		text-align: center;
+		font-size: clamp(1.3rem, 4vw, 2rem);
+		color: var(--papier);
+		text-shadow: 2px 2px 0 var(--tinte);
+		pointer-events: none;
+	}
+	.ball {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 64px;
+		height: 64px;
+		filter: drop-shadow(2px 3px 0 rgb(26 18 24 / 0.5));
+		will-change: transform;
+		pointer-events: none;
+	}
+	.schatten {
+		position: absolute;
+		bottom: 38px;
+		left: 0;
+		width: 80px;
+		height: 14px;
+		border-radius: 50%;
+		background: rgb(26 18 24 / 0.6);
+		filter: blur(2px);
+		pointer-events: none;
+	}
+	@keyframes hochhalten {
+		50% { transform: translateY(-10px) rotate(-3deg); }
+	}
+	@keyframes staub {
+		30% { transform: translateY(-4px); filter: brightness(1.15); }
+	}
+</style>

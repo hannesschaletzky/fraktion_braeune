@@ -1,0 +1,70 @@
+---
+interface Props {
+	texte: string[];
+	farbe?: 'fackel' | 'sonne';
+	richtung?: 'links' | 'rechts';
+	neigung?: number;
+}
+const { texte, farbe = 'fackel', richtung = 'links', neigung = -2 } = Astro.props;
+---
+
+<div class:list={['ticker', farbe, richtung]} style={`--neigung: ${neigung}deg`} aria-hidden="true">
+	<div class="band">
+		{[0, 1].map(() => (
+			<span class="satz">
+				{texte.map((t) => (
+					<span>{t}<b>🏐</b></span>
+				))}
+			</span>
+		))}
+	</div>
+</div>
+
+<style>
+	.ticker {
+		position: relative;
+		z-index: 2;
+		overflow: hidden;
+		margin: -22px -20px;
+		transform: rotate(var(--neigung));
+		border-block: 4px solid var(--tinte);
+		box-shadow: 0 10px 30px rgb(0 0 0 / 0.35);
+	}
+	.fackel {
+		background: var(--fackel);
+		color: var(--papier);
+	}
+	.sonne {
+		background: var(--sonne);
+		color: var(--tinte);
+	}
+	.band {
+		display: flex;
+		width: max-content;
+		animation: laufen 38s linear infinite;
+	}
+	.rechts .band {
+		animation-direction: reverse;
+	}
+	.satz {
+		display: flex;
+		white-space: nowrap;
+		font-family: var(--display);
+		text-transform: uppercase;
+		font-size: clamp(1.4rem, 4vw, 2.4rem);
+		line-height: 1;
+		padding: 14px 0;
+	}
+	.satz b {
+		font-weight: 400;
+		margin: 0 0.6em;
+		display: inline-block;
+		animation: drehen 3s linear infinite;
+	}
+	@keyframes laufen {
+		to { transform: translateX(-50%); }
+	}
+	@keyframes drehen {
+		to { transform: rotate(360deg); }
+	}
+</style>

@@ -1,0 +1,158 @@
+---
+import { Picture } from 'astro:assets';
+import credits from '../assets/fotos/credits.json';
+import foto from '../assets/fotos/2025-timmendorf-4.jpg';
+
+const sticker = [
+	{ text: 'Laut 📣', farbe: 'var(--fackel)', r: -6 },
+	{ text: 'Bunt 🌈', farbe: 'var(--lila)', r: 4 },
+	{ text: 'Immer positiv ☀️', farbe: 'var(--sonne)', r: -3, dunkel: true },
+	{ text: 'Bewusst genießen 🥂', farbe: 'var(--gruen)', r: 5, dunkel: true },
+];
+---
+
+<section class="abschnitt" id="wir">
+	<div class="wrap raster">
+		<div class="text">
+			<h2>Wer ist diese <mark>Fraktion Bräune</mark>?</h2>
+			<p class="gross">
+				Eine Freundesgruppe, die seit 2021 zu den Events der German Beach Tour fährt, um die Teams im Sand nach vorne zu
+				schreien.
+			</p>
+			<p>
+				Mit Fahnen, selbstgemalten Bannern, Choreos und Pyro. Wir singen, wir tanzen, wir feiern jeden Punkt, und
+				zwar für alle auf dem Platz. Laut, bunt und immer gut drauf.
+			</p>
+			<ul class="sticker" role="list">
+				{sticker.map((s) => (
+					<li style={`--farbe: ${s.farbe}; --r: ${s.r}deg`} class:list={{ dunkel: s.dunkel }}>{s.text}</li>
+				))}
+			</ul>
+		</div>
+
+		<div class="bild">
+			<figure class="polaroid">
+				<Picture src={foto} formats={['avif', 'webp']} widths={[480, 800, 1200]} sizes="(min-width: 900px) 480px, 92vw" alt="Gruppenfoto der Fraktion Bräune im Sand vor der Tribüne, mit Fahnen" />
+				<figcaption class="marker">Timmendorf 2025 · 📸 @{credits['2025-timmendorf-4']}</figcaption>
+			</figure>
+			<div class="pokal" aria-label="Fan Group of the Year, GBT Awards 2025">
+				<svg viewBox="0 0 200 200" aria-hidden="true">
+					<defs>
+						<path id="pokal-kreis" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />
+					</defs>
+					<circle cx="100" cy="100" r="98" fill="var(--sonne)" stroke="var(--tinte)" stroke-width="4" />
+					<g class="kreisel">
+						<text font-family="Anton, Impact, sans-serif" font-size="21" letter-spacing="2.4" fill="var(--tinte)">
+							<textPath href="#pokal-kreis">FAN GROUP OF THE YEAR ★ GBT AWARDS 2025 ★</textPath>
+						</text>
+					</g>
+					<text x="100" y="122" font-size="60" text-anchor="middle">🏆</text>
+				</svg>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.raster {
+		display: grid;
+		gap: 56px;
+		align-items: center;
+	}
+	@media (min-width: 900px) {
+		.raster {
+			grid-template-columns: 1.1fr 0.9fr;
+		}
+	}
+	h2 {
+		line-height: 1.12;
+	}
+	mark {
+		background: var(--papier);
+		color: var(--tinte);
+		display: inline-block;
+		margin-top: 0.1em;
+		padding: 0.04em 0.12em 0;
+		line-height: 0.95;
+		transform: rotate(-1.5deg);
+		box-decoration-break: clone;
+		-webkit-box-decoration-break: clone;
+	}
+	.gross {
+		font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+		line-height: 1.4;
+		font-weight: 700;
+	}
+	.text p {
+		max-width: 56ch;
+	}
+	.sticker {
+		list-style: none;
+		padding: 0;
+		margin: 32px 0 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 14px;
+	}
+	.sticker li {
+		font-family: var(--display);
+		text-transform: uppercase;
+		font-size: clamp(1.2rem, 3vw, 1.7rem);
+		padding: 0.25em 0.8em;
+		border-radius: 999px;
+		background: var(--farbe);
+		color: var(--papier);
+		border: 3px solid var(--tinte);
+		box-shadow: 4px 4px 0 var(--tinte);
+		transform: rotate(var(--r));
+		transition: transform 0.25s cubic-bezier(0.3, 1.8, 0.5, 1);
+	}
+	.sticker li.dunkel {
+		color: var(--tinte);
+	}
+	.sticker li:hover {
+		transform: rotate(0) scale(1.12);
+	}
+
+	.bild {
+		position: relative;
+		justify-self: center;
+		width: min(480px, 100%);
+	}
+	.polaroid {
+		margin: 0;
+		padding: 12px 12px 0;
+		background: var(--papier);
+		color: var(--tinte);
+		transform: rotate(3deg);
+		box-shadow: 0 20px 50px rgb(0 0 0 / 0.5);
+	}
+	.polaroid :global(img) {
+		width: 100%;
+		height: auto;
+	}
+	figcaption {
+		padding: 10px 4px 14px;
+		font-size: 1.05rem;
+	}
+	.pokal {
+		position: absolute;
+		width: clamp(120px, 30vw, 170px);
+		top: -48px;
+		left: -36px;
+		transform: rotate(-12deg);
+		filter: drop-shadow(4px 6px 0 var(--tinte));
+	}
+	@media (max-width: 520px) {
+		.pokal {
+			left: -8px;
+		}
+	}
+	.kreisel {
+		transform-origin: 100px 100px;
+		animation: kreisen 18s linear infinite;
+	}
+	@keyframes kreisen {
+		to { transform: rotate(360deg); }
+	}
+</style>

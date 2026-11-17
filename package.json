@@ -9,6 +9,8 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@fontsource/anton": "^5.3.0",
+    "@fontsource/permanent-marker": "^5.3.0",
     "astro": "^5.15.5"
   }
 }

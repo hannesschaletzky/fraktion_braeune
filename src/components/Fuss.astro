@@ -1,0 +1,77 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-bunt.png';
+import credits from '../assets/fotos/credits.json';
+
+const fotografen = [...new Set(Object.values(credits).filter((c): c is string => !!c && !c.includes(' ')))];
+---
+
+<footer class="fuss">
+	<div class="wrap">
+		<Image src={logo} widths={[400, 800]} sizes="320px" alt="Fraktion Bräune" class="logo" loading="lazy" />
+		<p class="aufruf">Du siehst uns auf der Tribüne? Komm rüber und sag Hallo!</p>
+		<a class="insta" href="https://www.instagram.com/fraktion_braeune/" target="_blank" rel="noopener noreferrer">
+			Folg uns auf Instagram → @fraktion_braeune
+		</a>
+		<p class="credits">
+			Fotos: {fotografen.map((f) => (
+				<Fragment><a href={`https://www.instagram.com/${f}/`} target="_blank" rel="noopener noreferrer">@{f}</a>, </Fragment>
+			))}German Beach Tour und Freund:innen. Danke! 💛
+		</p>
+		<p class="klein">Gemacht mit Liebe und Lichtschutzfaktor 50 · EST. 2021</p>
+	</div>
+</footer>
+
+<style>
+	.fuss {
+		padding: 96px 0 48px;
+		text-align: center;
+		background:
+			radial-gradient(ellipse at 50% 0%, rgb(255 46 77 / 0.18), transparent 60%),
+			var(--nacht);
+		border-top: 4px solid var(--tinte);
+	}
+	.logo {
+		width: min(320px, 70vw);
+		height: auto;
+		margin: 0 auto;
+		filter: drop-shadow(4px 5px 0 var(--fackel));
+	}
+	.aufruf {
+		margin: 36px auto 24px;
+		font-size: 1.25rem;
+		font-weight: 700;
+		max-width: 36ch;
+	}
+	.insta {
+		display: inline-block;
+		padding: 0.7em 1.4em;
+		border-radius: 999px;
+		border: 3px solid var(--tinte);
+		background: linear-gradient(90deg, var(--fackel), var(--glut), var(--sonne));
+		color: var(--tinte);
+		font-family: var(--display);
+		text-transform: uppercase;
+		font-size: clamp(1rem, 3vw, 1.35rem);
+		text-decoration: none;
+		box-shadow: 5px 5px 0 var(--tinte);
+		transition: transform 0.2s cubic-bezier(0.3, 1.8, 0.5, 1);
+	}
+	.insta:hover {
+		transform: rotate(-2deg) scale(1.06);
+	}
+	.credits {
+		margin: 48px auto 0;
+		max-width: 60ch;
+		font-size: 0.9rem;
+		opacity: 0.8;
+	}
+	.credits a {
+		color: var(--sonne);
+	}
+	.klein {
+		margin: 16px 0 0;
+		font-family: var(--marker);
+		opacity: 0.7;
+	}
+</style>

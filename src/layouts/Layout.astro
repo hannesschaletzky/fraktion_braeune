@@ -1,22 +1,36 @@
+---
+import '@fontsource/anton';
+import '@fontsource/permanent-marker';
+import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import foto from '../assets/1.jpg';
+
+const titel = 'Fraktion Bräune – Europas lauteste Beachvolleyball-Fans';
+const beschreibung =
+	'Fahnen, Choreos, Pyro und immer gute Laune: Fraktion Bräune fährt zu den Events der Beach Tour und bringt die Tribüne zum Beben. Fangruppe des Jahres 2025.';
+const vorschau = await getImage({ src: foto, width: 1200, format: 'jpg' });
+const bildUrl = new URL(vorschau.src, Astro.site).href;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="de">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="Beach Volleyball" content="Beach Volleyball Fangruppe German Beach Tour" />
-		<title>🏐 Fraktion Bräune</title>
+		<title>{titel}</title>
+		<meta name="description" content={beschreibung} />
+		<meta name="theme-color" content="#140d16" />
+		<link rel="canonical" href={Astro.site} />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="de_DE" />
+		<meta property="og:title" content={titel} />
+		<meta property="og:description" content={beschreibung} />
+		<meta property="og:url" content={Astro.site} />
+		<meta property="og:image" content={bildUrl} />
+		<meta name="twitter:card" content="summary_large_image" />
 	</head>
 	<body>
 		<slot />
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
