@@ -2,16 +2,25 @@
   "name": "fraktion-braeune",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=26"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "astro check"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.5",
+    "@astrojs/sitemap": "^3.7.6",
     "@fontsource/anton": "^5.3.0",
     "@fontsource/permanent-marker": "^5.3.0",
-    "astro": "^5.15.5"
+    "astro": "^7.4.13",
+    "sharp": "^0.35.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "typescript": "~6.0.3"
   }
 }
