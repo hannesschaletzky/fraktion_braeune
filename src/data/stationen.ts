@@ -139,6 +139,7 @@ export const stationen: Station[] = [
 		zusatz: 'Olympia',
 		motto: 'Nett hier, wann GBT in Paris?',
 		fotos: [
+			foto('2024-paris-banner', 'Zwei aus der Fraktion mit dem Fraktion-Bräune-Banner und Baguettes vor dem Eiffelturm'),
 			foto('2024-paris-1', 'Der Eiffelturm im Abendlicht über dem vollen Beachvolleyball-Stadion'),
 			foto('2024-paris-2', 'Blick von der Tribüne auf den Court und die vollen Ränge'),
 		],
