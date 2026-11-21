@@ -89,6 +89,8 @@ const clips = {
 	'timmendorf23-gekommen': { teile: [[IG('17922140525775157'), 0, null]], hoch: true, poster: 5 },
 	'hamburg23-support': { teile: [[IG('17989915973488514'), 0, null]], hoch: true, poster: 18 },
 	'timmendorf24-mvp': { teile: [[IG('17934347210913264'), 0, null]], hoch: true, poster: 4 },
+	// Eigenes Handyvideo, quer gefilmt: mittig auf Hochkant zugeschnitten
+	'bremen24-jubel': { teile: [['assets/2024_Bremen/b077f5f9-569e-49d1-8416-f6ed5fea1bdb.MP4', 0, null]], crop: '405:720:437:0', hoch: true, poster: 12 },
 	'paris24-olympia': { teile: [[IG('18347289610137992'), 0, null]], hoch: true, poster: 13 },
 	'muenchen26-rudern': { teile: [[IG('18218353558332396'), 0, null]], hoch: true, poster: 11 },
 

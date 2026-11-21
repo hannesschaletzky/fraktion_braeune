@@ -52,6 +52,7 @@ export const clips = {
 	'timmendorf23-gekommen': c('timmendorf23-gekommen', 'Sprechchor „Er ist gekommen“ im Block', true),
 	'hamburg23-support': c('hamburg23-support', 'Anfeuern im Stadion am Rothenbaum', true, 'Natürlich ist der Support am Start!'),
 	'timmendorf24-mvp': c('timmendorf24-mvp', 'Rote Fackeln bei Nacht, der Block feiert den MVP', true, 'MVP!!!'),
+	'bremen24-jubel': c('bremen24-jubel', 'Jubel und Fahne auf der roten Tribüne in Bremen', true),
 	'paris24-olympia': c('paris24-olympia', 'Jubel im Olympiastadion am Eiffelturm', true, 'Nett hier, wann GBT in Paris?'),
 	'timmendorf25-fackel': c('timmendorf25-fackel', 'Fackel im Block in Timmendorf', true),
 	'timmendorf25-fahne': c('timmendorf25-fahne', 'Fahne über dem Block in Timmendorf', true),

@@ -159,8 +159,8 @@ export const stationen: Station[] = [
 		jahr: 2024,
 		ort: 'Bremen',
 		motto: 'Was ein geiler Tag!',
-		fotos: [],
-		clips: ['bremen24-schalala', 'bremen24-fahne'],
+		fotos: [foto('2024-bremen-1', 'Gruppenfoto in Fraktion-Shirts mit Medaillen vor dem Gelände in Bremen')],
+		clips: ['bremen24-schalala', 'bremen24-jubel', 'bremen24-fahne'],
 	},
 	{
 		jahr: 2024,

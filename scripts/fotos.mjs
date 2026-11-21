@@ -87,6 +87,7 @@ const auswahl = {
 	'2023-hamburg-1': 'shared_album_apple/IMG_1958.jpeg',
 	'2023-hamburg-2': 'shared_album_apple/IMG_5836.jpeg',
 	'2024-duesseldorf-1': IG + '202405/18027707966043960.jpg',
+	'2024-bremen-1': '2024_Bremen/7cf6a9dd-1756-48a7-a7fe-e04f3a721b9a.JPG',
 	'2024-paris-1': '2024_Paris/IMG_1072.JPG',
 	'2024-paris-2': '2024_Paris/IMG_1039.JPG',
 	'2024-kuehlungsborn-1': 'shared_album_apple/IMG_9492.jpeg',
