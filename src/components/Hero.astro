@@ -48,6 +48,10 @@ import logo from '../assets/logo-bunt.png';
 	interface Funke { x: number; y: number; vx: number; vy: number; leben: number }
 	interface Fackel { x: number; y: number; farbe: RGB; leben: number; fest: boolean }
 
+	// Bei "Bewegung reduzieren" bewegt sich nichts von selbst (keine Dauer-Fackeln, keine Rauchfahne der Maus).
+	// Eine Fackel, die man selbst antippt, zündet trotzdem: bewusste Aktion, die nach ein paar Sekunden ausgeht.
+	const ruhig = ruhigGewuenscht();
+
 	const hero = document.getElementById('hero')!;
 	const canvas = document.getElementById('rauch') as HTMLCanvasElement;
 	const ctx = canvas.getContext('2d')!;
@@ -88,10 +92,13 @@ import logo from '../assets/logo-bunt.png';
 
 	let rauch: Rauch[] = [];
 	let funken: Funke[] = [];
-	const fackeln: Fackel[] = [
-		{ x: 0, y: 0, farbe: ROT, leben: Infinity, fest: true },
-		{ x: 0, y: 0, farbe: ROT, leben: Infinity, fest: true },
-	];
+	const fackeln: Fackel[] = ruhig
+		? []
+		: [
+				{ x: 0, y: 0, farbe: ROT, leben: Infinity, fest: true },
+				{ x: 0, y: 0, farbe: ROT, leben: Infinity, fest: true },
+			];
+	const aktiv = () => fackeln.length + rauch.length + funken.length > 0;
 	let farbIndex = 0;
 	let t = 0;
 
@@ -121,6 +128,7 @@ import logo from '../assets/logo-bunt.png';
 			funken.push({ x, y, vx: Math.cos(winkel) * v, vy: Math.sin(winkel) * v - 2, leben: 30 + Math.random() * 30 });
 		}
 		tipp.classList.add('weg');
+		steuern();
 	}
 
 	function schritt() {
@@ -172,44 +180,43 @@ import logo from '../assets/logo-bunt.png';
 		ctx.globalAlpha = 1;
 		ctx.globalCompositeOperation = 'source-over';
 
+		// Ruhig: nur zeichnen, solange eine angetippte Fackel noch brennt oder raucht
+		if (ruhig && !aktiv()) laeuft = false;
 		if (laeuft) requestAnimationFrame(schritt);
 	}
 
 	let sichtbar = true;
 	let laeuft = false;
 	function steuern() {
-		const soll = sichtbar && !document.hidden && !ruhigGewuenscht();
+		const soll = sichtbar && !document.hidden && (!ruhig || aktiv());
 		if (soll && !laeuft) {
 			laeuft = true;
 			requestAnimationFrame(schritt);
 		} else if (!soll) laeuft = false;
 	}
 
-	if (ruhigGewuenscht()) {
-		tipp.hidden = true;
-	} else {
-		new ResizeObserver(groesse).observe(hero);
-		groesse();
-		new IntersectionObserver(([e]) => {
-			sichtbar = e.isIntersecting;
-			steuern();
-		}).observe(hero);
-		document.addEventListener('visibilitychange', steuern);
+	new ResizeObserver(groesse).observe(hero);
+	groesse();
+	new IntersectionObserver(([e]) => {
+		sichtbar = e.isIntersecting;
+		steuern();
+	}).observe(hero);
+	document.addEventListener('visibilitychange', steuern);
 
-		hero.addEventListener('pointerdown', (e) => {
-			if ((e.target as HTMLElement).closest('a')) return;
-			const r = hero.getBoundingClientRect();
-			zuenden(e.clientX - r.left, e.clientY - r.top);
-		});
-		// Mit der Maus zieht eine dünne Rauchfahne hinterher
-		let zuletzt = 0;
+	hero.addEventListener('pointerdown', (e) => {
+		if ((e.target as HTMLElement).closest('a')) return;
+		const r = hero.getBoundingClientRect();
+		zuenden(e.clientX - r.left, e.clientY - r.top);
+	});
+	// Mit der Maus zieht eine dünne Rauchfahne hinterher
+	let zuletzt = 0;
+	if (!ruhig)
 		hero.addEventListener('pointermove', (e) => {
 			if (e.pointerType !== 'mouse' || e.timeStamp - zuletzt < 35) return;
 			zuletzt = e.timeStamp;
 			const r = hero.getBoundingClientRect();
 			qualm(e.clientX - r.left, e.clientY - r.top, FARBEN[farbIndex % FARBEN.length], 0.45);
 		});
-	}
 </script>
 
 <style>

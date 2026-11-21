@@ -4,89 +4,134 @@ import logo from '../assets/logo-bunt.png';
 import credits from '../assets/fotos/credits.json';
 
 const fotografen = [...new Set(Object.values(credits).filter((c): c is string => !!c && !c.includes(' ')))];
+const extern = { target: '_blank', rel: 'noopener noreferrer' };
 ---
 
 <footer class="fuss">
 	<div class="wrap">
-		<Image src={logo} widths={[400, 800]} sizes="320px" alt="Fraktion Bräune" class="logo" loading="lazy" />
-		<p class="aufruf">Du siehst uns auf der Tribüne? Komm rüber und sag Hallo!</p>
-		<a class="insta" href="https://www.instagram.com/fraktion_braeune/" target="_blank" rel="noopener noreferrer">
-			Folg uns auf Instagram → @fraktion_braeune
-		</a>
-		<p class="credits">
-			Fotos: {fotografen.map((f) => (
-				<Fragment><a href={`https://www.instagram.com/${f}/`} target="_blank" rel="noopener noreferrer">@{f}</a>, </Fragment>
-			))}German Beach Tour und Freund:innen. Danke! 💛
-		</p>
-		<p class="klein">Gemacht mit Liebe und Lichtschutzfaktor 50 · EST. 2021</p>
-		<p class="macher">
-			Website gebaut von <strong>Hannes Schaletzky</strong> ·
-			<a href="https://github.com/hannesschaletzky/fraktion_braeune" target="_blank" rel="noopener noreferrer">Code auf GitHub</a>
-		</p>
+		<div class="oben">
+			<a href="/" class="heim" aria-label="Zur Startseite">
+				<Image src={logo} widths={[300, 600]} sizes="170px" alt="Fraktion Bräune" class="logo" loading="lazy" />
+			</a>
+			<div class="gruss">
+				<p class="aufruf">Du siehst uns auf der Tribüne? Komm rüber und sag Hallo!</p>
+				<p class="spruch marker">Mit Liebe und Lichtschutzfaktor 50 · seit 2021</p>
+			</div>
+			<a class="insta" href="https://www.instagram.com/fraktion_braeune/" {...extern}>
+				<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2.2" /><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2.2" /><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor" /></svg>
+				@fraktion_braeune
+			</a>
+		</div>
+
+		<div class="unten">
+			<p>
+				📸 {fotografen.map((f, i) => (
+					<Fragment>{i > 0 && ', '}<a href={`https://www.instagram.com/${f}/`} {...extern}>@{f}</a></Fragment>
+				))}, German Beach Tour und Freund:innen. Danke! 💛
+			</p>
+			<p>
+				Website: <a href="https://hschaletzky.com" {...extern}>Hannes Schaletzky</a>{' · '}<a href="https://github.com/hannesschaletzky/fraktion_braeune" {...extern}>Code auf GitHub</a>
+			</p>
+		</div>
 	</div>
 </footer>
 
 <style>
 	.fuss {
-		padding: 96px 0 48px;
-		text-align: center;
+		padding: 56px 0 28px;
 		background:
-			radial-gradient(ellipse at 50% 0%, rgb(255 46 77 / 0.18), transparent 60%),
+			radial-gradient(ellipse at 50% 0%, rgb(255 46 77 / 0.16), transparent 60%),
 			var(--nacht);
 		border-top: 4px solid var(--tinte);
 	}
+	.oben {
+		display: grid;
+		gap: 20px;
+		justify-items: center;
+		text-align: center;
+	}
+	@media (min-width: 820px) {
+		.oben {
+			grid-template-columns: auto 1fr auto;
+			align-items: center;
+			justify-items: start;
+			text-align: left;
+			gap: 36px;
+		}
+	}
+	.heim {
+		display: block;
+	}
 	.logo {
-		width: min(320px, 70vw);
+		width: 170px;
 		height: auto;
-		margin: 0 auto;
-		filter: drop-shadow(4px 5px 0 var(--fackel));
+		filter: drop-shadow(3px 4px 0 var(--fackel));
+		transition: transform 0.25s cubic-bezier(0.3, 1.8, 0.5, 1);
+	}
+	.heim:hover .logo {
+		transform: rotate(-3deg) scale(1.05);
 	}
 	.aufruf {
-		margin: 36px auto 24px;
-		font-size: 1.25rem;
+		margin: 0;
+		font-size: 1.15rem;
 		font-weight: 700;
-		max-width: 36ch;
+		line-height: 1.35;
+		max-width: 34ch;
+	}
+	.spruch {
+		margin: 6px 0 0;
+		font-size: 0.95rem;
+		opacity: 0.7;
 	}
 	.insta {
-		display: inline-block;
-		padding: 0.7em 1.4em;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5em;
+		padding: 0.6em 1.2em;
 		border-radius: 999px;
 		border: 3px solid var(--tinte);
 		background: linear-gradient(90deg, var(--fackel), var(--glut), var(--sonne));
 		color: var(--tinte);
 		font-family: var(--display);
-		text-transform: uppercase;
-		font-size: clamp(1rem, 3vw, 1.35rem);
+		font-size: 1.15rem;
+		letter-spacing: 0.02em;
 		text-decoration: none;
-		box-shadow: 5px 5px 0 var(--tinte);
+		white-space: nowrap;
+		box-shadow: 4px 4px 0 var(--tinte);
 		transition: transform 0.2s cubic-bezier(0.3, 1.8, 0.5, 1);
 	}
 	.insta:hover {
-		transform: rotate(-2deg) scale(1.06);
+		transform: rotate(-2deg) scale(1.05);
 	}
-	.credits {
-		margin: 48px auto 0;
-		max-width: 60ch;
-		font-size: 0.9rem;
-		opacity: 0.8;
+	.insta svg {
+		width: 1.2em;
+		height: 1.2em;
 	}
-	.credits a {
-		color: var(--sonne);
-	}
-	.klein {
-		margin: 16px 0 0;
-		font-family: var(--marker);
-		opacity: 0.7;
-	}
-	.macher {
-		margin: 28px 0 0;
-		font-size: 0.9rem;
+	.unten {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 8px 32px;
+		margin-top: 40px;
+		padding-top: 20px;
+		border-top: 1px solid rgb(248 242 231 / 0.15);
+		font-size: 0.85rem;
 		opacity: 0.75;
 	}
-	.macher a {
+	@media (max-width: 819px) {
+		.unten {
+			justify-content: center;
+			text-align: center;
+		}
+	}
+	.unten p {
+		margin: 0;
+	}
+	.unten a {
+		color: inherit;
 		text-underline-offset: 3px;
 	}
-	.macher a:hover {
+	.unten a:hover {
 		color: var(--sonne);
 	}
 </style>
