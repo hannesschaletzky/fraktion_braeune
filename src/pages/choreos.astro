@@ -35,7 +35,7 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 
 	<main class="wrap liste">
 		{choreos.map((c, i) => (
-			<article id={slug(c)} class:list={['choreo', { gespiegelt: i % 2 === 1 }]} style={`--schatten: ${farben[i % farben.length]}`}>
+			<article id={slug(c)} class="choreo" style={`--schatten: ${farben[i % farben.length]}`}>
 				<header class="info">
 					<p class="wann">
 						{c.jahr} · {c.ort}{c.zusatz && <span class="zusatz">{c.zusatz}</span>}
@@ -45,28 +45,36 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 						{c.zutaten.map((z) => <li>{z}</li>)}
 					</ul>
 				</header>
-				<div class:list={['medien', { 'mit-handys': c.clips }]}>
-					<div class:list={['fotos', { zwei: c.fotos.length > 1 }]}>
-						{c.fotos.map((f, j) => (
+				{/* Immer gleich: die Choreo groß, darunter weitere Fotos und Videos in einer Reihe */}
+				<button
+								type="button"
+								class="foto haupt"
+								style={`--r: ${neigungen[(i + 0) % neigungen.length]}deg`}
+								data-gross={gross.get(c.fotos[0].bild.src)}
+								data-alt={c.fotos[0].alt}
+								data-credit={c.fotos[0].credit ?? ''}
+								aria-label={`Groß anzeigen: ${c.fotos[0].alt}`}
+							>
+								<Picture src={c.fotos[0].bild} formats={['avif', 'webp']} widths={[480, 800, 1200, 1600]} sizes="(min-width: 1100px) 1068px, 92vw" alt={c.fotos[0].alt} loading={i < 2 ? 'eager' : 'lazy'} />
+							</button>
+				{(c.fotos.length > 1 || c.clips) && (
+					<div class="weitere">
+						{c.fotos.slice(1).map((f, j) => (
 							<button
 								type="button"
-								class="foto"
-								style={`--r: ${neigungen[(i + j) % neigungen.length]}deg`}
+								class="foto klein"
+								style={`--r: ${neigungen[(i + j + 1) % neigungen.length]}deg`}
 								data-gross={gross.get(f.bild.src)}
 								data-alt={f.alt}
 								data-credit={f.credit ?? ''}
 								aria-label={`Groß anzeigen: ${f.alt}`}
 							>
-								<Picture src={f.bild} formats={['avif', 'webp']} widths={[480, 800, 1200]} sizes="(min-width: 900px) 600px, 92vw" alt={f.alt} loading={i < 2 ? 'eager' : 'lazy'} />
+								<Picture src={f.bild} formats={['avif', 'webp']} widths={[480, 800, 1200, 1600]} sizes="(min-width: 760px) 400px, 70vw" alt={f.alt} loading={i < 2 ? 'eager' : 'lazy'} />
 							</button>
 						))}
+						{c.clips?.map((k, j) => <div class="handy-platz"><Handy clip={k} r={neigungen[(i + j + 2) % neigungen.length]} /></div>)}
 					</div>
-					{c.clips && (
-						<div class="handys">
-							{c.clips.map((k, j) => <div class="handy-platz"><Handy clip={k} r={neigungen[(i + j + 2) % neigungen.length]} /></div>)}
-						</div>
-					)}
-				</div>
+				)}
 			</article>
 		))}
 		<p class="zurueck"><a href="/">← Zurück zur Startseite</a></p>
@@ -135,67 +143,44 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 		gap: 32px;
 		scroll-margin-top: 32px;
 	}
-	.gespiegelt .info {
-		justify-self: end;
-		text-align: right;
+	/* Hauptfoto der Choreo über die ganze Breite, nicht höher als der Bildschirm */
+	.foto.haupt {
+		display: block;
+		/* groß nur leicht schräg, sonst kippt die ganze Seite */
+		transform: rotate(calc(var(--r) * 0.35));
 	}
-	.gespiegelt .zutaten {
-		justify-content: flex-end;
+	.foto.haupt :global(img) {
+		max-height: 78vh;
 	}
-	.medien {
-		display: grid;
-		gap: clamp(28px, 4vw, 48px);
-		align-items: start;
-	}
-	@media (min-width: 760px) {
-		.medien.mit-handys {
-			grid-template-columns: minmax(0, 1fr) auto;
-		}
-		.gespiegelt .medien.mit-handys {
-			grid-template-columns: auto minmax(0, 1fr);
-		}
-		.gespiegelt .handys {
-			order: -1;
-		}
-	}
-	/* Ein einzelnes Foto ohne Videos nicht über die ganze Breite ziehen */
-	.medien:not(.mit-handys) .fotos:not(.zwei) {
-		max-width: 760px;
-	}
-	.gespiegelt .medien:not(.mit-handys) .fotos:not(.zwei) {
-		justify-self: end;
-	}
-	.handys {
+	/* Weitere Fotos und Videos: eine Reihe gleich hoher Kacheln, auf dem Handy zum Wischen */
+	.weitere {
+		--hoehe: clamp(220px, 26vw, 300px);
 		display: flex;
-		gap: 24px;
+		flex-wrap: wrap;
 		align-items: flex-start;
+		gap: 24px;
+	}
+	.foto.klein :global(img) {
+		height: var(--hoehe);
+		width: auto;
+		max-width: 100%;
 	}
 	.handy-platz {
-		width: clamp(150px, 16vw, 190px);
+		width: calc(var(--hoehe) * 0.6);
+		flex: none;
 	}
 	@media (max-width: 759px) {
-		.handys {
+		.weitere {
+			flex-wrap: nowrap;
 			overflow-x: auto;
 			scroll-snap-type: x mandatory;
 			margin: 0 -16px;
 			padding: 8px 16px 16px;
 		}
-		.handy-platz {
-			flex: 0 0 52vw;
-			width: auto;
+		.weitere > * {
+			flex: none;
 			scroll-snap-align: center;
 		}
-	}
-	.fotos {
-		display: grid;
-		gap: 14px;
-	}
-	.fotos[hidden] {
-		display: none;
-	}
-	.fotos.zwei {
-		grid-template-columns: 1.4fr 1fr;
-		align-items: center;
 	}
 	.foto {
 		all: unset;
@@ -249,10 +234,6 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 		line-height: 1.15;
 		transform: rotate(-2deg);
 		box-shadow: 6px 6px 0 var(--schatten);
-	}
-	.gespiegelt .titel {
-		transform: rotate(1.5deg);
-		box-shadow: -6px 6px 0 var(--schatten);
 	}
 	.zutaten {
 		list-style: none;
