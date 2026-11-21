@@ -142,7 +142,7 @@ export const stationen: Station[] = [
 			foto('2024-paris-1', 'Der Eiffelturm im Abendlicht über dem vollen Beachvolleyball-Stadion'),
 			foto('2024-paris-2', 'Blick von der Tribüne auf den Court und die vollen Ränge'),
 		],
-		clips: ['paris24-olympia', 'paris24-allez', 'paris24-fahnen'],
+		clips: ['paris24-olympia', 'paris24-allez'],
 	},
 	{
 		jahr: 2024,
