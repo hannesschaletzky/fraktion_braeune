@@ -1,0 +1,99 @@
+---
+// Was im Livestream über uns gesagt wurde. Ein Klick schaltet den Fernseher auf den Mitschnitt (mit Ton).
+import { sender, stimmen } from '../data/clips';
+
+const farben = ['var(--sonne)', 'var(--gruen)', 'var(--fackel)', 'var(--lila)'];
+const neigung = [-2, 1.5, -1, 2];
+const kanal = (name: string) => String(sender.findIndex((s) => s.name === name) + 1).padStart(2, '0');
+---
+
+<section class="abschnitt stimmen" id="stimmen">
+	<div class="wrap">
+		<h2>Was über uns <span class="bunt">{[...'gesagt'].map((c) => <span>{c}</span>)}</span> wird</h2>
+		<ul class="blasen" role="list">
+			{stimmen.map((s, i) => (
+				<li style={`--farbe: ${farben[i % farben.length]}; --r: ${neigung[i % neigung.length]}deg`}>
+					<blockquote>
+						<p>„{s.text}“</p>
+					</blockquote>
+					<p class="wer">Kommentar im Livestream · {s.wann}</p>
+					<button type="button" class="hoeren" data-sender={s.sender}>📺 Anhören auf Sender {kanal(s.sender)}</button>
+				</li>
+			))}
+		</ul>
+	</div>
+</section>
+
+<script>
+	document.querySelectorAll<HTMLButtonElement>('.stimmen .hoeren').forEach((b) =>
+		b.addEventListener('click', () => document.dispatchEvent(new CustomEvent('fb:sender', { detail: b.dataset.sender }))),
+	);
+</script>
+
+<style>
+	.blasen {
+		list-style: none;
+		padding: 0;
+		margin: 48px 0 0;
+		display: grid;
+		gap: 40px 32px;
+	}
+	@media (min-width: 760px) {
+		.blasen {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+	li {
+		transform: rotate(var(--r));
+	}
+	blockquote {
+		position: relative;
+		margin: 0;
+		padding: 22px 24px;
+		border-radius: 26px;
+		background: var(--farbe);
+		color: var(--tinte);
+		border: 3px solid var(--tinte);
+		box-shadow: 6px 6px 0 var(--tinte);
+	}
+	/* Sprechblasen-Zipfel */
+	blockquote::after {
+		content: '';
+		position: absolute;
+		left: 36px;
+		bottom: -22px;
+		width: 30px;
+		height: 22px;
+		background: var(--farbe);
+		border: 3px solid var(--tinte);
+		border-top: 0;
+		clip-path: polygon(0 0, 100% 0, 0 100%);
+	}
+	blockquote p {
+		margin: 0;
+		font-family: var(--marker);
+		font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+		line-height: 1.35;
+	}
+	.wer {
+		margin: 30px 0 8px 12px;
+		font-size: 0.9rem;
+		opacity: 0.8;
+	}
+	.hoeren {
+		margin-left: 12px;
+		padding: 0.45em 1em;
+		border-radius: 999px;
+		border: 2px solid var(--papier);
+		background: transparent;
+		color: var(--papier);
+		font: inherit;
+		font-weight: 700;
+		cursor: pointer;
+		transition: background 0.2s, color 0.2s;
+	}
+	.hoeren:hover {
+		background: var(--papier);
+		color: var(--tinte);
+	}
+</style>

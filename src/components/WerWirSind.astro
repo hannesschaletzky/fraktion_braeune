@@ -2,6 +2,7 @@
 import { Picture } from 'astro:assets';
 import credits from '../assets/fotos/credits.json';
 import foto from '../assets/fotos/2025-timmendorf-4.jpg';
+import Handy from './Handy.astro';
 
 const sticker = [
 	{ text: 'Laut 📣', farbe: 'var(--fackel)', r: -6 },
@@ -35,14 +36,42 @@ const sticker = [
 				<Picture src={foto} formats={['avif', 'webp']} widths={[480, 800, 1200]} sizes="(min-width: 900px) 480px, 92vw" alt="Gruppenfoto der Fraktion Bräune im Sand vor der Tribüne, mit Fahnen" />
 				<figcaption class="marker">Timmendorf 2025 · 📸 @{credits['2025-timmendorf-4']}</figcaption>
 			</figure>
-			<p class="pokal">
+			<button type="button" class="pokal" aria-haspopup="dialog" aria-label="Fan Group of the Year, GBT Awards 2025: Videos von der Preisverleihung ansehen">
 				<span class="pokal-icon" aria-hidden="true">🏆</span>
 				<strong>Fan Group<br />of the Year</strong>
 				<span class="pokal-klein">GBT Awards 2025</span>
-			</p>
+				<span class="pokal-play" aria-hidden="true">▶ Video</span>
+			</button>
+			<div class="crew">
+				<Handy clip="reel-crew" r={-5} />
+			</div>
 		</div>
 	</div>
+
+	<dialog class="award" aria-labelledby="award-titel">
+		<div class="award-innen">
+			<button type="button" class="zu" aria-label="Schließen">✕</button>
+			<h3 id="award-titel">🏆 Fan Group of the Year 2025</h3>
+			<div class="award-handys">
+				<Handy clip="award25-interview" r={-2} />
+				<Handy clip="reel-award-training" r={2} />
+			</div>
+		</div>
+	</dialog>
 </section>
+
+<script>
+	import { tonAus } from '../scripts/videos';
+	const dialog = document.querySelector<HTMLDialogElement>('dialog.award')!;
+	document.querySelector('#wir .pokal')!.addEventListener('click', () => dialog.showModal());
+	dialog.querySelector('.zu')!.addEventListener('click', () => dialog.close());
+	// Klick neben den Inhalt schließt
+	dialog.addEventListener('click', (e) => e.target === dialog && dialog.close());
+	dialog.addEventListener('close', () => {
+		tonAus();
+		dialog.querySelectorAll('video').forEach((v) => v.pause());
+	});
+</script>
 
 <style>
 	.raster {
@@ -151,8 +180,82 @@ const sticker = [
 		transform: rotate(-10deg);
 		transition: transform 0.3s cubic-bezier(0.3, 1.8, 0.5, 1);
 	}
-	.pokal:hover {
+	.pokal {
+		font: inherit;
+		cursor: pointer;
+		padding: 0;
+	}
+	.pokal:hover,
+	.pokal:focus-visible {
 		transform: rotate(0) scale(1.08);
+	}
+	.pokal-play {
+		margin-top: 4px;
+		font-size: clamp(0.6rem, 1.6vw, 0.75rem);
+		font-weight: 800;
+		text-transform: uppercase;
+		padding: 0.15em 0.6em;
+		border-radius: 999px;
+		background: var(--tinte);
+		color: var(--sonne);
+	}
+	.crew {
+		width: 170px;
+		margin: 40px auto 0;
+	}
+	@media (min-width: 900px) {
+		.crew {
+			position: absolute;
+			right: -64px;
+			bottom: -96px;
+			width: 150px;
+			margin: 0;
+		}
+	}
+	.award {
+		width: min(640px, calc(100vw - 32px));
+		max-height: calc(100dvh - 32px);
+		padding: 0;
+		border: 3px solid var(--tinte);
+		border-radius: 24px;
+		background: var(--nacht-2);
+		color: var(--papier);
+		box-shadow: 8px 8px 0 var(--sonne);
+	}
+	.award::backdrop {
+		background: rgb(10 6 12 / 0.8);
+	}
+	.award-innen {
+		position: relative;
+		padding: 24px clamp(16px, 4vw, 32px) 32px;
+	}
+	.award h3 {
+		margin: 0 48px 24px 0;
+		font-family: var(--display);
+		font-weight: 400;
+		text-transform: uppercase;
+		font-size: clamp(1.6rem, 5vw, 2.2rem);
+		line-height: 1.05;
+	}
+	.zu {
+		position: absolute;
+		top: 16px;
+		right: 16px;
+		width: 44px;
+		height: 44px;
+		border-radius: 50%;
+		border: 2px solid var(--tinte);
+		background: var(--papier);
+		color: var(--tinte);
+		font-size: 1.2rem;
+		cursor: pointer;
+	}
+	.award-handys {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: clamp(16px, 4vw, 32px);
+		max-width: 480px;
+		margin: 0 auto;
 	}
 	.pokal-icon {
 		font-size: clamp(1.6rem, 5vw, 2.2rem);

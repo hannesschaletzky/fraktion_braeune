@@ -6,6 +6,8 @@ import sharp from 'sharp';
 import fs from 'node:fs';
 import path from 'node:path';
 
+const IG = 'insta_export/instagram-fraktion_braeune-2026-11-21-sxfKHv2S/media/posts/';
+
 const auswahl = {
 	'2023-timmendorf-1': '2023_Timmendorf/@justus.fotos-20230902-DSC04185.jpg',
 	'2023-timmendorf-2': '2023_Timmendorf/@justus.fotos-20230902-DSC09514.jpg',
@@ -41,6 +43,28 @@ const auswahl = {
 	'choreo-berlin-eric': '2026_Berlin/78db66b7-9e3d-473a-bfb5-430a25c62850.JPG',
 	'choreo-berlin-toursieg': '2026_Berlin/e48435cb-1dec-4fc0-a437-494fc15f4b29.JPG',
 	'choreo-hamburg-legends': '2026_Elite_Hamburg/pwa202608094391.jpg',
+
+	// Aus unseren Instagram-Posts: wenn möglich das Original aus dem Rohmaterial (volle Auflösung, Fotograf im
+	// Dateinamen), sonst das Bild aus dem Export (1440 px). Zugeordnet per Bildvergleich.
+	'choreo-2024-aufgehts': IG + '18029473928326024.jpg',
+	'choreo-2025-koenig': 'shared_album_apple/IMG_6084.jpeg',
+	'choreo-2025-pott': IG + '17967075758880785.jpg',
+	'choreo-2025-pott-2': 'shared_album_apple/IMG_6104.jpeg',
+	'choreo-2025-bayern': 'shared_album_apple/@justus.fotos-20250713-DSC05995.jpeg',
+	'choreo-2025-brenn': 'shared_album_apple/BEC0DC11-73A3-45DF-9FC4-EB0E706B5F5F.jpeg',
+	'choreo-2025-baerenhorde': 'shared_album_apple/@justus.fotos-20250816-DSC06336.jpeg',
+	'choreo-2025-regieren': 'shared_album_apple/@justus.fotos-20250823-DSC01385.jpeg',
+	'choreo-2026-fuenf': IG + '17901404775450818.jpg',
+	'choreo-2026-elitesieg': IG + '18406589911087258.jpg',
+	'2024-muenchen-1': IG + '17931735692903343.jpg',
+	'2024-muenchen-2': IG + '18045148345876955.jpg',
+	'2025-duesseldorf-1': IG + '17936489360899116.jpg',
+	'2025-duesseldorf-2': IG + '18060262784323720.jpg',
+	'2025-muenchen-1': 'shared_album_apple/@kevinmtg.fotos_MUC2-00586-557.jpeg',
+	'2025-muenchen-2': 'shared_album_apple/@kevinmtg.fotos_MUC2-00586-455.jpeg',
+	'2025-berlin-1': IG + '18056828822454398.jpg',
+	'2025-berlin-2': IG + '18068541907915654.jpg',
+	'2025-berlin-3': 'shared_album_apple/@kevinmtg.fotos-_DSC4617.jpeg',
 };
 
 const ziel = 'src/assets/fotos';

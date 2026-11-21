@@ -1,0 +1,79 @@
+/* Bedienelemente aller Videos (Fernseher und Handys), gesteuert von src/scripts/videos.ts */
+[data-spieler] .schirm {
+	position: relative;
+	overflow: hidden;
+	background: #000;
+	cursor: pointer;
+}
+[data-spieler] video {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+[data-spieler] video:fullscreen {
+	object-fit: contain;
+	background: #000;
+}
+[data-spieler] .pausezeichen {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	display: grid;
+	place-items: center;
+	font-size: 3rem;
+	color: var(--papier);
+	text-shadow: 0 2px 12px rgb(0 0 0 / 0.8);
+	background: rgb(0 0 0 / 0.35);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.2s;
+}
+[data-spieler].pause .pausezeichen {
+	opacity: 1;
+}
+[data-spieler] .knoepfe {
+	position: absolute;
+	right: 8px;
+	bottom: 8px;
+	z-index: 2;
+	display: flex;
+	gap: 8px;
+}
+[data-spieler] .ton,
+[data-spieler] .gross {
+	width: 40px;
+	height: 40px;
+	display: grid;
+	place-items: center;
+	padding: 0;
+	border-radius: 50%;
+	border: 2px solid var(--tinte);
+	background: var(--papier);
+	color: var(--tinte);
+	font-size: 1.1rem;
+	cursor: pointer;
+	transition: transform 0.2s cubic-bezier(0.3, 1.8, 0.5, 1);
+}
+[data-spieler] .gross:hover,
+[data-spieler] .ton:hover {
+	transform: scale(1.12);
+}
+[data-spieler] .gross svg {
+	width: 20px;
+	height: 20px;
+}
+[data-spieler].an .ton {
+	background: var(--sonne);
+	animation: wackeln 0.5s ease-in-out infinite alternate;
+}
+@keyframes wackeln {
+	to {
+		transform: rotate(10deg) scale(1.1);
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	[data-spieler].an .ton {
+		animation: none;
+	}
+}

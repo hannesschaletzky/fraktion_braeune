@@ -1,0 +1,96 @@
+---
+// Hochkant-Video im Handy-Rahmen (Stories und Reels). Steuerung: src/scripts/videos.ts
+import '../styles/spieler.css';
+import { clips, type ClipName } from '../data/clips';
+
+interface Props {
+	clip: ClipName;
+	/** Neigung in Grad */
+	r?: number;
+	/** Titel unter dem Handy zeigen */
+	mitTitel?: boolean;
+}
+const { clip: name, r = 0, mitTitel = true } = Astro.props;
+const c = clips[name];
+const titel = mitTitel ? c.titel : undefined;
+---
+
+<figure class="handy" data-spieler style={`--r: ${r}deg`}>
+	<div class="geraet">
+		<div class="schirm">
+			<video
+				src={`/videos/${c.name}.mp4`}
+				data-poster={`/videos/${c.name}.webp`}
+				muted
+				loop
+				playsinline
+				preload="none"
+				aria-label={c.titel ? `${c.titel}: ${c.beschreibung}` : c.beschreibung}
+			></video>
+			<span class="pausezeichen" aria-hidden="true">▶</span>
+			<span class="knoepfe">
+				{c.ton && (
+					<button type="button" class="ton" aria-label={`${c.titel ?? c.beschreibung} mit Ton abspielen`} aria-pressed="false">🔇</button>
+				)}
+				<button type="button" class="gross" aria-label={`${c.titel ?? c.beschreibung} im Vollbild abspielen`}>
+					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+				</button>
+			</span>
+		</div>
+	</div>
+	{titel && <figcaption class="marker">{titel}</figcaption>}
+</figure>
+
+<script>
+	import { spieler } from '../scripts/videos';
+	document.querySelectorAll<HTMLElement>('.handy[data-spieler]').forEach(spieler);
+</script>
+
+<style>
+	.handy {
+		margin: 0;
+		width: 100%;
+		transform: rotate(var(--r));
+		transition: transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1);
+	}
+	.handy:hover,
+	.handy:global(.an) {
+		transform: rotate(0) scale(1.03);
+	}
+	.geraet {
+		position: relative;
+		padding: 7px;
+		border-radius: 26px;
+		background: linear-gradient(160deg, #3a3340, #120d14);
+		border: 3px solid var(--tinte);
+		box-shadow:
+			inset 0 1px 0 rgb(255 255 255 / 0.18),
+			5px 6px 0 var(--tinte);
+	}
+	/* Kamera-Loch */
+	.geraet::before {
+		content: '';
+		position: absolute;
+		top: 14px;
+		left: 50%;
+		z-index: 3;
+		width: 9px;
+		height: 9px;
+		margin-left: -4.5px;
+		border-radius: 50%;
+		background: #000;
+		box-shadow: 0 0 0 2px rgb(255 255 255 / 0.08);
+		pointer-events: none;
+	}
+	.schirm {
+		aspect-ratio: 9 / 16;
+		border-radius: 19px;
+	}
+	figcaption {
+		margin-top: 12px;
+		font-size: 1.05rem;
+		line-height: 1.2;
+		text-align: center;
+		overflow-wrap: anywhere;
+	}
+</style>

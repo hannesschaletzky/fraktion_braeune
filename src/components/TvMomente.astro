@@ -1,171 +1,102 @@
 ---
-const clips = [
-	{ name: 'friesenjung', titel: 'Friesenjung', kanal: 1 },
-	{ name: 'dancecam', titel: 'Dance Cam', kanal: 2 },
-	{ name: 'taube', titel: 'Die Taube', kanal: 3 },
-	{ name: 'biertaufe', titel: 'Biertaufe', kanal: 4 },
-	{ name: 'harlemshake', titel: 'Harlem Shake', kanal: 5 },
-	{ name: 'aufmpferd', titel: 'Aufm Pferd', kanal: 6 },
-];
+// Ein Fernseher mit Senderwahl: Mitschnitte aus dem Livestream. Steuerung: src/scripts/videos.ts
+import '../styles/spieler.css';
+import { sender } from '../data/clips';
+
+const nr = (i: number) => String(i + 1).padStart(2, '0');
+const erster = sender[0];
 ---
 
 <section class="abschnitt tv" id="tv">
 	<div class="wrap">
 		<h2>Fanblock <span class="live">im TV</span></h2>
-		<p class="einleitung">Timmendorf 2023: Die Regie hat schnell gemerkt, wo die Party ist. Tipp aufs Bild hält an, 🔇 macht Ton an, das Eck-Symbol Vollbild.</p>
+		<p class="einleitung">Die Regie hat schnell gemerkt, wo die Party ist. Sender wählen, Tipp aufs Bild hält an, 🔇 macht Ton an.</p>
 
-		<ul class="geraete" role="list">
-			{clips.map((c, i) => (
-				<li class="geraet" style={`--r: ${[-2, 1.5, -1, 2, -1.5, 1][i]}deg`}>
-					<div class="gehaeuse">
-						<div class="schirm">
-							<video
-								src={`/videos/${c.name}.mp4`}
-								data-poster={`/videos/${c.name}.webp`}
-								muted
-								loop
-								playsinline
-								preload="none"
-								aria-label={c.titel}
-							></video>
-							<span class="kanal" aria-hidden="true">CH {String(c.kanal).padStart(2, '0')}</span>
-							<span class="pausezeichen" aria-hidden="true">▶</span>
-							<button type="button" class="ton" aria-label={`${c.titel} mit Ton abspielen`} aria-pressed="false">🔇</button>
-							<button type="button" class="gross" aria-label={`${c.titel} im Vollbild abspielen`}>
-								<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
-							</button>
-						</div>
-						<div class="regler" aria-hidden="true"><i></i><i></i></div>
-					</div>
-					<p class="titel marker">{c.titel}</p>
+		<div class="fernseher" data-spieler data-kanal="0">
+			<div class="gehaeuse">
+				<div class="schirm">
+					<video
+						src={`/videos/${erster.name}.mp4`}
+						data-poster={`/videos/${erster.name}.webp`}
+						muted
+						loop
+						playsinline
+						preload="none"
+						aria-label={`${erster.titel}, ${erster.wann}`}
+					></video>
+					<span class="rauschen" aria-hidden="true"></span>
+					<span class="kanal" aria-hidden="true">CH {nr(0)}</span>
+					<span class="pausezeichen" aria-hidden="true">▶</span>
+					<span class="knoepfe">
+						<button type="button" class="ton" aria-label="Mit Ton abspielen" aria-pressed="false">🔇</button>
+						<button type="button" class="gross" aria-label="Im Vollbild abspielen">
+							<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+						</button>
+					</span>
+				</div>
+				<div class="bedienung">
+					<p class="anzeige" aria-live="polite"><span class="nur-sr">Sender </span><span class="nummer">{nr(0)}</span></p>
+					<button type="button" class="hoch" aria-label="Nächster Sender">▲</button>
+					<button type="button" class="runter" aria-label="Vorheriger Sender">▼</button>
+					<i class="regler" aria-hidden="true"></i>
+					<i class="regler" aria-hidden="true"></i>
+				</div>
+			</div>
+			<div class="fuesse" aria-hidden="true"><i></i><i></i></div>
+		</div>
+
+		<ol class="programm" role="list" aria-label="Programm">
+			{sender.map((s, i) => (
+				<li>
+					<button type="button" data-nr={i} aria-current={i === 0 ? 'true' : undefined}>
+						<span class="pnr">{nr(i)}</span>
+						<span class="ptitel">{s.titel}</span>
+						<span class="pwann">{s.wann}</span>
+					</button>
 				</li>
 			))}
-		</ul>
+		</ol>
 		<p class="quelle">Mitschnitte aus dem Livestream der German Beach Tour.</p>
 	</div>
 </section>
 
 <script>
-	import { ruhigGewuenscht } from '../scripts/bewegung';
+	import { spieler, quelle, mitTon } from '../scripts/videos';
+	import { sender } from '../data/clips';
 
-	const geraete = [...document.querySelectorAll<HTMLElement>('.tv .geraet')];
-	const videos = geraete.map((g) => g.querySelector('video')!);
-	const ruhig = ruhigGewuenscht();
-	// Von Hand angehaltene Clips laufen nicht von selbst wieder los
-	const angehalten = new WeakSet<HTMLVideoElement>();
+	const tv = document.querySelector<HTMLElement>('.fernseher')!;
+	const video = tv.querySelector('video')!;
+	const knoepfe = [...document.querySelectorAll<HTMLButtonElement>('.programm button')];
+	const nr = (i: number) => String(i + 1).padStart(2, '0');
+	spieler(tv);
 
-	function weiter(v: HTMLVideoElement) {
-		angehalten.delete(v);
-		geraete[videos.indexOf(v)].classList.remove('pause');
+	function schalten(i: number, ton = false) {
+		i = (i + sender.length) % sender.length;
+		const s = sender[i];
+		tv.dataset.kanal = String(i);
+		quelle(tv, `/videos/${s.name}.mp4`, `/videos/${s.name}.webp`);
+		video.setAttribute('aria-label', `${s.titel}, ${s.wann}`);
+		tv.querySelector('.kanal')!.textContent = `CH ${nr(i)}`;
+		tv.querySelector('.nummer')!.textContent = nr(i);
+		knoepfe.forEach((k, j) => (j === i ? k.setAttribute('aria-current', 'true') : k.removeAttribute('aria-current')));
+		// Kurzes Rauschen beim Umschalten
+		tv.classList.remove('wechsel');
+		void tv.offsetWidth;
+		tv.classList.add('wechsel');
+		if (ton) mitTon(tv);
 	}
+	const jetzt = () => Number(tv.dataset.kanal);
 
-	// Stumm abspielen, solange sichtbar (nicht bei reduzierter Bewegung)
-	const beobachter = new IntersectionObserver(
-		(eintraege) => {
-			for (const e of eintraege) {
-				const v = e.target as HTMLVideoElement;
-				if (e.isIntersecting && !angehalten.has(v) && (!ruhig || !v.muted)) v.play().catch(() => {});
-				else v.pause();
-			}
-		},
-		{ threshold: 0.4 },
-	);
-	videos.forEach((v) => beobachter.observe(v));
+	tv.querySelector('.hoch')!.addEventListener('click', () => schalten(jetzt() + 1));
+	tv.querySelector('.runter')!.addEventListener('click', () => schalten(jetzt() - 1));
+	knoepfe.forEach((k) => k.addEventListener('click', () => schalten(Number(k.dataset.nr))));
 
-	// Vorschaubilder erst laden, wenn die Fernseher in die Nähe kommen (spart beim Seitenaufruf ~500 KB)
-	const vorlader = new IntersectionObserver(
-		(eintraege, beob) => {
-			for (const e of eintraege) {
-				if (!e.isIntersecting) continue;
-				const v = e.target as HTMLVideoElement;
-				v.poster = v.dataset.poster!;
-				beob.unobserve(v);
-			}
-		},
-		{ rootMargin: '800px 0px' },
-	);
-	videos.forEach((v) => vorlader.observe(v));
-
-	function tonAus(ausser?: HTMLVideoElement) {
-		geraete.forEach((g, i) => {
-			const v = videos[i];
-			if (v === ausser) return;
-			// ended zuerst lesen: mit loop = true meldet der Browser nie "ended"
-			const warZuEnde = v.ended;
-			v.muted = true;
-			v.loop = true;
-			if (ruhig) v.pause();
-			else if (warZuEnde && !angehalten.has(v)) v.play().catch(() => {});
-			g.classList.remove('an');
-			const b = g.querySelector('.ton')!;
-			b.textContent = '🔇';
-			b.setAttribute('aria-pressed', 'false');
-		});
-	}
-
-	geraete.forEach((g, i) => {
-		const v = videos[i];
-		const knopf = g.querySelector<HTMLButtonElement>('.ton')!;
-		const umschalten = () => {
-			const an = v.muted;
-			weiter(v);
-			tonAus(v);
-			v.muted = !an;
-			// Mit Ton nur einmal durch: In der Schleife setzt der Kommentar mitten im Satz neu ein
-			v.loop = !an;
-			g.classList.toggle('an', an);
-			knopf.textContent = an ? '🔊' : '🔇';
-			knopf.setAttribute('aria-pressed', String(an));
-			if (an) {
-				v.currentTime = 0;
-				v.play().catch(() => {});
-			} else if (ruhig) v.pause();
-		};
-		knopf.addEventListener('click', (e) => {
-			e.stopPropagation();
-			umschalten();
-		});
-
-		// Vollbild: von vorn, mit Ton und Bedienelementen
-		g.querySelector('.gross')!.addEventListener('click', (e) => {
-			e.stopPropagation();
-			weiter(v);
-			tonAus(v);
-			v.muted = false;
-			v.loop = false;
-			v.controls = true;
-			g.classList.add('an');
-			knopf.textContent = '🔊';
-			knopf.setAttribute('aria-pressed', 'true');
-			v.currentTime = 0;
-			v.play().catch(() => {});
-			const iosVideo = v as HTMLVideoElement & { webkitEnterFullscreen?: () => void };
-			if (v.requestFullscreen) v.requestFullscreen().catch(() => iosVideo.webkitEnterFullscreen?.());
-			else iosVideo.webkitEnterFullscreen?.();
-		});
-		const vollbildEnde = () => {
-			if (document.fullscreenElement === v) return;
-			v.controls = false;
-			tonAus();
-		};
-		// Clip mit Ton ist durch: im Vollbild am Ende stehen lassen, sonst stumm in die Schleife zurück
-		v.addEventListener('ended', () => {
-			if (document.fullscreenElement === v) return;
-			tonAus();
-		});
-		v.addEventListener('fullscreenchange', vollbildEnde);
-		v.addEventListener('webkitendfullscreen', vollbildEnde);
-		// Tipp aufs Bild: anhalten bzw. weiterlaufen lassen
-		g.querySelector('.schirm')!.addEventListener('click', () => {
-			if (v.paused) {
-				weiter(v);
-				v.play().catch(() => {});
-			} else {
-				angehalten.add(v);
-				g.classList.add('pause');
-				v.pause();
-			}
-		});
+	// Aus den Zitaten: Sender einschalten, mit Ton, und hinscrollen
+	document.addEventListener('fb:sender', (e) => {
+		const i = sender.findIndex((s) => s.name === (e as CustomEvent<string>).detail);
+		if (i < 0) return;
+		tv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		schalten(i, true);
 	});
 </script>
 
@@ -194,169 +125,202 @@ const clips = [
 	}
 	.einleitung {
 		max-width: 52ch;
-		margin: 0 0 56px;
+		margin: 0 0 48px;
 		font-size: 1.15rem;
 	}
-	.geraete {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 48px 40px;
-	}
-	@media (min-width: 720px) {
-		.geraete {
-			grid-template-columns: 1fr 1fr;
-		}
-	}
-	.geraet {
-		transform: rotate(var(--r));
-		transition: transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1);
-	}
-	.geraet:hover,
-	.geraet.an {
-		transform: rotate(0) scale(1.03);
+
+	.fernseher {
+		max-width: 860px;
+		margin: 0 auto;
+		transform: rotate(-1deg);
 	}
 	.gehaeuse {
 		display: grid;
-		grid-template-columns: 1fr 34px;
-		gap: 12px;
-		padding: 14px;
-		border-radius: 22px;
+		grid-template-columns: 1fr;
+		gap: 14px;
+		padding: clamp(12px, 2.5vw, 22px);
+		border-radius: 28px;
 		background: linear-gradient(160deg, #7a4b2c, #4a2b18);
 		border: 3px solid var(--tinte);
 		box-shadow:
 			inset 0 2px 0 rgb(255 255 255 / 0.15),
-			6px 8px 0 var(--tinte);
+			8px 10px 0 var(--tinte);
 	}
-	.geraet:nth-child(3n + 2) .gehaeuse { background: linear-gradient(160deg, #e9e2d3, #b9b09d); }
-	.geraet:nth-child(3n + 3) .gehaeuse { background: linear-gradient(160deg, #d84b3a, #8e2418); }
+	@media (min-width: 640px) {
+		.gehaeuse {
+			grid-template-columns: 1fr 64px;
+		}
+	}
 	.schirm {
-		position: relative;
 		aspect-ratio: 16 / 9;
-		border-radius: 18px / 24px;
-		overflow: hidden;
-		background: #000;
+		border-radius: 22px / 30px;
 		border: 3px solid var(--tinte);
-		cursor: pointer;
 	}
 	.schirm::after {
 		content: '';
 		position: absolute;
 		inset: 0;
+		z-index: 1;
 		pointer-events: none;
 		background:
 			repeating-linear-gradient(0deg, rgb(0 0 0 / 0.18) 0 1px, transparent 1px 3px),
 			radial-gradient(ellipse at 50% 50%, transparent 55%, rgb(0 0 0 / 0.55));
 	}
-	video {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		display: block;
-	}
 	.kanal {
 		position: absolute;
-		top: 8px;
-		left: 10px;
-		z-index: 1;
+		top: 10px;
+		left: 14px;
+		z-index: 2;
 		font-family: monospace;
+		font-size: clamp(1rem, 2.4vw, 1.4rem);
 		font-weight: 700;
 		color: #6cff8a;
 		text-shadow: 0 0 6px #2fd47a;
 	}
-	.ton {
+	.rauschen {
 		position: absolute;
-		right: 8px;
-		bottom: 8px;
+		inset: -50%;
 		z-index: 1;
-		width: 40px;
-		height: 40px;
-		border-radius: 50%;
-		border: 2px solid var(--tinte);
-		background: var(--papier);
-		font-size: 1.1rem;
-		cursor: pointer;
-	}
-	.pausezeichen {
-		position: absolute;
-		inset: 0;
-		z-index: 1;
-		display: grid;
-		place-items: center;
-		font-size: 3rem;
-		color: var(--papier);
-		text-shadow: 0 2px 12px rgb(0 0 0 / 0.8);
-		background: rgb(0 0 0 / 0.35);
 		opacity: 0;
 		pointer-events: none;
-		transition: opacity 0.2s;
+		background:
+			repeating-radial-gradient(circle at 17% 32%, #fff 0 1px, #000 1px 3px),
+			repeating-radial-gradient(circle at 73% 61%, #bbb 0 1px, transparent 1px 2px);
 	}
-	.pause .pausezeichen {
-		opacity: 1;
+	.wechsel .rauschen {
+		animation: rauschen 0.35s steps(6) 1;
 	}
-	.gross {
-		position: absolute;
-		right: 56px;
-		bottom: 8px;
-		z-index: 1;
-		width: 40px;
-		height: 40px;
-		display: grid;
-		place-items: center;
-		padding: 0;
+
+	.bedienung {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 12px;
+	}
+	@media (min-width: 640px) {
+		.bedienung {
+			flex-direction: column;
+			justify-content: flex-start;
+			padding-top: 6px;
+		}
+	}
+	.anzeige {
+		margin: 0;
+		padding: 4px 8px;
+		border-radius: 6px;
+		background: #0c140e;
+		border: 2px solid var(--tinte);
+		font-family: monospace;
+		font-size: 1.3rem;
+		font-weight: 700;
+		color: #6cff8a;
+		text-shadow: 0 0 6px #2fd47a;
+	}
+	.hoch,
+	.runter {
+		width: 44px;
+		height: 44px;
 		border-radius: 50%;
 		border: 2px solid var(--tinte);
-		background: var(--papier);
+		background: radial-gradient(circle at 35% 35%, #eee, #888);
 		color: var(--tinte);
+		font-size: 1rem;
 		cursor: pointer;
-		transition: transform 0.2s cubic-bezier(0.3, 1.8, 0.5, 1);
+		box-shadow: 2px 3px 0 var(--tinte);
+		transition: transform 0.15s;
 	}
-	.gross:hover {
-		transform: scale(1.12);
-	}
-	.gross svg {
-		width: 20px;
-		height: 20px;
-	}
-	/* Im Vollbild: ganzes Bild zeigen statt Röhren-Zuschnitt */
-	video:fullscreen {
-		object-fit: contain;
-		background: #000;
-	}
-	.an .ton {
-		background: var(--sonne);
-		animation: wackeln 0.5s ease-in-out infinite alternate;
+	.hoch:active,
+	.runter:active {
+		transform: translate(2px, 3px);
+		box-shadow: none;
 	}
 	.regler {
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-		align-items: center;
-		padding-top: 8px;
-	}
-	.regler i {
-		width: 26px;
-		height: 26px;
+		width: 30px;
+		height: 30px;
 		border-radius: 50%;
 		background: radial-gradient(circle at 35% 35%, #ddd, #555);
 		border: 2px solid var(--tinte);
 	}
-	.titel {
-		margin: 18px 0 0;
-		font-size: 1.5rem;
-		line-height: 1.1;
+	.fuesse {
+		display: flex;
+		justify-content: space-between;
+		padding: 0 18%;
+	}
+	.fuesse i {
+		width: 18px;
+		height: 22px;
+		background: var(--tinte);
+		border-radius: 0 0 6px 6px;
+	}
+
+	.programm {
+		list-style: none;
+		padding: 0;
+		margin: 48px auto 0;
+		max-width: 860px;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+		gap: 10px;
+	}
+	.programm button {
+		width: 100%;
+		display: grid;
+		grid-template-columns: auto 1fr;
+		grid-template-rows: auto auto;
+		column-gap: 12px;
+		align-items: center;
+		text-align: left;
+		padding: 10px 14px;
+		border-radius: 14px;
+		border: 2px solid rgb(248 242 231 / 0.25);
+		background: transparent;
+		color: var(--papier);
+		font: inherit;
+		cursor: pointer;
+		transition: background 0.2s, border-color 0.2s, transform 0.2s;
+	}
+	.programm button:hover {
+		border-color: var(--papier);
+		transform: rotate(-1deg);
+	}
+	.programm button[aria-current='true'] {
+		background: var(--papier);
+		color: var(--tinte);
+		border-color: var(--papier);
+	}
+	.pnr {
+		grid-row: span 2;
+		font-family: monospace;
+		font-weight: 700;
+		font-size: 1.3rem;
+	}
+	.ptitel {
+		font-weight: 800;
+		line-height: 1.2;
+	}
+	.pwann {
+		font-size: 0.85rem;
+		opacity: 0.75;
 	}
 	.quelle {
-		margin: 48px 0 0;
+		margin: 32px auto 0;
+		max-width: 860px;
 		font-size: 0.85rem;
 		opacity: 0.6;
 	}
 	@keyframes blinken {
 		50% { opacity: 0; }
 	}
-	@keyframes wackeln {
-		to { transform: rotate(10deg) scale(1.1); }
+	@keyframes rauschen {
+		0% { opacity: 1; transform: translate(0, 0); }
+		33% { transform: translate(-7%, 5%); }
+		66% { transform: translate(6%, -4%); }
+		100% { opacity: 0; transform: translate(-3%, 2%); }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.wechsel .rauschen,
+		.live::before {
+			animation: none;
+		}
 	}
 </style>

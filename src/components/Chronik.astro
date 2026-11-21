@@ -1,5 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
+import Handy from './Handy.astro';
 import { grossUrl } from '../data/fotos';
 import { stationen } from '../data/stationen';
 
@@ -28,7 +29,7 @@ const neigungen = [-3, 2.5, -1.5, 3.5, -2.5, 1.5];
 						</h3>
 						<p class="motto marker">{s.motto}</p>
 					</header>
-					<div class:list={['collage', `n${Math.min(s.fotos.length, 5)}`]}>
+					{s.fotos.length > 0 && <div class:list={['collage', `n${Math.min(s.fotos.length, 5)}`]}>
 						{s.fotos.map((f, j) => (
 							<button
 								type="button"
@@ -49,7 +50,12 @@ const neigungen = [-3, 2.5, -1.5, 3.5, -2.5, 1.5];
 								/>
 							</button>
 						))}
-					</div>
+					</div>}
+					{s.clips && (
+						<div class="handys">
+							{s.clips.map((c, j) => <div class="handy-platz"><Handy clip={c} r={neigungen[(i + j + 1) % neigungen.length]} /></div>)}
+						</div>
+					)}
 				</li>
 			))}
 		</ol>
@@ -136,6 +142,37 @@ const neigungen = [-3, 2.5, -1.5, 3.5, -2.5, 1.5];
 		box-shadow: 5px 5px 0 var(--gruen);
 	}
 
+	/* Stories aus dem Block: unter Kopf und Fotos über die ganze Breite */
+	.handys {
+		grid-column: 1 / -1;
+		/* auch bei gespiegelten Stationen (Kopf rechts, order: 2) unter Kopf und Fotos */
+		order: 3;
+		display: flex;
+		gap: clamp(16px, 4vw, 40px);
+		justify-content: center;
+		align-items: flex-start;
+	}
+	.handy-platz {
+		flex: 0 1 210px;
+		min-width: 0;
+	}
+	@media (max-width: 600px) {
+		/* Auf dem Handy: seitlich wischen statt winzig nebeneinander */
+		.handys {
+			justify-content: flex-start;
+			overflow-x: auto;
+			scroll-snap-type: x mandatory;
+			margin: 0 -16px;
+			padding: 8px 16px 16px;
+		}
+		.handy-platz {
+			flex: 0 0 58vw;
+			scroll-snap-align: center;
+		}
+		.handy-platz:only-child {
+			margin: 0 auto;
+		}
+	}
 	.collage {
 		display: grid;
 		grid-template-columns: repeat(6, 1fr);

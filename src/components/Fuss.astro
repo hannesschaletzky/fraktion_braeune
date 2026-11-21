@@ -19,6 +19,10 @@ const fotografen = [...new Set(Object.values(credits).filter((c): c is string =>
 			))}German Beach Tour und Freund:innen. Danke! 💛
 		</p>
 		<p class="klein">Gemacht mit Liebe und Lichtschutzfaktor 50 · EST. 2021</p>
+		<p class="macher">
+			Website gebaut von <strong>Hannes Schaletzky</strong> ·
+			<a href="https://github.com/hannesschaletzky/fraktion_braeune" target="_blank" rel="noopener noreferrer">Code auf GitHub</a>
+		</p>
 	</div>
 </footer>
 
@@ -73,5 +77,16 @@ const fotografen = [...new Set(Object.values(credits).filter((c): c is string =>
 		margin: 16px 0 0;
 		font-family: var(--marker);
 		opacity: 0.7;
+	}
+	.macher {
+		margin: 28px 0 0;
+		font-size: 0.9rem;
+		opacity: 0.75;
+	}
+	.macher a {
+		text-underline-offset: 3px;
+	}
+	.macher a:hover {
+		color: var(--sonne);
 	}
 </style>

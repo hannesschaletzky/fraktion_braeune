@@ -1,5 +1,6 @@
 import aufGehts from '../assets/1.jpg';
 import { foto, type Foto } from './fotos';
+import type { ClipName } from './clips';
 
 export interface Choreo {
 	jahr: number;
@@ -10,9 +11,11 @@ export interface Choreo {
 	/** Was dazugehörte, als kurze Schlagworte */
 	zutaten: string[];
 	fotos: Foto[];
+	/** Videos aus Stories und Reels */
+	clips?: ClipName[];
 }
 
-// Neueste zuerst
+// Neueste zuerst. Fotos aus unseren Posts bzw. dem Rohmaterial, Clips aus unseren Stories und Reels.
 export const choreos: Choreo[] = [
 	{
 		jahr: 2026,
@@ -20,17 +23,35 @@ export const choreos: Choreo[] = [
 		titel: 'Jetzt brennt der Pott',
 		zutaten: ['Banner mit Förderturm', 'Pyro-Wand'],
 		fotos: [foto('2026-dortmund-1', 'Pyro-Wand vor dem Banner „Jetzt brennt der Pott“')],
+		clips: ['dortmund26-brennt', 'reel-dortmund-pov'],
+	},
+	{
+		jahr: 2026,
+		ort: 'Hamburg',
+		zusatz: 'Elite16',
+		titel: 'Elite Sieg',
+		zutaten: ['Banner', 'Fackeln'],
+		fotos: [foto('choreo-2026-elitesieg', 'Banner „Elite Sieg“ zwischen Fackeln und Rauch')],
 	},
 	{
 		jahr: 2026,
 		ort: 'Hamburg',
 		zusatz: 'Elite16',
 		titel: 'Living Legends',
-		zutaten: ['Banner', 'Norge-Fahne mit Wikingerhelm', 'Fackeln'],
+		zutaten: ['Unsere erste Choreo für ein internationales Team', 'Norge-Fahne mit Wikingerhelm', 'Fackeln'],
 		fotos: [
 			foto('choreo-hamburg-legends', 'Banner „Living Legends“ und Norge-Fahne hinter rotem Rauch'),
 			foto('2026-hamburg-2', 'Norge-Fahne mit Wikingerhelm über der Bande'),
 		],
+		clips: ['hamburg26-legends'],
+	},
+	{
+		jahr: 2026,
+		ort: 'Berlin',
+		titel: 'Fünf Jahre Fraktion Bräune',
+		zutaten: ['Unser Lieblingsbanner, recycelt', 'Fackeln'],
+		fotos: [foto('choreo-2026-fuenf', 'Fackeln rund um das Fraktion-Banner auf dem Sand bei Nacht')],
+		clips: ['reel-choreo-bts', 'berlin26-pyrobts'],
 	},
 	{
 		jahr: 2026,
@@ -55,6 +76,7 @@ export const choreos: Choreo[] = [
 			foto('2025-timmendorf-1', 'Grüner Rauch über der Choreo „33 Jahre – Danke Timmendorf – One Last Dance“'),
 			foto('2025-timmendorf-3', 'Das „33 Jahre“-Banner wird über die Tribüne gezogen, dahinter grüne Tafeln'),
 		],
+		clips: ['timmendorf25-makingof', 'timmendorf25-gruen'],
 	},
 	{
 		jahr: 2025,
@@ -62,6 +84,56 @@ export const choreos: Choreo[] = [
 		titel: 'Auf geht’s, kämpfen und siegen',
 		zutaten: ['Banner', 'Fahnen', 'Fackeln'],
 		fotos: [{ bild: aufGehts, alt: 'Banner „Auf geht’s kämpfen und siegen“, davor zwei Fackeln im Sand', credit: null }],
+		clips: ['timmendorf25-abfahrt'],
+	},
+	{
+		jahr: 2025,
+		ort: 'Berlin',
+		zusatz: 'II',
+		titel: 'Wir regieren die Hauptstadt',
+		zutaten: ['Für die Hauptstadt Beacher', 'Banner', 'Rauch'],
+		fotos: [foto('choreo-2025-regieren', 'Banner „Wir regieren die Hauptstadt – Hauptstadt Beacher“ mit Rauch')],
+	},
+	{
+		jahr: 2025,
+		ort: 'Berlin',
+		zusatz: 'I',
+		titel: 'Die Bärenhorde stürmt das Feld – für den geilsten Club der Welt',
+		zutaten: ['Unsere bislang aufwendigste Choreo', 'Bären-Banner', 'Rauch'],
+		fotos: [foto('choreo-2025-baerenhorde', 'Choreo „Die Bärenhorde stürmt das Feld – für den geilsten Club der Welt“ mit Bären-Banner')],
+	},
+	{
+		jahr: 2025,
+		ort: 'Berlin',
+		zusatz: 'I',
+		titel: 'Wir brenn’ für euch – aus BER, für BER',
+		zutaten: ['Bären-Banner', 'Fackeln'],
+		fotos: [foto('choreo-2025-brenn', 'Banner „Wir brenn’ für euch“ und „Fraktion Bräune aus BER – für BER“ mit Fackeln')],
+		clips: ['berlin25-pyro'],
+	},
+	{
+		jahr: 2025,
+		ort: 'München',
+		titel: 'Wir sind eure Hauptstadt – ihr Bayern!',
+		zutaten: ['Banner', 'Rauch'],
+		fotos: [foto('choreo-2025-bayern', 'Banner „Wir sind eure Hauptstadt – ihr Bayern!“ an der Bande')],
+	},
+	{
+		jahr: 2025,
+		ort: 'Düsseldorf',
+		titel: 'Unser Pott hat richtig Dampf',
+		zutaten: ['Banner', 'Blauer Rauch'],
+		fotos: [
+			foto('choreo-2025-pott', 'Banner „Unser Pott hat richtig Dampf“ mit blauem Rauch'),
+			foto('choreo-2025-pott-2', 'Banner „Unser Pott dampft immer noch“ an der Bande'),
+		],
+	},
+	{
+		jahr: 2025,
+		ort: 'Düsseldorf',
+		titel: 'Der König ist zurück',
+		zutaten: ['Banner', 'Fahnen', 'Rauch'],
+		fotos: [foto('choreo-2025-koenig', 'Banner „Der König ist zurück“ unter Fahnen und weißem Rauch')],
 	},
 	{
 		jahr: 2024,
@@ -74,7 +146,7 @@ export const choreos: Choreo[] = [
 		jahr: 2024,
 		ort: 'Timmendorfer Strand',
 		titel: 'Christ · Grüne · Abfaaahrt',
-		zutaten: ['Banner am Oberrang', 'Rauch'],
+		zutaten: ['Side-Court-Choreo', 'Banner am Oberrang', 'Rauch'],
 		fotos: [foto('choreo-2024-abfahrt', 'Banner „Christ · Grüne · Abfaaahrt“ am Oberrang mit orangem Rauch')],
 	},
 	{
@@ -86,6 +158,13 @@ export const choreos: Choreo[] = [
 			foto('choreo-2024-purple', 'Lila Banner „Purple Party“ in der vollen Tribüne'),
 			foto('2024-timmendorf-6', 'Fackeln und lila Rauch im Block'),
 		],
+	},
+	{
+		jahr: 2024,
+		ort: 'München',
+		titel: 'Auf geht’s, kämpfen und siegen',
+		zutaten: ['Banner', 'Grüner Rauch'],
+		fotos: [foto('choreo-2024-aufgehts', 'Banner „Auf geht’s, kämpfen und siegen“ im grünen Rauch')],
 	},
 	{
 		jahr: 2023,
