@@ -184,7 +184,7 @@ export const stationen: Station[] = [
 			foto('2023-hamburg-1', 'Pappschild „Fraktion Bräune“ im Stadion am Rothenbaum'),
 			foto('2023-hamburg-2', 'Das Fraktion-Bräune-Banner auf den leeren Rängen am Rothenbaum'),
 		],
-		clips: ['hamburg23-sverige', 'hamburg23-timmi'],
+		clips: ['hamburg23-sverige'],
 	},
 	{
 		jahr: 2023,

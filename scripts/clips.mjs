@@ -75,7 +75,6 @@ const clips = {
 	'hamburg23gbt-achtelfinale': { teile: [[IG('17969807639235967'), 0, null]], hoch: true, poster: 6 },
 	'hamburg23gbt-sieg': { teile: [[IG('18367444630049570'), 0, null]], hoch: true, poster: 9 },
 	'hamburg23-sverige': { teile: [[IG('18026018026611712'), 0, null]], hoch: true, poster: 7 },
-	'hamburg23-timmi': { teile: [[IG('18002334502978948'), 0, null]], hoch: true, poster: 11 },
 	'berlin23-zustand': { teile: [[IG('17972904869329090'), 0, null]], hoch: true, poster: 12 },
 	'berlin23-richie': { teile: [[IG('18011640775824456'), 0, null]], hoch: true, poster: 7 },
 	'paris24-olympia': { teile: [[IG('18347289610137992'), 0, null]], hoch: true, poster: 13 },

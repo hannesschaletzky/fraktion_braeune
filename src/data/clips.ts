@@ -38,7 +38,6 @@ export const clips = {
 	'hamburg23gbt-achtelfinale': c('hamburg23gbt-achtelfinale', 'Clip der German Beach Tour: mit den Fans ins Achtelfinale', true, 'Mit starkem Support der Fans ins vorletzte Achtelfinale'),
 	'hamburg23gbt-sieg': c('hamburg23gbt-sieg', 'Matchball und Jubel im Block', true, 'Sieg für Eric & King'),
 	'hamburg23-sverige': c('hamburg23-sverige', 'Mit schwedischen Fans im Stadion am Rothenbaum', true, 'Fraktion Bräune wurde zur Fraktion Sverige 🇸🇪'),
-	'hamburg23-timmi': c('hamburg23-timmi', 'Timmi Tornado bekommt die Biertaufe', true, 'Timmi Tornado 🌪️'),
 	'berlin23-zustand': c('berlin23-zustand', 'Zusammenschnitt vom Wochenende in Berlin', true, 'Zustand nach GBT Berlin'),
 	'berlin23-richie': c('berlin23-richie', 'Sprechchor, während einer auf dem Court tanzt', true, 'Richie gönnt'),
 	'paris24-olympia': c('paris24-olympia', 'Jubel im Olympiastadion am Eiffelturm', true, 'Nett hier, wann GBT in Paris?'),
