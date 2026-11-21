@@ -31,6 +31,12 @@ const kanal = (name: string) => String(sender.findIndex((s) => s.name === name) 
 </script>
 
 <style>
+	/* Hintergrund wechselt von Abschnitt zu Abschnitt: hier der hellere */
+	.stimmen {
+		background:
+			radial-gradient(ellipse at 15% 0%, rgb(255 210 63 / 0.1), transparent 55%),
+			var(--nacht-2);
+	}
 	.blasen {
 		list-style: none;
 		padding: 0;
