@@ -149,6 +149,7 @@ export const stationen: Station[] = [
 		ort: 'München',
 		motto: 'München hat richtig geschmeckt.',
 		fotos: [
+			foto('2024-muenchen-sieg', 'Die Sieger knien jubelnd im Sand, dahinter der Block mit dem Fraktion-Bräune-Banner reißt die Arme hoch'),
 			foto('2024-muenchen-1', 'Der Block hinter dem Fraktion-Bräune-Banner in München'),
 			foto('choreo-2024-aufgehts', 'Banner „Auf geht’s, kämpfen und siegen“ im grünen Rauch'),
 			foto('2024-muenchen-2', 'Die Gruppe jubelt an der Bande'),

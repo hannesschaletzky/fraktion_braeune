@@ -68,6 +68,7 @@ const auswahl = {
 	'choreo-2025-regieren': 'shared_album_apple/@justus.fotos-20250823-DSC01385.jpeg',
 	'choreo-2026-fuenf': IG + '17901404775450818.jpg',
 	'choreo-2026-elitesieg': IG + '18406589911087258.jpg',
+	'2024-muenchen-sieg': '2024_München/656dd144-6cee-4caa-90e4-65ad16b58e9c.jpg',
 	'2024-muenchen-1': IG + '17931735692903343.jpg',
 	'2024-muenchen-2': IG + '18045148345876955.jpg',
 	'2025-duesseldorf-1': IG + '17936489360899116.jpg',
