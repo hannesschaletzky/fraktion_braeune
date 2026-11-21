@@ -36,38 +36,31 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 	<main class="wrap liste">
 		{choreos.map((c, i) => (
 			<article id={slug(c)} class:list={['choreo', { gespiegelt: i % 2 === 1 }]} style={`--schatten: ${farben[i % farben.length]}`}>
-				{c.fotos.length === 0 && (
-					<figure class="nachgemalt" style={`--r: ${neigungen[i % neigungen.length]}deg`}>
-						<div class="stoff">
-							<p class="stofftext">{c.titel}</p>
-							<span class="absender bunt" aria-hidden="true">{[...'FRAKTION BRÄUNE'].map((z) => <span>{z}</span>)}</span>
-						</div>
-						<figcaption>Nachgemalt · Foto folgt</figcaption>
-					</figure>
-				)}
-				<div class:list={['fotos', { zwei: c.fotos.length > 1 }]} hidden={c.fotos.length === 0}>
-					{c.fotos.map((f, j) => (
-						<button
-							type="button"
-							class="foto"
-							style={`--r: ${neigungen[(i + j) % neigungen.length]}deg`}
-							data-gross={gross.get(f.bild.src)}
-							data-alt={f.alt}
-							data-credit={f.credit ?? ''}
-							aria-label={`Groß anzeigen: ${f.alt}`}
-						>
-							<Picture src={f.bild} formats={['avif', 'webp']} widths={[480, 800, 1200]} sizes="(min-width: 900px) 600px, 92vw" alt={f.alt} loading={i < 2 ? 'eager' : 'lazy'} />
-						</button>
-					))}
-				</div>
-				<div class="info">
+				<header class="info">
 					<p class="wann">
 						{c.jahr} · {c.ort}{c.zusatz && <span class="zusatz">{c.zusatz}</span>}
 					</p>
-					<h2 class:list={['titel marker', { 'nur-sr': c.fotos.length === 0 }]}>{c.titel}</h2>
+					<h2 class="titel marker">{c.titel}</h2>
 					<ul class="zutaten" role="list">
 						{c.zutaten.map((z) => <li>{z}</li>)}
 					</ul>
+				</header>
+				<div class:list={['medien', { 'mit-handys': c.clips }]}>
+					<div class:list={['fotos', { zwei: c.fotos.length > 1 }]}>
+						{c.fotos.map((f, j) => (
+							<button
+								type="button"
+								class="foto"
+								style={`--r: ${neigungen[(i + j) % neigungen.length]}deg`}
+								data-gross={gross.get(f.bild.src)}
+								data-alt={f.alt}
+								data-credit={f.credit ?? ''}
+								aria-label={`Groß anzeigen: ${f.alt}`}
+							>
+								<Picture src={f.bild} formats={['avif', 'webp']} widths={[480, 800, 1200]} sizes="(min-width: 900px) 600px, 92vw" alt={f.alt} loading={i < 2 ? 'eager' : 'lazy'} />
+							</button>
+						))}
+					</div>
 					{c.clips && (
 						<div class="handys">
 							{c.clips.map((k, j) => <div class="handy-platz"><Handy clip={k} r={neigungen[(i + j + 2) % neigungen.length]} /></div>)}
@@ -130,38 +123,67 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 		color: var(--tinte);
 	}
 
-	.handys {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 24px;
-		margin-top: 28px;
-	}
-	.handy-platz {
-		width: clamp(150px, 40vw, 190px);
-	}
 	.liste {
 		display: grid;
-		gap: clamp(72px, 11vw, 128px);
+		gap: clamp(80px, 12vw, 140px);
 		padding-top: 72px;
 		padding-bottom: 96px;
 	}
+	/* Leserichtung: oben Titel, darunter Fotos und Handys in einer Reihe */
 	.choreo {
 		display: grid;
-		gap: 28px;
-		align-items: center;
+		gap: 32px;
 		scroll-margin-top: 32px;
 	}
-	@media (min-width: 900px) {
-		.choreo {
-			grid-template-columns: 1.25fr 0.75fr;
-			gap: 56px;
+	.gespiegelt .info {
+		justify-self: end;
+		text-align: right;
+	}
+	.gespiegelt .zutaten {
+		justify-content: flex-end;
+	}
+	.medien {
+		display: grid;
+		gap: clamp(28px, 4vw, 48px);
+		align-items: start;
+	}
+	@media (min-width: 760px) {
+		.medien.mit-handys {
+			grid-template-columns: minmax(0, 1fr) auto;
 		}
-		.choreo.gespiegelt {
-			grid-template-columns: 0.75fr 1.25fr;
+		.gespiegelt .medien.mit-handys {
+			grid-template-columns: auto minmax(0, 1fr);
 		}
-		.gespiegelt .fotos,
-		.gespiegelt .nachgemalt {
-			order: 2;
+		.gespiegelt .handys {
+			order: -1;
+		}
+	}
+	/* Ein einzelnes Foto ohne Videos nicht über die ganze Breite ziehen */
+	.medien:not(.mit-handys) .fotos:not(.zwei) {
+		max-width: 760px;
+	}
+	.gespiegelt .medien:not(.mit-handys) .fotos:not(.zwei) {
+		justify-self: end;
+	}
+	.handys {
+		display: flex;
+		gap: 24px;
+		align-items: flex-start;
+	}
+	.handy-platz {
+		width: clamp(150px, 16vw, 190px);
+	}
+	@media (max-width: 759px) {
+		.handys {
+			overflow-x: auto;
+			scroll-snap-type: x mandatory;
+			margin: 0 -16px;
+			padding: 8px 16px 16px;
+		}
+		.handy-platz {
+			flex: 0 0 52vw;
+			width: auto;
+			scroll-snap-align: center;
 		}
 	}
 	.fotos {
@@ -196,74 +218,10 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 	.foto :global(img) {
 		width: 100%;
 		height: auto;
-		max-height: 72vh;
+		max-height: 64vh;
 		object-fit: cover;
 		display: block;
 	}
-	/* Banner ohne Foto: als Stoffbahn nachgemalt */
-	.nachgemalt {
-		margin: 0;
-		transform: rotate(var(--r));
-	}
-	.nachgemalt .stoff {
-		position: relative;
-		aspect-ratio: 3 / 1.15;
-		display: grid;
-		place-items: center;
-		padding: 6% 7%;
-		color: var(--tinte);
-		/* Falten im Stoff */
-		background:
-			linear-gradient(90deg, rgb(0 0 0 / 0.07), transparent 12%, rgb(0 0 0 / 0.05) 30%, transparent 42%, rgb(0 0 0 / 0.06) 63%, transparent 75%, rgb(0 0 0 / 0.08)),
-			linear-gradient(180deg, rgb(255 255 255 / 0.5), transparent 40%, rgb(0 0 0 / 0.05)),
-			var(--papier);
-		box-shadow: 0 18px 40px rgb(0 0 0 / 0.5), 8px 8px 0 var(--schatten);
-		clip-path: polygon(0 2%, 3% 0, 25% 1.5%, 50% 0, 75% 1.5%, 97% 0, 100% 2%, 99.3% 50%, 100% 98%, 97% 100%, 75% 98.5%, 50% 100%, 25% 98.5%, 3% 100%, 0 98%, 0.7% 50%);
-		animation: wehen 6s ease-in-out infinite;
-	}
-	/* Ösen in den Ecken */
-	.nachgemalt .stoff::before,
-	.nachgemalt .stoff::after {
-		content: '';
-		position: absolute;
-		top: 6%;
-		width: 14px;
-		height: 14px;
-		border-radius: 50%;
-		border: 3px solid #9a9a9a;
-		background: var(--nacht);
-	}
-	.nachgemalt .stoff::before { left: 2.5%; }
-	.nachgemalt .stoff::after { right: 2.5%; }
-	.stofftext {
-		margin: 0;
-		font-family: var(--marker);
-		text-transform: uppercase;
-		text-align: center;
-		font-size: clamp(1.5rem, 4.4vw, 3rem);
-		line-height: 1.05;
-		letter-spacing: 0.02em;
-		transform: rotate(-1.5deg);
-	}
-	.absender {
-		position: absolute;
-		right: 4%;
-		bottom: 6%;
-		font-family: var(--marker);
-		font-size: clamp(0.7rem, 1.6vw, 0.95rem);
-		transform: rotate(-3deg);
-	}
-	.nachgemalt figcaption {
-		margin-top: 14px;
-		font-family: var(--marker);
-		font-size: 0.95rem;
-		opacity: 0.6;
-	}
-	@keyframes wehen {
-		0%, 100% { transform: perspective(900px) rotateY(0) skewY(0); }
-		50% { transform: perspective(900px) rotateY(-4deg) skewY(-0.6deg); }
-	}
-
 	.wann {
 		margin: 0;
 		font-weight: 800;
@@ -294,6 +252,7 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 	}
 	.gespiegelt .titel {
 		transform: rotate(1.5deg);
+		box-shadow: -6px 6px 0 var(--schatten);
 	}
 	.zutaten {
 		list-style: none;
