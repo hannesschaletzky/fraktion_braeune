@@ -10,8 +10,11 @@ const R = 'assets/all_recordings/';
 const W = 'assets/ausWhatsApp/';
 const A = 'assets/shared_album_apple/';
 // Instagram-Export: Stories und Reels liegen teils im Export, teils im separat entpackten media/
-const IG = (id) =>
-	[`assets/insta_export/media/other/${id}.mp4`, ...fs.readdirSync('assets/insta_export').filter((d) => d.startsWith('instagram-')).map((d) => `assets/insta_export/${d}/media/other/${id}.mp4`)].find((f) => fs.existsSync(f));
+const IG = (id) => {
+	const treffer = spawnSync('find', ['assets/insta_export', '-name', `${id}.mp4`], { encoding: 'utf8' }).stdout.trim().split('\n')[0];
+	if (!treffer) throw new Error(`Instagram-Video ${id} nicht gefunden`);
+	return treffer;
+};
 
 /**
  * teile: [Datei, Start, Ende] (Ende null = bis Schluss)
@@ -66,6 +69,12 @@ const clips = {
 	'timmendorf24-ericmomme': { teile: [[IG('18240282706274457'), 0, null]], hoch: true, poster: 3 },
 	'kuehlungsborn24-mvp': { teile: [[IG('17914065161892403'), 0, null]], hoch: true, poster: 6 },
 	'kuehlungsborn24-freak': { teile: [[IG('18364660513103923'), 0, null]], hoch: true, poster: 5 },
+	'duesseldorf24-huette': { teile: [[IG('18036237307747065'), 0, null]], hoch: true, poster: 4 },
+	'bremen24-schalala': { teile: [[IG('18033214378841792'), 0, null]], hoch: true, poster: 5 },
+	'hamburg23-sverige': { teile: [[IG('18026018026611712'), 0, null]], hoch: true, poster: 7 },
+	'hamburg23-timmi': { teile: [[IG('18002334502978948'), 0, null]], hoch: true, poster: 11 },
+	'berlin23-zustand': { teile: [[IG('17972904869329090'), 0, null]], hoch: true, poster: 12 },
+	'berlin23-richie': { teile: [[IG('18011640775824456'), 0, null]], hoch: true, poster: 7 },
 	'paris24-olympia': { teile: [[IG('18347289610137992'), 0, null]], hoch: true, poster: 13 },
 	'muenchen26-rudern': { teile: [[IG('18218353558332396'), 0, null]], hoch: true, poster: 11 },
 

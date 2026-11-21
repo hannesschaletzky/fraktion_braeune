@@ -151,6 +151,20 @@ export const stationen: Station[] = [
 		],
 	},
 	{
+		jahr: 2024,
+		ort: 'Bremen',
+		motto: 'Was ein geiler Tag!',
+		fotos: [],
+		clips: ['bremen24-schalala'],
+	},
+	{
+		jahr: 2024,
+		ort: 'Düsseldorf',
+		motto: 'Es geht wieder looooos!',
+		fotos: [foto('2024-duesseldorf-1', 'Drei aus der Gruppe mit dem Pappschild „Fraktion Bräune“ und den neuen Shirts auf der Tribüne')],
+		clips: ['duesseldorf24-huette'],
+	},
+	{
 		jahr: 2023,
 		ort: 'Timmendorfer Strand',
 		motto: 'Wer hätte gedacht, dass aus ein paar Freunden … sowas unfassbar Geiles entsteht?',
@@ -159,6 +173,39 @@ export const stationen: Station[] = [
 			foto('2023-timmendorf-1', 'Fans oben ohne singen mit Fahne und Schildern auf der Tribüne'),
 			foto('2023-timmendorf-3', 'Drei Fans oben ohne jubeln an der Bande'),
 			foto('2023-timmendorf-4', 'Selbstgemalte Schilder wie „Ballern“ über dem Banner'),
+		],
+	},
+	{
+		jahr: 2023,
+		ort: 'Hamburg',
+		zusatz: 'Elite16',
+		motto: 'Fraktion Bräune wurde zur Fraktion Sverige 🇸🇪',
+		fotos: [
+			foto('2023-hamburg-1', 'Pappschild „Fraktion Bräune“ im Stadion am Rothenbaum'),
+			foto('2023-hamburg-2', 'Das Fraktion-Bräune-Banner auf den leeren Rängen am Rothenbaum'),
+		],
+		clips: ['hamburg23-sverige', 'hamburg23-timmi'],
+	},
+	{
+		jahr: 2023,
+		ort: 'Berlin',
+		motto: 'Zustand nach GBT Berlin: Stimmen im Sparmodus, Ohren taub, Bock auf Timmendorf!',
+		fotos: [
+			foto('2023-berlin-1', 'Der Block jubelt hinter dem Banner „Fraktion Bräune“'),
+			foto('2023-berlin-2', 'Volle Tribüne, alle reißen die Arme hoch'),
+			foto('2023-berlin-3', 'Ein Spieler vor dem Block mit hochgehaltenen Bewertungsschildern'),
+			foto('2023-berlin-4', 'Selbstgemalte Pappschilder „Fraktion Bräune“ im Block'),
+		],
+		clips: ['berlin23-zustand', 'berlin23-richie'],
+	},
+	{
+		jahr: 2022,
+		ort: 'Timmendorfer Strand',
+		motto: 'Hallooo ihr da drüüübeeen ✌🏼❤️',
+		fotos: [
+			foto('2022-timmendorf-1', 'Fans mit Pappschildern wie „Ball“ auf der Tribüne'),
+			foto('2022-timmendorf-2', 'Fans halten Schilder „Out“ und „10“ hoch'),
+			foto('2022-timmendorf-3', 'Fans mit Fahne und Schildern auf der Tribüne'),
 		],
 	},
 ];
