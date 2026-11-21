@@ -79,18 +79,19 @@ export interface Sender {
 	wann: string;
 }
 
+// Neueste zuerst, wie die Stationen
 export const sender: Sender[] = [
-	{ name: 'friesenjung', titel: 'Friesenjung', wann: 'Timmendorf 2023' },
-	{ name: 'dancecam', titel: 'Dance Cam', wann: 'Timmendorf 2023' },
-	{ name: 'taube', titel: 'Die Taube', wann: 'Timmendorf 2023' },
-	{ name: 'biertaufe', titel: 'Biertaufe', wann: 'Timmendorf 2023' },
-	{ name: 'harlemshake', titel: 'Harlem Shake', wann: 'Timmendorf 2023' },
-	{ name: 'aufmpferd', titel: 'Aufm Pferd', wann: 'Timmendorf 2023' },
+	{ name: 'hamburg26-elitesieg', titel: 'Elite-Sieg', wann: 'Hamburg 2026' },
+	{ name: 'hamburg26-bilder', titel: 'Schaut euch diese Bilder an', wann: 'Hamburg 2026' },
+	{ name: 'muenchen24-traum', titel: 'Riesenbanner', wann: 'München 2024' },
 	{ name: 'duesseldorf24-zuendeln', titel: 'Schon wieder am Zündeln', wann: 'Düsseldorf 2024' },
 	{ name: 'duesseldorf24-shirts', titel: 'Fan-Shirts', wann: 'Düsseldorf 2024' },
-	{ name: 'muenchen24-traum', titel: 'Riesenbanner', wann: 'München 2024' },
-	{ name: 'hamburg26-bilder', titel: 'Schaut euch diese Bilder an', wann: 'Hamburg 2026' },
-	{ name: 'hamburg26-elitesieg', titel: 'Elite-Sieg', wann: 'Hamburg 2026' },
+	{ name: 'taube', titel: 'Die Taube', wann: 'Timmendorf 2023' },
+	{ name: 'dancecam', titel: 'Dance Cam', wann: 'Timmendorf 2023' },
+	{ name: 'harlemshake', titel: 'Harlem Shake', wann: 'Timmendorf 2023' },
+	{ name: 'aufmpferd', titel: 'Aufm Pferd', wann: 'Timmendorf 2023' },
+	{ name: 'biertaufe', titel: 'Biertaufe', wann: 'Timmendorf 2023' },
+	{ name: 'friesenjung', titel: 'Friesenjung', wann: 'Timmendorf 2023' },
 ];
 
 /** Was im Livestream über uns gesagt wurde (wörtlich, gekürzt), mit Verweis auf den Sender */
