@@ -5,6 +5,18 @@
 import sharp from 'sharp';
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+
+// Fotograf aus den EXIF-Daten (Artist), wenn er nicht im Dateinamen steht. Braucht exiftool (brew install exiftool).
+const fotografen = { 'Kevin Mattig': 'kevinmtg.fotos', 'Justus Stegemann': 'justus.fotos', 'Christian Schlüter': 'christianschlueter._' };
+function exifFotograf(datei) {
+	try {
+		const name = execFileSync('exiftool', ['-s3', '-Artist', datei], { encoding: 'utf8' }).trim();
+		return fotografen[name] ?? null;
+	} catch {
+		return null;
+	}
+}
 
 const IG = 'insta_export/instagram-fraktion_braeune-2026-11-21-sxfKHv2S/media/posts/';
 
@@ -65,6 +77,10 @@ const auswahl = {
 	'2025-berlin-1': IG + '18056828822454398.jpg',
 	'2025-berlin-2': IG + '18068541907915654.jpg',
 	'2025-berlin-3': 'shared_album_apple/@kevinmtg.fotos-_DSC4617.jpeg',
+	'2024-kuehlungsborn-1': 'shared_album_apple/IMG_9492.jpeg',
+	'2024-kuehlungsborn-2': 'shared_album_apple/IMG_9495.jpeg',
+	'2024-kuehlungsborn-3': 'shared_album_apple/IMG_9497.jpeg',
+	'2024-kuehlungsborn-4': 'shared_album_apple/IMG_9502.jpeg',
 };
 
 const ziel = 'src/assets/fotos';
@@ -80,7 +96,9 @@ for (const [name, quelle] of Object.entries(auswahl)) {
 		.toFile(datei);
 	// Fotograf steht im Dateinamen (@justus.fotos …), GBT_ = Pressefoto der Tour
 	const basis = path.basename(quelle);
-	credits[name] = basis.match(/^@([a-z0-9._]+?)[-_]/i)?.[1]?.replace(/\.$/, '') ?? (basis.startsWith('GBT_') ? 'German Beach Tour' : null);
+	credits[name] =
+		basis.match(/^@([a-z0-9._]+?)[-_]/i)?.[1]?.replace(/\.$/, '') ??
+		(basis.startsWith('GBT_') ? 'German Beach Tour' : exifFotograf(path.join('assets', quelle)));
 	console.log(name, (fs.statSync(datei).size / 1024).toFixed(0), 'KB', credits[name] ?? '');
 }
 fs.writeFileSync(path.join(ziel, 'credits.json'), JSON.stringify(credits, null, '\t') + '\n');

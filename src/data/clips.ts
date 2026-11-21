@@ -1,6 +1,6 @@
 // Videos in public/videos/<name>.mp4 + .webp (geschnitten von scripts/clips.mjs bzw. scripts/videos.sh).
 // titel: unsere eigenen Worte aus der Instagram-Story bzw. dem Reel, wird unter dem Handy angezeigt.
-// ton: false = ohne Tonspur (unterlegte Musik, deren Rechte wir nicht haben)
+// ton: false = ohne Tonspur
 
 export interface Clip {
 	name: string;
@@ -30,20 +30,22 @@ export const clips = {
 	'berlin25-pyro': c('berlin25-pyro', 'Fackeln vor dem Banner „Wir brenn’ für euch“', true),
 	'duesseldorf25-paulies': c('duesseldorf25-paulies', 'Der Block singt „Let’s go Paulies“', true, 'Wir haben euren Rücken 😘'),
 	'timmendorf24-ericmomme': c('timmendorf24-ericmomme', 'Fahnen und Jubel für Eric und Momme', true, 'ERIC & MOMME AUF DIE 1!!!'),
+	'kuehlungsborn24-mvp': c('kuehlungsborn24-mvp', 'Der Block singt „MVP“ für Eric Stadie', true, 'MVP oder MVP?'),
+	'kuehlungsborn24-freak': c('kuehlungsborn24-freak', 'Sprechchor für Daniel Kirchner und Lui Wüst', true, 'Let’s goooooo 😍'),
 	'paris24-olympia': c('paris24-olympia', 'Jubel im Olympiastadion am Eiffelturm', true, 'Nett hier, wann GBT in Paris?'),
 	'timmendorf25-fackel': c('timmendorf25-fackel', 'Fackel im Block in Timmendorf', true),
 	'timmendorf25-fahne': c('timmendorf25-fahne', 'Fahne über dem Block in Timmendorf', true),
 
 	// Choreos
 	'timmendorf25-makingof': c('timmendorf25-makingof', 'Die Choreo „33 Jahre“ wird gemalt', true, 'Making-of'),
-	'timmendorf25-gruen': c('timmendorf25-gruen', 'Grüner Rauch über der Choreo', false, 'Jetzt das Nächste'),
-	'timmendorf25-abfahrt': c('timmendorf25-abfahrt', 'Fackeln vor dem Banner „Auf geht’s, kämpfen und siegen“', false, 'Abfahrt 🔥'),
-	'reel-choreo-bts': c('reel-choreo-bts', 'Hinter den Kulissen der Choreo zum fünfjährigen Jubiläum', false, 'Behind the scenes'),
-	'reel-dortmund-pov': c('reel-dortmund-pov', 'Mitten in der Choreo in Dortmund, mit Stimmen aus dem Block', false, 'POV: du bist bei der größten Beachvolleyball-Choreo dabei'),
+	'timmendorf25-gruen': c('timmendorf25-gruen', 'Grüner Rauch über der Choreo', true, 'Jetzt das Nächste'),
+	'timmendorf25-abfahrt': c('timmendorf25-abfahrt', 'Fackeln vor dem Banner „Auf geht’s, kämpfen und siegen“', true, 'Abfahrt 🔥'),
+	'reel-choreo-bts': c('reel-choreo-bts', 'Hinter den Kulissen der Choreo zum fünfjährigen Jubiläum', true, 'Behind the scenes'),
+	'reel-dortmund-pov': c('reel-dortmund-pov', 'Mitten in der Choreo in Dortmund, mit Stimmen aus dem Block', true, 'POV: du bist bei der größten Beachvolleyball-Choreo dabei'),
 
 	// Wer wir sind, Award
-	'reel-crew': c('reel-crew', 'Die Crew stellt sich vor, mit Namen und Aufgaben', false, 'Meet the Crew'),
-	'reel-award-training': c('reel-award-training', 'Morgens Tanz üben, abends auf der Award-Bühne', false, 'Hartes Training zahlt sich aus'),
+	'reel-crew': c('reel-crew', 'Die Crew stellt sich vor, mit Namen und Aufgaben', true, 'Meet the Crew'),
+	'reel-award-training': c('reel-award-training', 'Morgens Tanz üben, abends auf der Award-Bühne', true, 'Hartes Training zahlt sich aus'),
 	'award25-interview': c('award25-interview', 'Interview auf der Bühne der GBT Awards 2025', true, 'Auf der Bühne'),
 } satisfies Record<string, Clip>;
 

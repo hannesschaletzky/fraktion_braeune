@@ -64,17 +64,19 @@ const clips = {
 	'berlin25-btspyro': { teile: [[IG('18015423290717085'), 0, null]], hoch: true, poster: 2 },
 	'duesseldorf25-paulies': { teile: [[IG('18195162445308395'), 0, null]], hoch: true, poster: 3 },
 	'timmendorf24-ericmomme': { teile: [[IG('18240282706274457'), 0, null]], hoch: true, poster: 3 },
+	'kuehlungsborn24-mvp': { teile: [[IG('17914065161892403'), 0, null]], hoch: true, poster: 6 },
+	'kuehlungsborn24-freak': { teile: [[IG('18364660513103923'), 0, null]], hoch: true, poster: 5 },
 	'paris24-olympia': { teile: [[IG('18347289610137992'), 0, null]], hoch: true, poster: 13 },
 	'muenchen26-rudern': { teile: [[IG('18218353558332396'), 0, null]], hoch: true, poster: 11 },
 
-	// Reels und Stories mit unterlegter Musik: nur das Bild
+	// Reels und Stories mit unterlegter Musik
 	'hamburg26-legends': { teile: [[IG('18110183801107532'), 0, null]], hoch: true, poster: 6 },
-	'timmendorf25-abfahrt': { teile: [[IG('18087085723869671'), 0, null]], hoch: true, stumm: true, poster: 6 },
-	'timmendorf25-gruen': { teile: [[IG('18053289710210406'), 0, null]], hoch: true, stumm: true, poster: 3 },
-	'reel-crew': { teile: [[IG('18069536500899792'), 0, null]], hoch: true, stumm: true, poster: 4 },
-	'reel-choreo-bts': { teile: [[IG('17877498645476676'), 0, null]], hoch: true, stumm: true, poster: 38 },
-	'reel-award-training': { teile: [[IG('18136506835439222'), 0, null]], hoch: true, stumm: true, poster: 24 },
-	'reel-dortmund-pov': { teile: [[IG('17887438701612901'), 0, null]], hoch: true, stumm: true, poster: 40 },
+	'timmendorf25-abfahrt': { teile: [[IG('18087085723869671'), 0, null]], hoch: true, poster: 6 },
+	'timmendorf25-gruen': { teile: [[IG('18053289710210406'), 0, null]], hoch: true, poster: 3 },
+	'reel-crew': { teile: [[IG('18069536500899792'), 0, null]], hoch: true, poster: 4 },
+	'reel-choreo-bts': { teile: [[IG('17877498645476676'), 0, null]], hoch: true, poster: 38 },
+	'reel-award-training': { teile: [[IG('18136506835439222'), 0, null]], hoch: true, poster: 24 },
+	'reel-dortmund-pov': { teile: [[IG('17887438701612901'), 0, null]], hoch: true, poster: 40 },
 };
 
 function dauer(datei) {

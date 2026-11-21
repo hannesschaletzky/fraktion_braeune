@@ -33,11 +33,11 @@
 	"choreo-berlin-toursieg": null,
 	"choreo-hamburg-legends": null,
 	"choreo-2024-aufgehts": null,
-	"choreo-2025-koenig": null,
+	"choreo-2025-koenig": "justus.fotos",
 	"choreo-2025-pott": null,
-	"choreo-2025-pott-2": null,
+	"choreo-2025-pott-2": "kevinmtg.fotos",
 	"choreo-2025-bayern": "justus.fotos",
-	"choreo-2025-brenn": null,
+	"choreo-2025-brenn": "kevinmtg.fotos",
 	"choreo-2025-baerenhorde": "justus.fotos",
 	"choreo-2025-regieren": "justus.fotos",
 	"choreo-2026-fuenf": null,
@@ -50,5 +50,9 @@
 	"2025-muenchen-2": "kevinmtg.fotos",
 	"2025-berlin-1": null,
 	"2025-berlin-2": null,
-	"2025-berlin-3": "kevinmtg.fotos"
+	"2025-berlin-3": "kevinmtg.fotos",
+	"2024-kuehlungsborn-1": "justus.fotos",
+	"2024-kuehlungsborn-2": "justus.fotos",
+	"2024-kuehlungsborn-3": "justus.fotos",
+	"2024-kuehlungsborn-4": "justus.fotos"
 }

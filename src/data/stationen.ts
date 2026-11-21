@@ -122,6 +122,18 @@ export const stationen: Station[] = [
 	},
 	{
 		jahr: 2024,
+		ort: 'Kühlungsborn',
+		motto: 'Fraktion Bräune im Rentnerparadies 2.0',
+		fotos: [
+			foto('2024-kuehlungsborn-3', 'Zwei Fans mit Fackeln und rotem Rauch vor der Bande'),
+			foto('2024-kuehlungsborn-1', 'Spieler klatschen mit dem jubelnden Block an der Bande ab'),
+			foto('2024-kuehlungsborn-2', 'Drei Fans schreien über dem Fraktion-Bräune-Banner in den Himmel'),
+			foto('2024-kuehlungsborn-4', 'Zwei Spieler umarmen sich vor Fackeln und dem Banner „Wir brenn’ für euch“'),
+		],
+		clips: ['kuehlungsborn24-mvp', 'kuehlungsborn24-freak'],
+	},
+	{
+		jahr: 2024,
 		ort: 'Paris',
 		zusatz: 'Olympia',
 		motto: 'Nett hier, wann GBT in Paris?',
