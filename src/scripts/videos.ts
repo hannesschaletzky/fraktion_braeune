@@ -1,9 +1,12 @@
 // Gemeinsame Steuerung für alle Videos der Seite (Fernseher und Handys):
-// stumm in der Schleife, solange sichtbar; Tipp aufs Bild hält an; 🔇 spielt einmal mit Ton von vorn
+// eine kleine stumme Vorschau-Schleife läuft, solange das Video sichtbar ist (bei Datensparmodus nicht); Tipp aufs Bild hält an; 🔇 spielt einmal mit Ton von vorn
 // (immer nur ein Video mit Ton); Vollbild mit Bedienelementen. Vorschaubilder werden erst kurz vorher geladen.
 import { ruhigGewuenscht } from './bewegung';
 
 const ruhig = ruhigGewuenscht();
+// Datensparmodus (Android/Chrome): nichts von selbst abspielen
+const sparen = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
+const vonSelbst = !ruhig && !sparen;
 const alle: HTMLElement[] = [];
 const sichtbar = new WeakSet<HTMLVideoElement>();
 // Von Hand angehaltene Videos laufen nicht von selbst wieder los
@@ -34,15 +37,22 @@ export function tonAus(ausser?: HTMLElement) {
 		v.muted = true;
 		v.loop = true;
 		v.controls = false;
-		if (ruhig || !sichtbar.has(v)) v.pause();
+		if (!vonSelbst || !sichtbar.has(v)) v.pause();
 		else if (warZuEnde && !angehalten.has(v)) v.play().catch(() => {});
 		anzeigen(s, false);
 	}
 }
 
+/** Vom Vorschau-Schnipsel auf das volle Video wechseln (lädt erst jetzt) */
+function voll(v: HTMLVideoElement) {
+	const src = v.dataset.voll;
+	if (src && !v.currentSrc.endsWith(src)) v.src = src;
+}
+
 /** Mit Ton einmal von vorn abspielen */
 export function mitTon(s: HTMLElement) {
 	const v = vid(s);
+	voll(v);
 	weiter(s);
 	tonAus(s);
 	v.muted = false;
@@ -59,7 +69,7 @@ const beobachter = new IntersectionObserver(
 			const v = e.target as HTMLVideoElement;
 			if (e.isIntersecting) {
 				sichtbar.add(v);
-				if (!angehalten.has(v) && (!ruhig || !v.muted)) v.play().catch(() => {});
+				if (!angehalten.has(v) && (vonSelbst || !v.muted)) v.play().catch(() => {});
 			} else {
 				sichtbar.delete(v);
 				v.pause();
@@ -81,13 +91,17 @@ const vorlader = new IntersectionObserver(
 	{ rootMargin: '800px 0px' },
 );
 
-/** Neue Quelle (Senderwechsel beim Fernseher) */
-export function quelle(s: HTMLElement, src: string, poster: string) {
+/** Neue Quelle (Senderwechsel beim Fernseher): Vorschau-Schleife plus volles Video für später */
+export function quelle(s: HTMLElement, vorschau: string, ganz: string, poster: string) {
 	const v = vid(s);
 	weiter(s);
-	v.src = src;
+	v.muted = true;
+	v.loop = true;
+	anzeigen(s, false);
+	v.dataset.voll = ganz;
+	v.src = vorschau;
 	v.poster = poster;
-	if (sichtbar.has(v) && !ruhig) v.play().catch(() => {});
+	if (sichtbar.has(v) && vonSelbst) v.play().catch(() => {});
 }
 
 /** Ein Abspielgerät verdrahten: Element mit <video>, .schirm, optional .ton und .gross */
@@ -108,6 +122,7 @@ export function spieler(s: HTMLElement) {
 		e.stopPropagation();
 		if (s.querySelector('.ton')) mitTon(s);
 		else {
+			voll(v);
 			weiter(s);
 			v.currentTime = 0;
 			v.play().catch(() => {});

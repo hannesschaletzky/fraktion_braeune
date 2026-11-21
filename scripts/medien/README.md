@@ -1,6 +1,13 @@
 # Medien-Auswertung
 
-Index über das Rohmaterial in `assets/` (nicht im Repo). Die Ergebnisse liegen in `assets/_index/` und
+Index über das Rohmaterial in `assets/`. Der Ordner ist ein eigenes privates Repo
+([fraktion_braeune-assets](https://github.com/hannesschaletzky/fraktion_braeune-assets)), versioniert wird dort nur
+Text (Index, Transkripte, Zuordnungen, Dateiliste), keine Medien. Nach neuer Auswertung dort committen und pushen:
+
+    git -C assets add -A && git -C assets commit -m "…" && git -C assets push
+
+Neue Rohdateien in die Dateiliste aufnehmen: siehe `assets/README.md`.
+ Die Ergebnisse liegen in `assets/_index/` und
 müssen nicht neu berechnet werden; die Skripte hier erzeugen sie bei Bedarf neu. Alle Skripte bekommen
 `assets/_index` als ersten Parameter (`I` unten).
 

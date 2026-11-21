@@ -68,7 +68,7 @@ const clips = {
 	'muenchen26-rudern': { teile: [[IG('18218353558332396'), 0, null]], hoch: true, poster: 11 },
 
 	// Reels und Stories mit unterlegter Musik: nur das Bild
-	'hamburg26-legends': { teile: [[IG('18110183801107532'), 0, null]], hoch: true, stumm: true, poster: 6 },
+	'hamburg26-legends': { teile: [[IG('18110183801107532'), 0, null]], hoch: true, poster: 6 },
 	'timmendorf25-abfahrt': { teile: [[IG('18087085723869671'), 0, null]], hoch: true, stumm: true, poster: 6 },
 	'timmendorf25-gruen': { teile: [[IG('18053289710210406'), 0, null]], hoch: true, stumm: true, poster: 3 },
 	'reel-crew': { teile: [[IG('18069536500899792'), 0, null]], hoch: true, stumm: true, poster: 4 },
@@ -86,6 +86,27 @@ function dauer(datei) {
 async function poster(video, sekunde, ziel) {
 	const png = spawnSync('ffmpeg', ['-nostdin', '-v', 'error', '-ss', String(sekunde), '-i', video, '-frames:v', '1', '-f', 'image2pipe', '-c:v', 'png', '-']).stdout;
 	await sharp(png).resize({ width: 640, withoutEnlargement: true }).webp({ quality: 72 }).toFile(ziel);
+}
+
+// Vorschau-Schleife: 4 s ohne Ton in kleiner Auflösung, läuft automatisch, solange das Video sichtbar ist.
+// Das volle Video lädt erst beim Tippen auf Ton oder Vollbild (spart mobil den Großteil der Daten).
+function vorschau(name, c = {}) {
+	const quelle = `public/videos/${name}.mp4`;
+	const len = dauer(quelle);
+	const L = Math.min(4, len);
+	const start = Math.max(0, Math.min((c.poster ?? 1) - 1.5, len - L));
+	const hoch = c.hoch ?? false;
+	fs.mkdirSync('public/videos/vorschau', { recursive: true });
+	const r = spawnSync('ffmpeg', ['-nostdin', '-v', 'error', '-y', '-ss', String(start), '-t', String(L), '-i', quelle,
+		'-vf', `scale=${hoch ? 320 : 480}:-2,fps=24`, '-an', '-c:v', 'libx264', '-preset', 'slow', '-crf', '32', '-profile:v', 'high',
+		'-pix_fmt', 'yuv420p', '-movflags', '+faststart', '-map_metadata', '-1', `public/videos/vorschau/${name}.mp4`], { encoding: 'utf8' });
+	if (r.status !== 0) console.error(`${name} (Vorschau): FEHLER\n${r.stderr}`);
+}
+
+if (process.argv[2] === '--vorschau') {
+	// Nur Vorschau-Schleifen neu, für alle Videos (auch die aus scripts/videos.sh): node scripts/clips.mjs --vorschau
+	for (const f of fs.readdirSync('public/videos').filter((f) => f.endsWith('.mp4'))) vorschau(f.slice(0, -4), clips[f.slice(0, -4)]);
+	process.exit(0);
 }
 
 if (process.argv[2] === '--poster') {
@@ -134,5 +155,6 @@ for (const [name, c] of Object.entries(clips)) {
 		continue;
 	}
 	await poster(ziel, c.poster ?? 1, `public/videos/${name}.webp`);
+	vorschau(name, c);
 	console.log(`${name}: ${dauer(ziel).toFixed(1)} s, ${Math.round(fs.statSync(ziel).size / 1024)} KB`);
 }

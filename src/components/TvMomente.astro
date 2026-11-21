@@ -16,7 +16,8 @@ const erster = sender[0];
 			<div class="gehaeuse">
 				<div class="schirm">
 					<video
-						src={`/videos/${erster.name}.mp4`}
+						src={`/videos/vorschau/${erster.name}.mp4`}
+						data-voll={`/videos/${erster.name}.mp4`}
 						data-poster={`/videos/${erster.name}.webp`}
 						muted
 						loop
@@ -74,7 +75,7 @@ const erster = sender[0];
 		i = (i + sender.length) % sender.length;
 		const s = sender[i];
 		tv.dataset.kanal = String(i);
-		quelle(tv, `/videos/${s.name}.mp4`, `/videos/${s.name}.webp`);
+		quelle(tv, `/videos/vorschau/${s.name}.mp4`, `/videos/${s.name}.mp4`, `/videos/${s.name}.webp`);
 		video.setAttribute('aria-label', `${s.titel}, ${s.wann}`);
 		tv.querySelector('.kanal')!.textContent = `CH ${nr(i)}`;
 		tv.querySelector('.nummer')!.textContent = nr(i);

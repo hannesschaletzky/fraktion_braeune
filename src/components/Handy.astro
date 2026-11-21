@@ -19,7 +19,8 @@ const titel = mitTitel ? c.titel : undefined;
 	<div class="geraet">
 		<div class="schirm">
 			<video
-				src={`/videos/${c.name}.mp4`}
+				src={`/videos/vorschau/${c.name}.mp4`}
+				data-voll={`/videos/${c.name}.mp4`}
 				data-poster={`/videos/${c.name}.webp`}
 				muted
 				loop
