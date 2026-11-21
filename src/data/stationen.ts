@@ -199,6 +199,13 @@ export const stationen: Station[] = [
 		clips: ['berlin23-zustand', 'berlin23-richie'],
 	},
 	{
+		jahr: 2023,
+		ort: 'Hamburg',
+		motto: '„Verrückte Menschen ❤️“ – Eric Stadie über uns',
+		fotos: [],
+		clips: ['hamburg23gbt-fanclub', 'hamburg23gbt-achtelfinale', 'hamburg23gbt-sieg'],
+	},
+	{
 		jahr: 2022,
 		ort: 'Timmendorfer Strand',
 		motto: 'Hallooo ihr da drüüübeeen ✌🏼❤️',
