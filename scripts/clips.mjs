@@ -81,7 +81,6 @@ const clips = {
 	'muenchen25-atmo': { teile: [[IG('17902616607218159'), 0, null]], hoch: true, poster: 6 },
 	'duesseldorf25-fahnen': { teile: [[IG('18048096161525054'), 0, null]], hoch: true, poster: 4 },
 	'duesseldorf24-tuecher': { teile: [[IG('17973986750705600'), 0, null]], hoch: true, poster: 8 },
-	'bremen24-fahne': { teile: [[IG('18060295423585626'), 0, null]], hoch: true, poster: 3 },
 	'paris24-allez': { teile: [[IG('18343936270136038'), 0, null]], hoch: true, poster: 5 },
 	'muenchen24-nacht': { teile: [[IG('18050077033794473'), 0, null]], hoch: true, poster: 6 },
 	'muenchen24-feuerwerk': { teile: [[IG('18027380147510704'), 0, null]], hoch: true, poster: 4 },
@@ -89,6 +88,7 @@ const clips = {
 	'timmendorf23-gekommen': { teile: [[IG('17922140525775157'), 0, null]], hoch: true, poster: 5 },
 	'hamburg23-support': { teile: [[IG('17989915973488514'), 0, null]], hoch: true, poster: 18 },
 	'timmendorf24-mvp': { teile: [[IG('17934347210913264'), 0, null]], hoch: true, poster: 4 },
+	'bremen24-tim': { teile: [['assets/2024_Bremen/037d3652-6598-4984-a00e-8222ac1271c0.MP4', 0, null]], hoch: true, poster: 6 },
 	// Eigenes Handyvideo, quer gefilmt: mittig auf Hochkant zugeschnitten
 	'bremen24-jubel': { teile: [['assets/2024_Bremen/b077f5f9-569e-49d1-8416-f6ed5fea1bdb.MP4', 0, null]], crop: '405:720:437:0', hoch: true, poster: 12 },
 	'paris24-olympia': { teile: [[IG('18347289610137992'), 0, null]], hoch: true, poster: 13 },
