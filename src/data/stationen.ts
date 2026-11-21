@@ -94,6 +94,7 @@ export const stationen: Station[] = [
 			foto('2025-muenchen-1', 'Der Block oben ohne mit erhobenen Armen'),
 			foto('2025-muenchen-2', 'Fans jubeln auf der Tribüne in München'),
 		],
+		clips: ['muenchen25-wirauch', 'muenchen25-atmo'],
 	},
 	{
 		jahr: 2025,
@@ -104,7 +105,7 @@ export const stationen: Station[] = [
 			foto('choreo-2025-pott', 'Banner „Unser Pott hat richtig Dampf“ mit blauem Rauch'),
 			foto('2025-duesseldorf-2', 'Die Gruppe auf der Tribüne in Düsseldorf'),
 		],
-		clips: ['duesseldorf25-paulies'],
+		clips: ['duesseldorf25-paulies', 'duesseldorf25-fahnen'],
 	},
 	{
 		jahr: 2024,
@@ -118,7 +119,7 @@ export const stationen: Station[] = [
 			foto('2024-timmendorf-5', 'Gruppenfoto mit goldenen Ketten auf der Tribüne'),
 			foto('2024-timmendorf-4', 'Gelber Rauch und Fahne vor dem Center Court'),
 		],
-		clips: ['timmendorf24-ericmomme'],
+		clips: ['timmendorf24-mvp', 'timmendorf24-ericmomme'],
 	},
 	{
 		jahr: 2024,
@@ -137,8 +138,11 @@ export const stationen: Station[] = [
 		ort: 'Paris',
 		zusatz: 'Olympia',
 		motto: 'Nett hier, wann GBT in Paris?',
-		fotos: [],
-		clips: ['paris24-olympia'],
+		fotos: [
+			foto('2024-paris-1', 'Der Eiffelturm im Abendlicht über dem vollen Beachvolleyball-Stadion'),
+			foto('2024-paris-2', 'Blick von der Tribüne auf den Court und die vollen Ränge'),
+		],
+		clips: ['paris24-olympia', 'paris24-allez', 'paris24-fahnen'],
 	},
 	{
 		jahr: 2024,
@@ -149,20 +153,21 @@ export const stationen: Station[] = [
 			foto('choreo-2024-aufgehts', 'Banner „Auf geht’s, kämpfen und siegen“ im grünen Rauch'),
 			foto('2024-muenchen-2', 'Die Gruppe jubelt an der Bande'),
 		],
+		clips: ['muenchen24-nacht', 'muenchen24-feuerwerk'],
 	},
 	{
 		jahr: 2024,
 		ort: 'Bremen',
 		motto: 'Was ein geiler Tag!',
 		fotos: [],
-		clips: ['bremen24-schalala'],
+		clips: ['bremen24-schalala', 'bremen24-fahne'],
 	},
 	{
 		jahr: 2024,
 		ort: 'Düsseldorf',
 		motto: 'Es geht wieder looooos!',
 		fotos: [foto('2024-duesseldorf-1', 'Drei aus der Gruppe mit dem Pappschild „Fraktion Bräune“ und den neuen Shirts auf der Tribüne')],
-		clips: ['duesseldorf24-huette'],
+		clips: ['duesseldorf24-huette', 'duesseldorf24-tuecher'],
 	},
 	{
 		jahr: 2023,
@@ -174,6 +179,7 @@ export const stationen: Station[] = [
 			foto('2023-timmendorf-3', 'Drei Fans oben ohne jubeln an der Bande'),
 			foto('2023-timmendorf-4', 'Selbstgemalte Schilder wie „Ballern“ über dem Banner'),
 		],
+		clips: ['timmendorf23-trommel', 'timmendorf23-gekommen'],
 	},
 	{
 		jahr: 2023,
@@ -184,7 +190,7 @@ export const stationen: Station[] = [
 			foto('2023-hamburg-1', 'Pappschild „Fraktion Bräune“ im Stadion am Rothenbaum'),
 			foto('2023-hamburg-2', 'Das Fraktion-Bräune-Banner auf den leeren Rängen am Rothenbaum'),
 		],
-		clips: ['hamburg23-sverige'],
+		clips: ['hamburg23-sverige', 'hamburg23-support'],
 	},
 	{
 		jahr: 2023,
