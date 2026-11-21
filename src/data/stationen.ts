@@ -168,7 +168,11 @@ export const stationen: Station[] = [
 		jahr: 2024,
 		ort: 'Düsseldorf',
 		motto: 'Es geht wieder looooos!',
-		fotos: [foto('2024-duesseldorf-1', 'Drei aus der Gruppe mit dem Pappschild „Fraktion Bräune“ und den neuen Shirts auf der Tribüne')],
+		fotos: [
+			foto('2024-duesseldorf-vollgas', 'Choreo „Dieses Jahr wieder Vollgas“ mit Fahnen und rosa Rauch'),
+			foto('2024-duesseldorf-1', 'Drei aus der Gruppe mit dem Pappschild „Fraktion Bräune“ und den neuen Shirts auf der Tribüne'),
+			foto('2024-duesseldorf-court', 'Blick aus dem Block auf den Court in Düsseldorf'),
+		],
 		clips: ['duesseldorf24-huette', 'duesseldorf24-tuecher'],
 	},
 	{

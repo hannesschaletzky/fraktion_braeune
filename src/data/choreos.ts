@@ -167,6 +167,14 @@ export const choreos: Choreo[] = [
 		fotos: [foto('choreo-2024-aufgehts', 'Banner „Auf geht’s, kämpfen und siegen“ im grünen Rauch')],
 	},
 	{
+		jahr: 2024,
+		ort: 'Düsseldorf',
+		titel: 'Dieses Jahr wieder Vollgas',
+		zutaten: ['Banner', 'Fahnen', 'Rosa Rauch'],
+		fotos: [foto('2024-duesseldorf-vollgas', 'Banner „Dieses Jahr wieder Vollgas“ über der Bande, dazu Fahnen und rosa Rauch')],
+		clips: ['duesseldorf24-huette'],
+	},
+	{
 		jahr: 2023,
 		ort: 'Timmendorfer Strand',
 		titel: 'Fraktion Bräune',

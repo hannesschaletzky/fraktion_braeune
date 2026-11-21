@@ -5,6 +5,7 @@
 import sharp from 'sharp';
 import fs from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
 import { execFileSync } from 'node:child_process';
 
 // Fotograf aus den EXIF-Daten (Artist), wenn er nicht im Dateinamen steht. Braucht exiftool (brew install exiftool).
@@ -87,6 +88,8 @@ const auswahl = {
 	'2023-berlin-4': 'shared_album_apple/F97F307F-1B26-43C3-8083-ADE8D282D11B.jpeg',
 	'2023-hamburg-1': 'shared_album_apple/IMG_1958.jpeg',
 	'2023-hamburg-2': 'shared_album_apple/IMG_5836.jpeg',
+	'2024-duesseldorf-vollgas': '2024_Düsseldorf/IMG_8534.jpg',
+	'2024-duesseldorf-court': '2024_Düsseldorf/IMG_8526.HEIC',
 	'2024-duesseldorf-1': IG + '202405/18027707966043960.jpg',
 	'2024-bremen-1': '2024_Bremen/7cf6a9dd-1756-48a7-a7fe-e04f3a721b9a.JPG',
 	'2024-paris-banner': '2024_Paris/IMG_1028.JPG',
@@ -104,7 +107,14 @@ fs.mkdirSync(ziel, { recursive: true });
 const credits = {};
 for (const [name, quelle] of Object.entries(auswahl)) {
 	const datei = path.join(ziel, `${name}.jpg`);
-	await sharp(path.join('assets', quelle))
+	// HEIC (iPhone) kann sharp nicht lesen: vorher mit sips (macOS) nach JPEG wandeln
+	let eingabe = path.join('assets', quelle);
+	if (/\.heic$/i.test(quelle)) {
+		const tmp = path.join(os.tmpdir(), `${name}.jpg`);
+		execFileSync('sips', ['-s', 'format', 'jpeg', eingabe, '--out', tmp], { stdio: 'ignore' });
+		eingabe = tmp;
+	}
+	await sharp(eingabe)
 		.rotate()
 		.resize({ width: 2000, height: 2000, fit: 'inside', withoutEnlargement: true })
 		.jpeg({ quality: 80, mozjpeg: true })
