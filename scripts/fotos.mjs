@@ -71,6 +71,8 @@ export const auswahl = {
 	'2024-muenchen-sieg': '2024_07_München/ordner_656dd144-6cee-4caa-90e4-65ad16b58e9c.jpg',
 	'2024-muenchen-1': '2024_07_München/2024-07-22_08-24_insta-post_17931735692903343.jpg',
 	'2024-muenchen-2': '2024_07_München/2024-07-22_08-24_insta-post_18045148345876955.jpg',
+	'2025-duesseldorf-koenig': '2025_05_Düsseldorf1/2025-05-12_00-10_apple_IMG_6096.jpeg',
+	'2025-duesseldorf-abklatschen': '2025_05_Düsseldorf1/2025-05-12_00-13_apple_IMG_6113 (1).jpeg',
 	'2025-duesseldorf-1': '2025_05_Düsseldorf1/2025-05-13_10-12_insta-post_17936489360899116.jpg',
 	'2025-duesseldorf-2': '2025_05_Düsseldorf1/2025-05-13_10-12_insta-post_18060262784323720.jpg',
 	'2025-muenchen-1': '2025_07_München2/2025-07-14_21-06_apple_@kevinmtg.fotos_MUC2-00586-557.jpeg',

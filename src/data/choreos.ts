@@ -144,7 +144,10 @@ export const choreos: Choreo[] = [
 		stopp: 1,
 		ort: 'Düsseldorf',
 		titel: 'Kniet nieder – der König ist zurück',
-		fotos: [foto('choreo-2025-koenig', 'Banner „Kniet nieder“ und „Der König ist zurück“ unter Fahnen und weißem Rauch')],
+		fotos: [
+			foto('choreo-2025-koenig', 'Banner „Kniet nieder“ und „Der König ist zurück“ unter Fahnen und weißem Rauch'),
+			foto('2025-duesseldorf-koenig', 'Banner „Kniet nieder“ und „Der König ist zurück“ im weißen Rauch, von nah'),
+		],
 	},
 	{
 		jahr: 2024,

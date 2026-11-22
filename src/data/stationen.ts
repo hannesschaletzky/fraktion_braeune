@@ -142,7 +142,10 @@ export const stationen: Station[] = [
 		stopp: 1,
 		motto: 'Und die Fahnen wehen wieder.',
 		fotos: [
+			foto('choreo-2025-koenig', 'Banner „Der König ist zurück“ unter Fahnen und weißem Rauch vor blauem Himmel'),
 			foto('2025-duesseldorf-1', 'Der Block reißt die Arme hoch'),
+			foto('2025-duesseldorf-koenig', 'Banner „Kniet nieder“ und „Der König ist zurück“ im weißen Rauch'),
+			foto('2025-duesseldorf-abklatschen', 'Ein Spieler klatscht an der Bande mit dem Block ab'),
 			foto('choreo-2025-pott', 'Banner „Unser Pott hat richtig Dampf“ mit blauem Rauch'),
 			foto('2025-duesseldorf-2', 'Die Gruppe auf der Tribüne in Düsseldorf'),
 		],
