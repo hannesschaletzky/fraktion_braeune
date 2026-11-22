@@ -1,5 +1,9 @@
 # Medien-Auswertung
 
+> Seit 2026-11-22 gibt es `assets/insta_export/` nicht mehr (alles einsortiert, siehe `assets/README.md`).
+> `parse.py`, `index.py`, `transkribiere.py`, `boegen.py`, `abgleich.mjs` und `einsortieren.mjs --umzug` brauchten
+> den Export; ihre Ergebnisse liegen in `assets/_index/`. Für einen neuen Export müssten sie angepasst werden.
+
 Index über das Rohmaterial in `assets/`. Der Ordner ist ein eigenes privates Repo
 ([fraktion_braeune-assets](https://github.com/hannesschaletzky/fraktion_braeune-assets)), versioniert wird dort nur
 Text (Index, Transkripte, Zuordnungen, Dateiliste), keine Medien. Nach neuer Auswertung dort committen und pushen:
