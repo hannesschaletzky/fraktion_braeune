@@ -60,6 +60,7 @@ export const choreos: Choreo[] = [
 			foto('choreo-2026-brezel', 'Brezel-Fahne über dem Fraktion-Banner vor dem Olympiaturm unter blauem Himmel'),
 			foto('choreo-2026-brezel-2', 'Banner „Zerbrezelt sie!“ im Rauch, dahinter das Netz und der Olympiaturm'),
 			foto('choreo-2026-brezel-3', 'Brezel-Fahne über dem Banner „Zerbrezelt sie!“, davor das Netz'),
+			foto('choreo-2026-brezel-spieler', 'Zwei Spieler drehen sich auf dem Court zur Choreo „Zerbrezelt sie!“ um'),
 		],
 	},
 	{
