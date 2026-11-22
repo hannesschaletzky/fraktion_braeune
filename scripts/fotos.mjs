@@ -87,6 +87,8 @@ export const auswahl = {
 	'2025-berlin-1': '2025_08_Berlin1/2025-08-17_09-41_insta-post_18056828822454398.jpg',
 	'2025-berlin-2': '2025_08_Berlin1/2025-08-17_09-41_insta-post_18068541907915654.jpg',
 	'2025-berlin-3': '2025_08_Berlin1/2025-08-16_18-58_apple_@kevinmtg.fotos-_DSC4617.jpeg',
+	'2022-timmendorf-vollgas': '2022_09_Timmendorf/2022-09-04_18-37_eingang_@justus.fotos-DM-Timmendorf-20220904-A1_01963.jpg',
+	'2022-timmendorf-leidergeil': '2022_09_Timmendorf/2022-09-04_18-39_eingang_@justus.fotos-DM-Timmendorf-20220904-A1_02041.jpg',
 	'2022-timmendorf-1': '2022_09_Timmendorf/2022-09-05_05-54_insta-post_18028380295398860.webp',
 	'2022-timmendorf-2': '2022_09_Timmendorf/2022-09-06_01-15_insta-post_18258280174100227.webp',
 	'2022-timmendorf-3': '2022_09_Timmendorf/2022-09-09_03-32_insta-post_18313085038026286.webp',

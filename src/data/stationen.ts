@@ -297,7 +297,9 @@ export const stationen: Station[] = [
 		ort: 'Timmendorfer Strand',
 		motto: 'Hallooo ihr da drüüübeeen ✌🏼❤️',
 		fotos: [
+			foto('2022-timmendorf-vollgas', 'Der Block winkt, vorne das Pappschild „Heute nochmal Vollgas!“'),
 			foto('2022-timmendorf-1', 'Fans mit Pappschildern wie „Ball“ auf der Tribüne'),
+			foto('2022-timmendorf-leidergeil', 'Pappschilder „Leider geil“ und „Fraktion Bräune“ in der vollen Tribüne'),
 			foto('2022-timmendorf-2', 'Fans halten Schilder „Out“ und „10“ hoch'),
 			foto('2022-timmendorf-3', 'Fans mit Fahne und Schildern auf der Tribüne'),
 		],
