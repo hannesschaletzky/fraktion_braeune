@@ -88,6 +88,7 @@ export const stationen: Station[] = [
 			foto('2026-berlin-2', 'Fans schreien hinter dem Banner mit den bunten Buchstaben'),
 			foto('choreo-berlin-toursieg', 'Schilder „Unser Wunsch: Toursieg“ an der Bande'),
 			foto('2026-berlin2-1', 'Die Spieler kommen an die Bande und klatschen mit dem Block ab'),
+			foto('2026-berlin2-banner', 'Unser Banner „Fraktion Bräune“ über der Bande, davor umarmen sich zwei Spieler'),
 		],
 		clips: ['berlin26-fackelreihe', 'berlin26-fahnen'],
 	},

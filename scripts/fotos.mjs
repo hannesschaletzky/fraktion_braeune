@@ -194,6 +194,7 @@ export const auswahl = {
 	'choreo-2025-lina': '2025_07_München2/2025-07-11_20-20_apple_@justus.fotos-20250711-DSC00589.jpeg',
 	'choreo-2025-toursieg': '2025_07_München2/2025-07-12_18-15_apple_@justus.fotos-20250712-DSC07532.jpeg',
 	'choreo-2024-ben': '2024_07_München/standbild_gute-besserung-ben.jpg',
+	'2026-berlin2-banner': '2026_06_Berlin2/2026-06-13_15-34_eingang_@kevinmtg.fotos_260613-153400__DSC1280.jpg',
 	'2023-berlin-sieg': '2023_08_Berlin/2023-08-13_19-18_eingang_@justus.fotos-20230813-DSC06651.jpg',
 	'2023-berlin-1': '2023_08_Berlin/2023-08-13_15-43_apple_2B1C7E1C-6227-4E7E-B8AB-06363DB59EDE.jpeg',
 	'2023-berlin-2': '2023_08_Berlin/2023-08-13_19-04_apple_0D1828ED-9D1B-42B9-913B-5B8D9BDCBB4B.jpeg',
