@@ -1,5 +1,6 @@
 ---
 // Was im Livestream über uns gesagt wurde. Ein Klick schaltet den Fernseher auf den Mitschnitt (mit Ton).
+import DatumZeile from './DatumZeile.astro';
 import { sender, stimmen } from '../data/clips';
 
 // Jede Blase eine eigene Farbe (MVP lila, Riesenbanner grün, Eltern blau, …). Kommen mehr Zitate dazu als Farben,
@@ -8,6 +9,8 @@ const farben = ['var(--lila)', 'var(--gruen)', 'var(--blau)', 'var(--fackel)', '
 if (stimmen.length > farben.length) throw new Error(`Stimmen: ${stimmen.length} Zitate, aber nur ${farben.length} Farben`);
 const neigung = [-2, 1.5, -1, 2, -1.5, 1];
 const kanal = (name: string) => String(sender.findIndex((s) => s.name === name) + 1).padStart(2, '0');
+// Datum und Ort kommen vom Sender, damit sie überall gleich sind
+const vom = (name: string) => sender.find((s) => s.name === name)!;
 // Zuerst nur so viele Zitate (Handy 3, ab Tablet 4), danach schaut die nächste Reihe verblasst hervor
 // und ein Knopf klappt den Rest auf. Die Zahlen stehen auch im CSS unten (nth-child).
 const klappbar = stimmen.length > 3;
@@ -22,7 +25,8 @@ const klappbar = stimmen.length > 3;
 					<blockquote>
 						<p>„{s.text}“</p>
 					</blockquote>
-					<p class="wer">{s.quelle ?? 'Kommentar im Livestream'} · {s.wann}</p>
+					<DatumZeile class="datum" jahr={vom(s.sender).jahr} monat={vom(s.sender).monat} ort={vom(s.sender).ort} />
+					<p class="wer">{s.quelle ?? 'Kommentar im Livestream'}</p>
 					<button type="button" class="hoeren" data-sender={s.sender}>📺 Ausschnitt {Number(kanal(s.sender))}</button>
 				</li>
 			))}
@@ -114,10 +118,15 @@ const klappbar = stimmen.length > 3;
 		font-size: clamp(1.15rem, 2.4vw, 1.4rem);
 		line-height: 1.35;
 	}
+	/* Unter der Blase: Datumszeile, darunter klein die Quelle */
+	li :global(.datum) {
+		margin: 30px 0 0 12px;
+		font-size: 1.05rem;
+	}
 	.wer {
-		margin: 30px 0 8px 12px;
-		font-size: 0.9rem;
-		opacity: 0.8;
+		margin: 2px 0 8px 12px;
+		font-size: 0.85rem;
+		opacity: 0.7;
 	}
 	.hoeren {
 		margin-left: 12px;

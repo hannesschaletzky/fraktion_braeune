@@ -1,0 +1,46 @@
+---
+// Einheitliche Datumszeile „2023 | JUN | HAMBURG“ wie in den Köpfen der Stationen, für TV-Programm und Zitate.
+// Optional klein dahinter die Quelle (z. B. „Twitch-Stream“).
+import { monate } from '../data/stationen';
+
+interface Props {
+	jahr: number;
+	monat: number;
+	ort: string;
+	quelle?: string;
+	class?: string;
+}
+const { jahr, monat, ort, quelle, class: klasse } = Astro.props;
+---
+
+<span class:list={['dz', klasse]}>
+	<span class="dz-jahr">{jahr}</span><span class="dz-strich" aria-hidden="true">|</span><span class="dz-monat">{monate[monat - 1].slice(0, 3)}</span><span class="dz-strich" aria-hidden="true">|</span><span class="dz-ort">{ort}</span>{quelle && <span class="dz-quelle"> · {quelle}</span>}
+</span>
+
+<style>
+	.dz {
+		display: block;
+		min-width: 0;
+		font-family: var(--display);
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+		line-height: 1.2;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.dz-strich {
+		margin: 0 0.35em;
+		opacity: 0.35;
+	}
+	.dz-ort {
+		color: var(--sonne);
+	}
+	.dz-quelle {
+		font-family: var(--text);
+		text-transform: none;
+		letter-spacing: 0;
+		font-size: 0.85em;
+		opacity: 0.6;
+	}
+</style>

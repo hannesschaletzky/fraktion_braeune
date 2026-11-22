@@ -1,3 +1,4 @@
+import { monate } from './stationen';
 // Videos in public/videos/<name>.mp4 + .webp (geschnitten von scripts/clips.mjs bzw. scripts/videos.sh).
 // titel: unsere eigenen Worte aus der Instagram-Story bzw. dem Reel, wird unter dem Handy angezeigt.
 // ton: false = ohne Tonspur
@@ -89,49 +90,58 @@ export type ClipName = keyof typeof clips;
 export interface Sender {
 	name: string;
 	titel: string;
-	wann: string;
+	jahr: number;
+	/** Monat (1–12) */
+	monat: number;
+	/** Ort wie bei den Stationen, mit Stopp-Nummer, z. B. „Berlin 2“ */
+	ort: string;
+	/** Wo es lief, wenn nicht im Livestream der German Beach Tour, z. B. „BR24 Sport“ */
+	quelle?: string;
 	/** Hochkant-Video: im Fernseher mit schwarzen Rändern statt beschnitten */
 	hoch?: boolean;
 }
 
+/** Klartext für Screenreader, z. B. „Juni 2023, Hamburg, Twitch-Stream“ */
+export const wannText = (s: Sender) => `${monate[s.monat - 1]} ${s.jahr}, ${s.ort}${s.quelle ? `, ${s.quelle}` : ''}`;
+
 // Neueste zuerst, wie die Stationen
 export const sender: Sender[] = [
-	{ name: 'hamburg26-elitesieg', titel: 'Elite-Sieg', wann: 'Hamburg 2026' },
-	{ name: 'hamburg26-respekt', titel: 'Respekt fürs Banner', wann: 'Hamburg 2026' },
-	{ name: 'hamburg26-bilder', titel: 'Diese Bilder!', wann: 'Hamburg 2026' },
-	{ name: 'wdr4-dortmund', titel: 'Live bei WDR 4', wann: 'Dortmund 2026', hoch: true },
-	{ name: 'twitch-aura', titel: 'Aura-Moment', wann: 'Twitch-Stream · Berlin 2026', hoch: true },
-	{ name: 'gbt-allstars', titel: 'Fraktion vs. Allstars', wann: 'GBT-Interview · Berlin 2 2025', hoch: true },
-	{ name: 'berlin25-chenoa', titel: 'Chenoa vs. Fraktion', wann: 'Berlin 1 2025' },
-	{ name: 'br24-ultras', titel: 'Beachvolleyball-Ultras', wann: 'BR24 Sport · München 2025', hoch: true },
-	{ name: 'gbt-eltern', titel: 'Fraktion oder Eltern?', wann: 'GBT-Interview · München 2025', hoch: true },
-	{ name: 'gbt-geheim', titel: 'Choreo? Geheim!', wann: 'GBT-Interview · München 2025', hoch: true },
-	{ name: 'gbt-ericdani', titel: 'Eric & Dani fordern', wann: 'GBT-Interview · Düsseldorf 2025', hoch: true },
-	{ name: 'muenchen24-traum', titel: 'Riesenbanner', wann: 'München 2024' },
-	{ name: 'duesseldorf24-zuendeln', titel: 'Schon wieder am Zündeln', wann: 'Düsseldorf 2024' },
-	{ name: 'duesseldorf24-shirts', titel: 'Fan-Shirts', wann: 'Düsseldorf 2024' },
-	{ name: 'taube', titel: 'Die Taube', wann: 'Timmendorf 2023' },
-	{ name: 'dancecam', titel: 'Dance Cam', wann: 'Timmendorf 2023' },
-	{ name: 'harlemshake', titel: 'Harlem Shake', wann: 'Timmendorf 2023' },
-	{ name: 'aufmpferd', titel: 'Aufm Pferd', wann: 'Timmendorf 2023' },
-	{ name: 'biertaufe', titel: 'Biertaufe', wann: 'Timmendorf 2023' },
-	{ name: 'friesenjung', titel: 'Friesenjung', wann: 'Timmendorf 2023' },
-	{ name: 'hamburg23gbt-mvp', titel: 'Einfach MVP', wann: 'Hamburg 2023' },
-	{ name: 'hamburg23gbt-platz', titel: 'Der Platz passt zu denen', wann: 'Hamburg 2023' },
-	{ name: 'hamburg23gbt-sehen', titel: 'Die muss man doch sehen', wann: 'Hamburg 2023' },
-	{ name: 'hamburg23gbt-dancecam', titel: 'Shake that ass', wann: 'Hamburg 2023' },
-	{ name: 'timmendorf22-clipit', titel: 'Clip it!', wann: 'Timmendorf 2022' },
-	{ name: 'kw21-kommentar', titel: 'Die Fraktion Bräune', wann: 'Königs Wusterhausen 2021' },
+	{ name: 'hamburg26-elitesieg', titel: 'Elite-Sieg', jahr: 2026, monat: 8, ort: 'Hamburg' },
+	{ name: 'hamburg26-respekt', titel: 'Respekt fürs Banner', jahr: 2026, monat: 8, ort: 'Hamburg' },
+	{ name: 'hamburg26-bilder', titel: 'Diese Bilder!', jahr: 2026, monat: 8, ort: 'Hamburg' },
+	{ name: 'wdr4-dortmund', titel: 'Live bei WDR 4', jahr: 2026, monat: 8, ort: 'Dortmund', hoch: true },
+	{ name: 'twitch-aura', titel: 'Aura-Moment', jahr: 2026, monat: 6, ort: 'Berlin', quelle: 'Twitch-Stream', hoch: true },
+	{ name: 'gbt-allstars', titel: 'Fraktion vs. Allstars', jahr: 2025, monat: 8, ort: 'Berlin 2', quelle: 'GBT-Interview', hoch: true },
+	{ name: 'berlin25-chenoa', titel: 'Chenoa vs. Fraktion', jahr: 2025, monat: 8, ort: 'Berlin 1' },
+	{ name: 'br24-ultras', titel: 'Beachvolleyball-Ultras', jahr: 2025, monat: 7, ort: 'München', quelle: 'BR24 Sport', hoch: true },
+	{ name: 'gbt-eltern', titel: 'Fraktion oder Eltern?', jahr: 2025, monat: 7, ort: 'München', quelle: 'GBT-Interview', hoch: true },
+	{ name: 'gbt-geheim', titel: 'Choreo? Geheim!', jahr: 2025, monat: 7, ort: 'München', quelle: 'GBT-Interview', hoch: true },
+	{ name: 'gbt-ericdani', titel: 'Eric & Dani fordern', jahr: 2025, monat: 5, ort: 'Düsseldorf', quelle: 'GBT-Interview', hoch: true },
+	{ name: 'muenchen24-traum', titel: 'Riesenbanner', jahr: 2024, monat: 7, ort: 'München' },
+	{ name: 'duesseldorf24-zuendeln', titel: 'Schon wieder am Zündeln', jahr: 2024, monat: 5, ort: 'Düsseldorf' },
+	{ name: 'duesseldorf24-shirts', titel: 'Fan-Shirts', jahr: 2024, monat: 5, ort: 'Düsseldorf' },
+	{ name: 'taube', titel: 'Die Taube', jahr: 2023, monat: 9, ort: 'Timmendorf' },
+	{ name: 'dancecam', titel: 'Dance Cam', jahr: 2023, monat: 9, ort: 'Timmendorf' },
+	{ name: 'harlemshake', titel: 'Harlem Shake', jahr: 2023, monat: 9, ort: 'Timmendorf' },
+	{ name: 'aufmpferd', titel: 'Aufm Pferd', jahr: 2023, monat: 9, ort: 'Timmendorf' },
+	{ name: 'biertaufe', titel: 'Biertaufe', jahr: 2023, monat: 9, ort: 'Timmendorf' },
+	{ name: 'friesenjung', titel: 'Friesenjung', jahr: 2023, monat: 9, ort: 'Timmendorf' },
+	{ name: 'hamburg23gbt-mvp', titel: 'Einfach MVP', jahr: 2023, monat: 6, ort: 'Hamburg' },
+	{ name: 'hamburg23gbt-platz', titel: 'Der Platz passt zu denen', jahr: 2023, monat: 6, ort: 'Hamburg' },
+	{ name: 'hamburg23gbt-sehen', titel: 'Die muss man doch sehen', jahr: 2023, monat: 6, ort: 'Hamburg' },
+	{ name: 'hamburg23gbt-dancecam', titel: 'Shake that ass', jahr: 2023, monat: 6, ort: 'Hamburg' },
+	{ name: 'timmendorf22-clipit', titel: 'Clip it!', jahr: 2022, monat: 9, ort: 'Timmendorf' },
+	{ name: 'kw21-kommentar', titel: 'Die Fraktion Bräune', jahr: 2021, monat: 7, ort: 'Königs Wusterhausen' },
 ];
 
 /** Was im Livestream über uns gesagt wurde (wörtlich, gekürzt), mit Verweis auf den Sender */
 export const stimmen = [
-	{ text: 'Schöne, schöne Stimmung hier! Und Fraktion Bräune wirklich einfach MVP.', wann: 'Hamburg 2023', sender: 'hamburg23gbt-mvp' },
-	{ text: 'Also ein absoluter Traum an die Fraktion. … Ich liebe, wie das aussieht auf der Tribüne. Mit diesen Riesenbannern.', wann: 'München 2024', sender: 'muenchen24-traum' },
-	{ text: 'Fraktion Bräune oder Eltern im Publikum? – Boah, das ist ja richtig unfair … Äh, Fraktion Bräune. – Der kam schnell.', wann: 'München 2025', quelle: 'Interview der German Beach Tour', sender: 'gbt-eltern' },
-	{ text: 'Herzliches Willkommen an die Fraktion Bräune, die hier schon wieder am Zündeln sind. Schön, dass ihr da seid.', wann: 'Düsseldorf 2024', sender: 'duesseldorf24-zuendeln' },
-	{ text: 'Es gibt Fan-Shirts mit der Fraktion Bräune. … Das ist insane. Viel Liebe für die Fraktion.', wann: 'Düsseldorf 2024', sender: 'duesseldorf24-shirts' },
-	{ text: 'Nebenan die Fraktion Bräune. Das sind Beachvolleyball-Ultras. Sie kommen aus Berlin und fahren von Turnier zu Turnier.', wann: 'München 2025', quelle: 'BR24 Sport', sender: 'br24-ultras' },
-	{ text: 'Die sind hier mit einem Elite-Sieg-Banner hergekommen, für Lui und für Nils. … Und wenn sie den durchbringen, dann sag ich auch Respekt.', wann: 'Hamburg 2026', sender: 'hamburg26-respekt' },
-	{ text: 'Ich finde es auch gut, dass die Fraktion Bräune diesen Platz sich wieder gekrallt hat. … Hier ist es mega geil, und der Platz passt auch sehr gut zu denen.', wann: 'Hamburg 2023', sender: 'hamburg23gbt-platz' },
+	{ text: 'Schöne, schöne Stimmung hier! Und Fraktion Bräune wirklich einfach MVP.', sender: 'hamburg23gbt-mvp' },
+	{ text: 'Also ein absoluter Traum an die Fraktion. … Ich liebe, wie das aussieht auf der Tribüne. Mit diesen Riesenbannern.', sender: 'muenchen24-traum' },
+	{ text: 'Fraktion Bräune oder Eltern im Publikum? – Boah, das ist ja richtig unfair … Äh, Fraktion Bräune. – Der kam schnell.', quelle: 'Interview der German Beach Tour', sender: 'gbt-eltern' },
+	{ text: 'Herzliches Willkommen an die Fraktion Bräune, die hier schon wieder am Zündeln sind. Schön, dass ihr da seid.', sender: 'duesseldorf24-zuendeln' },
+	{ text: 'Es gibt Fan-Shirts mit der Fraktion Bräune. … Das ist insane. Viel Liebe für die Fraktion.', sender: 'duesseldorf24-shirts' },
+	{ text: 'Nebenan die Fraktion Bräune. Das sind Beachvolleyball-Ultras. Sie kommen aus Berlin und fahren von Turnier zu Turnier.', quelle: 'BR24 Sport', sender: 'br24-ultras' },
+	{ text: 'Die sind hier mit einem Elite-Sieg-Banner hergekommen, für Lui und für Nils. … Und wenn sie den durchbringen, dann sag ich auch Respekt.', sender: 'hamburg26-respekt' },
+	{ text: 'Ich finde es auch gut, dass die Fraktion Bräune diesen Platz sich wieder gekrallt hat. … Hier ist es mega geil, und der Platz passt auch sehr gut zu denen.', sender: 'hamburg23gbt-platz' },
 ];

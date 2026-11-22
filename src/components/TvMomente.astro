@@ -1,7 +1,8 @@
 ---
 // Ein Fernseher mit Senderwahl: Mitschnitte aus dem Livestream. Steuerung: src/scripts/videos.ts
 import '../styles/spieler.css';
-import { sender } from '../data/clips';
+import DatumZeile from './DatumZeile.astro';
+import { sender, wannText } from '../data/clips';
 
 const nr = (i: number) => String(i + 1).padStart(2, '0');
 const erster = sender[0];
@@ -23,7 +24,7 @@ const erster = sender[0];
 						loop
 						playsinline
 						preload="none"
-						aria-label={`${erster.titel}, ${erster.wann}`}
+						aria-label={`${erster.titel}, ${wannText(erster)}`}
 					></video>
 					<span class="rauschen" aria-hidden="true"></span>
 					<span class="kanal" aria-hidden="true">CH {nr(0)}</span>
@@ -58,7 +59,7 @@ const erster = sender[0];
 					<button type="button" data-nr={i} aria-current={i === 0 ? 'true' : undefined}>
 						<span class="pnr">{nr(i)}</span>
 						<span class="ptitel">{s.titel}</span>
-						<span class="pwann">{s.wann}</span>
+						<DatumZeile class="pwann" jahr={s.jahr} monat={s.monat} ort={s.ort} quelle={s.quelle} />
 					</button>
 				</li>
 			))}
@@ -69,7 +70,7 @@ const erster = sender[0];
 
 <script>
 	import { spieler, quelle, mitTon } from '../scripts/videos';
-	import { sender } from '../data/clips';
+	import { sender, wannText } from '../data/clips';
 
 	const tv = document.querySelector<HTMLElement>('.fernseher')!;
 	const video = tv.querySelector('video')!;
@@ -88,7 +89,7 @@ const erster = sender[0];
 		tv.dataset.kanal = String(i);
 		quelle(tv, `/videos/vorschau/${s.name}.mp4`, `/videos/${s.name}.mp4`, `/videos/${s.name}.webp`);
 		tv.classList.toggle('hochkant', !!s.hoch);
-		video.setAttribute('aria-label', `${s.titel}, ${s.wann}`);
+		video.setAttribute('aria-label', `${s.titel}, ${wannText(s)}`);
 		tv.querySelector('.kanal')!.textContent = `CH ${nr(i)}`;
 		tv.querySelector('.nummer')!.textContent = nr(i);
 		knoepfe.forEach((k, j) => (j === i ? k.setAttribute('aria-current', 'true') : k.removeAttribute('aria-current')));
@@ -372,20 +373,21 @@ const erster = sender[0];
 	[aria-current='true'] .pnr {
 		opacity: 1;
 	}
-	.ptitel,
-	.pwann {
+	.ptitel {
 		min-width: 0;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-	}
-	.ptitel {
 		font-weight: 800;
 		line-height: 1.25;
 	}
-	.pwann {
-		font-size: 0.8rem;
-		opacity: 0.6;
+	/* Datumszeile unter dem Titel (Komponente DatumZeile) */
+	.programm :global(.pwann) {
+		font-size: 0.9rem;
+		margin-top: 1px;
+	}
+	[aria-current='true'] :global(.dz-ort) {
+		color: #a06a00;
 	}
 	/* Handy: einzeilige Wisch-Leiste direkt unter dem Fernseher statt langer Liste */
 	@media (max-width: 759px) {
