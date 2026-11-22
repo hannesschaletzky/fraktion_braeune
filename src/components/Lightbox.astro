@@ -19,10 +19,37 @@
 	const credit = document.getElementById('lb-credit') as HTMLAnchorElement;
 	let aktuell = 0;
 
+	// Große Fassungen vorladen; was schon geladen ist, wird sofort angezeigt
+	const geladen = new Map<string, HTMLImageElement>();
+	function vorladen(i: number) {
+		const url = fotos[(i + fotos.length) % fotos.length]?.dataset.gross;
+		if (!url || geladen.has(url)) return;
+		const img = new Image();
+		img.decoding = 'async';
+		img.src = url;
+		geladen.set(url, img);
+	}
+
 	function zeigen(i: number) {
 		aktuell = (i + fotos.length) % fotos.length;
-		const f = fotos[aktuell].dataset;
-		bild.src = f.gross!;
+		const knopf = fotos[aktuell];
+		const f = knopf.dataset;
+		const gross = f.gross!;
+		const vorab = geladen.get(gross);
+		if (vorab?.complete && vorab.naturalWidth) bild.src = gross;
+		else {
+			// Sofort die schon geladene kleine Fassung zeigen, dann scharf stellen, sobald die große da ist
+			const klein = knopf.querySelector('img')?.currentSrc;
+			if (klein) bild.src = klein;
+			vorladen(aktuell);
+			const ziel = aktuell;
+			geladen.get(gross)!.decode().then(
+				() => ziel === aktuell && (bild.src = gross),
+				() => ziel === aktuell && (bild.src = gross),
+			);
+		}
+		vorladen(aktuell + 1);
+		vorladen(aktuell - 1);
 		bild.alt = f.alt ?? '';
 		const c = f.credit;
 		credit.hidden = !c;
