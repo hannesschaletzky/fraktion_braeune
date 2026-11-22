@@ -28,6 +28,10 @@ const erster = sender[0];
 					<span class="rauschen" aria-hidden="true"></span>
 					<span class="kanal" aria-hidden="true">CH {nr(0)}</span>
 					<span class="pausezeichen" aria-hidden="true">▶</span>
+					<button type="button" class="abspielen" aria-label="Mit Ton abspielen">
+						<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+						<span>Mit Ton</span>
+					</button>
 					<span class="knoepfe">
 						<button type="button" class="ton" aria-label="Mit Ton abspielen" aria-pressed="false">🔇</button>
 						<button type="button" class="gross" aria-label="Im Vollbild abspielen">
@@ -72,6 +76,11 @@ const erster = sender[0];
 	const knoepfe = [...document.querySelectorAll<HTMLButtonElement>('.programm button')];
 	const nr = (i: number) => String(i + 1).padStart(2, '0');
 	spieler(tv);
+	// Großer Play-Knopf: Clip mit Ton von vorn
+	tv.querySelector('.abspielen')!.addEventListener('click', (e) => {
+		e.stopPropagation();
+		mitTon(tv);
+	});
 
 	function schalten(i: number, ton = false) {
 		i = (i + sender.length) % sender.length;
@@ -104,6 +113,45 @@ const erster = sender[0];
 </script>
 
 <style>
+	/* Großer Play-Knopf mitten im Bild, solange der Clip nur stumm als Vorschau läuft */
+	.abspielen {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		z-index: 2;
+		display: grid;
+		justify-items: center;
+		gap: 2px;
+		padding: 18px 22px 12px;
+		border-radius: 999px;
+		border: 3px solid var(--tinte);
+		background: var(--sonne);
+		color: var(--tinte);
+		font-family: var(--display);
+		text-transform: uppercase;
+		font-size: 0.95rem;
+		letter-spacing: 0.04em;
+		box-shadow: 4px 4px 0 var(--tinte);
+		cursor: pointer;
+		transform: translate(-50%, -50%);
+		transition:
+			opacity 0.25s,
+			transform 0.2s cubic-bezier(0.3, 1.8, 0.5, 1);
+	}
+	.abspielen svg {
+		width: clamp(28px, 6vw, 44px);
+		height: clamp(28px, 6vw, 44px);
+		margin-left: 4px;
+	}
+	.abspielen:hover {
+		transform: translate(-50%, -50%) scale(1.08);
+	}
+	/* Mit Ton oder angehalten (eigenes ▶): ausblenden */
+	.fernseher:global(.an) .abspielen,
+	.fernseher:global(.pause) .abspielen {
+		opacity: 0;
+		pointer-events: none;
+	}
 	.tv {
 		background:
 			repeating-linear-gradient(0deg, rgb(255 255 255 / 0.02) 0 2px, transparent 2px 4px),
