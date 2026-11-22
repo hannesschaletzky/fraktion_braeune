@@ -256,6 +256,7 @@ export const stationen: Station[] = [
 		ort: 'Berlin',
 		motto: 'Zustand nach GBT Berlin: Stimmen im Sparmodus, Ohren taub, Bock auf Timmendorf!',
 		fotos: [
+			foto('2023-berlin-sieg', 'Die Sieger mit Pokal vor dem jubelnden Block, daneben das Banner „Fraktion Bräune“'),
 			foto('2023-berlin-1', 'Der Block jubelt hinter dem Banner „Fraktion Bräune“'),
 			foto('2023-berlin-2', 'Volle Tribüne, alle reißen die Arme hoch'),
 			foto('2023-berlin-3', 'Ein Spieler vor dem Block mit hochgehaltenen Bewertungsschildern'),
@@ -270,6 +271,18 @@ export const stationen: Station[] = [
 		motto: '„Verrückte Menschen ❤️“ – Eric Stadie über uns',
 		fotos: [],
 		clips: ['hamburg23gbt-fanclub', 'hamburg23gbt-achtelfinale', 'hamburg23gbt-sieg'],
+	},
+	{
+		jahr: 2023,
+		monat: 5,
+		ort: 'Bremen',
+		stopp: 1,
+		motto: 'Auswärtsfahrt 🤍',
+		fotos: [
+			foto('2023-bremen-2', 'Der Block schreit mit Schildern „Schmeckt“, „Ein’n drauf“ und „10/10“ über dem Banner'),
+			foto('2023-bremen-1', 'Zwei Spieler in Orange jubeln mit Pokalen vor dem Block, dahinter Schilder wie „Eric Stadie“'),
+		],
+		clips: ['bremen23-block', 'bremen23-abfahrt'],
 	},
 	{
 		jahr: 2022,
