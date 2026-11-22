@@ -4,7 +4,7 @@ import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
 interface Props {
-	karten: { href: string; bild: ImageMetadata; alt: string; datum: string; ort: string; text: string }[];
+	karten: { href: string; bild: ImageMetadata; alt: string; datum: string; ort: string; text: string; fokus?: string }[];
 	mehr: { href: string; text: string };
 }
 const { karten, mehr } = Astro.props;
@@ -16,7 +16,7 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)'];
 	{karten.map((k, i) => (
 		<li style={`--r: ${neigungen[i % 3]}deg; --schatten: ${farben[i % 3]}`}>
 			<a href={k.href} class="karte">
-				<Picture src={k.bild} formats={['avif', 'webp']} widths={[400, 700]} sizes="(min-width: 900px) 340px, 92vw" alt={k.alt} loading="lazy" />
+				<Picture src={k.bild} formats={['avif', 'webp']} widths={[400, 700]} sizes="(min-width: 900px) 340px, 92vw" alt={k.alt} loading="lazy" style={k.fokus ? `object-position: ${k.fokus}` : undefined} />
 				<span class="wann">
 					<span class="datum">{k.datum}</span>
 					<span class="ort">{k.ort}</span>

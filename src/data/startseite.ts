@@ -1,18 +1,26 @@
-// Auswahl der Karten auf der Startseite: je eine Station und eine Choreo aus 2026, 2025 und 2024,
-// kein Foto und kein Turnier doppelt (die Choreos überspringen, was schon bei den Stationen steht).
-import { stationen } from './stationen';
-import { choreos } from './choreos';
+// Auswahl der Karten auf der Startseite (fest, von Hand):
+// Choreos: unsere größten. Stationen: bunte Mischung aus anderen Turnieren, damit sich nichts doppelt.
+import { stationen, type Station } from './stationen';
+import { choreos, type Choreo } from './choreos';
 
-const jahre = [2026, 2025, 2024];
+/** Bildausschnitt der Karte (CSS object-position), wenn das Wichtige nicht in der Mitte ist */
+type MitFokus<T> = T & { fokus?: string };
 
-export const startStationen = jahre
-	.map((j) => stationen.find((s) => s.jahr === j && s.fotos.length))
-	.filter((s) => s !== undefined);
+function choreo(titel: string, fokus?: string): MitFokus<Choreo> {
+	const c = choreos.find((x) => x.titel === titel);
+	if (!c) throw new Error(`Choreo fehlt: ${titel}`);
+	return { ...c, fokus };
+}
+function station(jahr: number, ort: string, stopp?: number): MitFokus<Station> {
+	const s = stationen.find((x) => x.jahr === jahr && x.ort === ort && x.stopp === stopp);
+	if (!s) throw new Error(`Station fehlt: ${ort} ${jahr}`);
+	return s;
+}
 
-// Choreos von anderen Turnieren als die gezeigten Stationen, damit beide Reihen verschieden wirken
-const turniere = new Set(startStationen.map((s) => `${s.jahr}-${s.ort}`));
-const belegt = new Set(startStationen.map((s) => s.fotos[0].bild.src));
+export const startChoreos = [
+	choreo('Jetzt brennt der Pott'),
+	choreo('33 Jahre – Danke Timmendorf – One Last Dance'),
+	choreo('Unsere Helden aus Paris', '50% 85%'),
+];
 
-export const startChoreos = jahre
-	.map((j) => choreos.find((c) => c.jahr === j && !turniere.has(`${c.jahr}-${c.ort}`) && !belegt.has(c.fotos[0].bild.src)))
-	.filter((c) => c !== undefined);
+export const startStationen = [station(2026, 'Berlin', 1), station(2025, 'München', 2), station(2024, 'Kühlungsborn', 2)];

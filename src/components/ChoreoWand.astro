@@ -1,5 +1,5 @@
 ---
-// Startseite: je eine Choreo aus 2026, 2025 und 2024 als Karte, alle auf der Choreo-Seite
+// Startseite: unsere größten Choreos als Karten (Auswahl in data/startseite.ts), alle auf der Choreo-Seite
 import Karten from './Karten.astro';
 import { choreos, slug } from '../data/choreos';
 import { monate } from '../data/stationen';
@@ -12,13 +12,14 @@ const karten = startChoreos.map((c) => ({
 	datum: `${monate[c.monat - 1]} ${c.jahr}`,
 	ort: `${c.ort}${c.stopp ? ` ${c.stopp}` : ''}${c.zusatz ? ` · ${c.zusatz}` : ''}`,
 	text: c.vonAnderen ? `${c.titel} · für uns 💜` : c.titel,
+	fokus: c.fokus,
 }));
 ---
 
 <section class="abschnitt wand" id="choreos">
 	<div class="wrap">
 		<h2>Unsere <span class="bunt">{[...'Choreos'].map((c) => <span>{c}</span>)}</span></h2>
-		<p class="einleitung">Banner, Fahnen, Papptafeln und Rauch. {choreos.length} Choreos, zum Beispiel:</p>
+		<p class="einleitung">Banner, Fahnen, Papptafeln und Rauch. {choreos.length} Choreos, unsere größten:</p>
 		<Karten karten={karten} mehr={{ href: '/choreos/', text: `Alle ${choreos.length} Choreos mit Fotos und Videos →` }} />
 	</div>
 </section>
