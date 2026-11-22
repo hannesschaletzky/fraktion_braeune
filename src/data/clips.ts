@@ -100,8 +100,8 @@ export const sender: Sender[] = [
 
 /** Was im Livestream über uns gesagt wurde (wörtlich, gekürzt), mit Verweis auf den Sender */
 export const stimmen = [
-	{ text: 'Das wird viral gehen, ohne Witz. … Timmendorf ist besser.', wann: 'Timmendorf 2023', sender: 'taube' },
+	{ text: 'Also ein absoluter Traum an die Fraktion. … Ich liebe, wie das aussieht auf der Tribüne. Mit diesen Riesenbannern.', wann: 'München 2024', sender: 'muenchen24-traum' },
 	{ text: 'Herzliches Willkommen an die Fraktion Bräune, die hier schon wieder am Zündeln sind. Schön, dass ihr da seid.', wann: 'Düsseldorf 2024', sender: 'duesseldorf24-zuendeln' },
 	{ text: 'Es gibt Fan-Shirts mit der Fraktion Bräune. … Das ist insane. Viel Liebe für die Fraktion.', wann: 'Düsseldorf 2024', sender: 'duesseldorf24-shirts' },
-	{ text: 'Also ein absoluter Traum an die Fraktion. … Ich liebe, wie das aussieht auf der Tribüne. Mit diesen Riesenbannern.', wann: 'München 2024', sender: 'muenchen24-traum' },
+	{ text: 'Das wird viral gehen, ohne Witz. … Timmendorf ist besser.', wann: 'Timmendorf 2023', sender: 'taube' },
 ];
