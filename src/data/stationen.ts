@@ -238,6 +238,7 @@ export const stationen: Station[] = [
 		ort: 'Timmendorfer Strand',
 		motto: 'Wer hätte gedacht, dass aus ein paar Freunden … sowas unfassbar Geiles entsteht?',
 		fotos: [
+			foto('choreo-2023-kaempfen', 'Die Gruppe hält das Banner „Auf geht’s kämpfen und siegen!“ auf der Tribüne hoch'),
 			foto('2023-timmendorf-2', 'Das Banner „Fraktion Bräune“ mit bunten Buchstaben vor der vollen Tribüne'),
 			foto('2023-timmendorf-1', 'Fans oben ohne singen mit Fahne und Schildern auf der Tribüne'),
 			foto('2023-timmendorf-3', 'Drei Fans oben ohne jubeln an der Bande'),
