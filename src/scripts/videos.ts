@@ -66,12 +66,38 @@ export function spieler(s: HTMLElement) {
 	});
 	s.querySelector('.gross')?.addEventListener('click', (e) => {
 		e.stopPropagation();
+		merken();
 		abspielen();
 		const ios = v as HTMLVideoElement & { webkitEnterFullscreen?: () => void };
 		if (v.requestFullscreen) v.requestFullscreen().catch(() => ios.webkitEnterFullscreen?.());
 		else ios.webkitEnterFullscreen?.();
 	});
 	// Im Vollbild die Bedienelemente des Browsers zeigen, danach wieder unsere
-	v.addEventListener('fullscreenchange', () => (v.controls = document.fullscreenElement === v));
-	v.addEventListener('webkitendfullscreen', () => (v.controls = false));
+	v.addEventListener('fullscreenchange', () => {
+		v.controls = document.fullscreenElement === v;
+		if (!document.fullscreenElement) zurueck();
+	});
+	v.addEventListener('webkitendfullscreen', () => {
+		v.controls = false;
+		zurueck();
+	});
+}
+
+// Android (Chrome) verliert beim Vollbild oft die Scrollposition: Das Handy dreht sich, die Seite baut sich
+// dahinter neu auf und steht danach oben. Deshalb die Position vorher merken und nach dem Schließen wiederherstellen,
+// einmal sofort und noch einmal, wenn sich das Layout nach dem Zurückdrehen gesetzt hat.
+let gemerkt: number | null = null;
+function merken() {
+	gemerkt = scrollY;
+}
+function zurueck() {
+	if (gemerkt === null) return;
+	const y = gemerkt;
+	gemerkt = null;
+	const hin = () => {
+		if (Math.abs(scrollY - y) > 50) scrollTo({ top: y, behavior: 'instant' });
+	};
+	requestAnimationFrame(hin);
+	setTimeout(hin, 350);
+	setTimeout(hin, 800);
 }
