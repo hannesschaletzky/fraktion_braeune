@@ -24,10 +24,10 @@ while IFS='|' read -r name datei start laenge; do
   ffmpeg -nostdin -v error -y -ss "$(echo "$start + 1" | bc)" -i "$quelle/$datei" -frames:v 1 -vf "scale=640:-2" -c:v libwebp -quality 72 "$ziel/$name.webp"
   echo "$name: $(( $(stat -f %z "$ziel/$name.mp4") / 1024 )) KB"
 done <<'LISTE'
-friesenjung|Friesenjung1.mov|0|14
-dancecam|harlemshake1.mov|10|19
-taube|taube3.mov|22.6|23.3
-biertaufe|Biertaufe.mov|0|7
-harlemshake|harlemshake2.mov|0|21
-aufmpferd|aufmPferd1.mov|0|6.4
+friesenjung|ordner_Friesenjung1.mov|0|14
+dancecam|ordner_harlemshake1.mov|10|19
+taube|ordner_taube3.mov|22.6|23.3
+biertaufe|ordner_Biertaufe.mov|0|7
+harlemshake|ordner_harlemshake2.mov|0|21
+aufmpferd|ordner_aufmPferd1.mov|0|6.4
 LISTE

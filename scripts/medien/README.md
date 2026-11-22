@@ -6,7 +6,11 @@ Text (Index, Transkripte, Zuordnungen, Dateiliste), keine Medien. Nach neuer Aus
 
     git -C assets add -A && git -C assets commit -m "…" && git -C assets push
 
-Neue Rohdateien in die Dateiliste aufnehmen: siehe `assets/README.md`.
+Ablage der Medien (Stopp-Ordner, _Eingang, _ohne_Stopp): siehe `assets/README.md`.
+
+    node scripts/medien/einsortieren.mjs     # _Eingang/ nach Datum in die Stopp-Ordner verschieben
+    node scripts/medien/markiere.mjs         # Finder-Tag „Auf der Seite“ für alles, was die Website benutzt
+    node scripts/medien/pruefe.mjs           # Prüfsummen-Abgleich mit _index/vorher.sha1
  Die Ergebnisse liegen in `assets/_index/` und
 müssen nicht neu berechnet werden; die Skripte hier erzeugen sie bei Bedarf neu. Alle Skripte bekommen
 `assets/_index` als ersten Parameter (`I` unten).

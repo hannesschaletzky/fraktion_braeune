@@ -6,15 +6,7 @@ import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import sharp from 'sharp';
 
-const R = 'assets/all_recordings/';
-const W = 'assets/ausWhatsApp/';
-const A = 'assets/shared_album_apple/';
-// Instagram-Export: Stories und Reels liegen teils im Export, teils im separat entpackten media/
-const IG = (id) => {
-	const treffer = spawnSync('find', ['assets/insta_export', '-name', `${id}.mp4`], { encoding: 'utf8' }).stdout.trim().split('\n')[0];
-	if (!treffer) throw new Error(`Instagram-Video ${id} nicht gefunden`);
-	return treffer;
-};
+// Quellen liegen in den Stopp-Ordnern unter assets/ (siehe scripts/medien/einsortieren.mjs)
 
 /**
  * teile: [Datei, Start, Ende] (Ende null = bis Schluss)
@@ -25,107 +17,107 @@ const IG = (id) => {
  */
 export const clips = {
 	// Im Fernsehen: Kommentar über die Fraktion
-	'duesseldorf24-zuendeln': { teile: [[R + 'Screen Recording 2024-05-14 at 20.29.00.mov', 8, 40]], crop: '3448:1940:0:108', poster: 22 },
-	'duesseldorf24-shirts': { teile: [[R + 'Screen Recording 2024-05-13 at 15.01.52.mov', 11.2, 44]], crop: '3448:1940:0:108', poster: 14 },
+	'duesseldorf24-zuendeln': { teile: [['assets/2024_05_Düsseldorf/2024-05-14_20-29_stream_Screen Recording 2024-05-14 at 20.29.00.mov', 8, 40]], crop: '3448:1940:0:108', poster: 22 },
+	'duesseldorf24-shirts': { teile: [['assets/2024_05_Düsseldorf/2024-05-13_15-01_stream_Screen Recording 2024-05-13 at 15.01.52.mov', 11.2, 44]], crop: '3448:1940:0:108', poster: 14 },
 	'muenchen24-traum': {
 		teile: [
-			[W + 'VIDEO-2024-07-21-21-55-22.mp4', 30.4, 47.6],
-			[W + 'VIDEO-2024-07-21-21-55-22.mp4', 77.2, 86],
+			['assets/2024_07_München/2024-07-21_21-55_whatsapp_VIDEO-2024-07-21-21-55-22.mp4', 30.4, 47.6],
+			['assets/2024_07_München/2024-07-21_21-55_whatsapp_VIDEO-2024-07-21-21-55-22.mp4', 77.2, 86],
 		],
 	},
 	'berlin25-chenoa': {
 		teile: [
-			[R + 'Screen Recording 2025-08-17 at 21.34.32.mov', 7, 63],
-			[R + 'Screen Recording 2025-08-17 at 21.34.32.mov', 81, 88],
+			['assets/2025_08_Berlin1/2025-08-17_21-34_stream_Screen Recording 2025-08-17 at 21.34.32.mov', 7, 63],
+			['assets/2025_08_Berlin1/2025-08-17_21-34_stream_Screen Recording 2025-08-17 at 21.34.32.mov', 81, 88],
 		],
 		crop: '1806:1016:16:0',
 		poster: 37,
 	},
-	'hamburg26-bilder': { teile: [[R + 'Screen Recording 2026-08-10 at 00.10.56.mov', 0, null]], crop: '2750:1547:8:330' },
-	'hamburg26-respekt': { teile: [[R + 'Screen Recording 2026-08-10 at 00.50.33.mov', 0, null]], crop: '2288:1287:304:388', poster: 20 },
-	'hamburg26-elitesieg': { teile: [[R + 'Screen Recording 2026-08-10 at 01.32.06.mov', 0, null]], crop: '2270:1277:262:84' },
+	'hamburg26-bilder': { teile: [['assets/2026_08_Elite_Hamburg/2026-08-10_00-10_stream_Screen Recording 2026-08-10 at 00.10.56.mov', 0, null]], crop: '2750:1547:8:330' },
+	'hamburg26-respekt': { teile: [['assets/2026_08_Elite_Hamburg/2026-08-10_00-50_stream_Screen Recording 2026-08-10 at 00.50.33.mov', 0, null]], crop: '2288:1287:304:388', poster: 20 },
+	'hamburg26-elitesieg': { teile: [['assets/2026_08_Elite_Hamburg/2026-08-10_01-32_stream_Screen Recording 2026-08-10 at 01.32.06.mov', 0, null]], crop: '2270:1277:262:84' },
 
 	// Fernsehbeitrag BR24 Sport über uns (als Story geteilt, hochkant)
-	'br24-ultras': { teile: [[IG('18082518853888070'), 0, null]], hoch: true, poster: 3 },
+	'br24-ultras': { teile: [['assets/2025_07_München2/2025-07-13_03-15_insta-story_18082518853888070.mp4', 0, null]], hoch: true, poster: 3 },
 	// Interviews und Reaktionen aus Stories (hochkant)
-	'wdr4-dortmund': { teile: [[IG('18113633092959950'), 0, null]], hoch: true, poster: 5 },
-	'twitch-aura': { teile: [[IG('18114120593061089'), 6.5, null]], hoch: true, poster: 3 },
-	'gbt-allstars': { teile: [[IG('17857239621484690'), 0, null]], hoch: true, poster: 3 },
-	'gbt-geheim': { teile: [[IG('18044394341297957'), 0, null]], hoch: true, poster: 30 },
-	'gbt-ericdani': { teile: [[IG('18005394017768097'), 9, null]], hoch: true, poster: 32 },
+	'wdr4-dortmund': { teile: [['assets/2026_08_Dortmund/2026-08-27_05-28_insta-story_18113633092959950.mp4', 0, null]], hoch: true, poster: 5 },
+	'twitch-aura': { teile: [['assets/_ohne_Stopp/2026-09-11_05-26_insta-story_18114120593061089.mp4', 6.5, null]], hoch: true, poster: 3 },
+	'gbt-allstars': { teile: [['assets/2025_08_Berlin2/2025-08-24_06-58_insta-story_17857239621484690.mp4', 0, null]], hoch: true, poster: 3 },
+	'gbt-geheim': { teile: [['assets/2025_07_München2/2025-07-12_03-54_insta-story_18044394341297957.mp4', 0, null]], hoch: true, poster: 30 },
+	'gbt-ericdani': { teile: [['assets/2025_05_Düsseldorf1/2025-05-10_08-04_insta-story_18005394017768097.mp4', 9, null]], hoch: true, poster: 32 },
 	// GBT-Interview Entweder-oder (Story, hochkant)
-	'gbt-eltern': { teile: [[IG('18081912094848707'), 4.4, 24.8]], hoch: true, poster: 12 },
+	'gbt-eltern': { teile: [['assets/2025_07_München2/2025-07-13_06-08_insta-story_18081912094848707.mp4', 4.4, 24.8]], hoch: true, poster: 12 },
 
 	// Award-Interview auf der Bühne, Timmendorf 2025
-	'award25-interview': { teile: [[A + 'IMG_1422.mov', 89, 166]], hoch: true },
+	'award25-interview': { teile: [['assets/_ohne_Stopp/ohne_Datum/apple_IMG_1422.mov', 89, 166]], hoch: true },
 
 	// Aus dem Block (Handy)
 	'timmendorf25-makingof': {
 		teile: [
-			[A + 'IMG_0499.mov', 0, null],
-			[A + 'IMG_0503.mov', 0, null],
-			[A + 'IMG_0504.mov', 0, null],
-			[A + 'IMG_0507.mov', 0, null],
+			['assets/2025_09_Timmendorf/2025-09-03_10-58_apple-ca_IMG_0499.mov', 0, null],
+			['assets/2025_09_Timmendorf/2025-09-03_14-19_apple-ca_IMG_0503.mov', 0, null],
+			['assets/2025_09_Timmendorf/2025-09-03_14-19_apple-ca_IMG_0504.mov', 0, null],
+			['assets/_ohne_Stopp/ohne_Datum/apple_IMG_0507.mov', 0, null],
 		],
 		hoch: true,
 	},
-	'timmendorf25-fackel': { teile: [[A + 'IMG_0598.mov', 0, null]], hoch: true },
-	'timmendorf25-fahne': { teile: [[A + 'IMG_0729.mov', 0, null]], hoch: true },
-	'berlin25-pyro': { teile: [[A + 'IMG_9767 (2).mov', 18, 48]], hoch: true },
+	'timmendorf25-fackel': { teile: [['assets/_ohne_Stopp/ohne_Datum/apple_IMG_0598.mov', 0, null]], hoch: true },
+	'timmendorf25-fahne': { teile: [['assets/_ohne_Stopp/ohne_Datum/apple_IMG_0729.mov', 0, null]], hoch: true },
+	'berlin25-pyro': { teile: [['assets/2024_09_Timmendorf/2024-09-01_17-25_apple-ca_IMG_9767 (2).mov', 18, 48]], hoch: true },
 
 	// Aus dem Block: unsere Instagram-Stories mit Originalton (Gesänge, Jubel, Pyro)
-	'dortmund26-brennt': { teile: [[IG('18107768558334052'), 0, null]], hoch: true, poster: 21 },
-	'dortmund26-angezuendet': { teile: [[IG('17988944285851833'), 0, null]], hoch: true, poster: 3 },
-	'dortmund26-nele': { teile: [[IG('17866892640645777'), 0, 20]], hoch: true, poster: 5 },
-	'hamburg26-pyro': { teile: [[IG('17925667398401067'), 0, 30]], hoch: true, poster: 18 },
-	'muenchen26-goated': { teile: [[IG('18097996475601176'), 0, null]], hoch: true, poster: 4 },
-	'muenchen26-chenoa': { teile: [[IG('18086029685138250'), 0, 18]], hoch: true, poster: 3 },
-	'berlin26-pyrobts': { teile: [[IG('17890284264378149'), 0, null]], hoch: true, poster: 3 },
-	'berlin26-fackelreihe': { teile: [[IG('18046417976571310'), 0, null]], hoch: true, poster: 12 },
-	'berlin26-feuerwerk': { teile: [[IG('18117450868692699'), 0, null]], hoch: true, poster: 33 },
-	'berlin26-trommel': { teile: [[IG('18095074781223588'), 0, null]], hoch: true, poster: 4 },
-	'berlin26-fahnen': { teile: [[IG('17911485870223540'), 0, null]], hoch: true, poster: 3 },
-	'berlin25-hey': { teile: [[IG('18078541817312463'), 0, null]], hoch: true, poster: 4 },
-	'berlin25-licht': { teile: [[IG('17976438464911307'), 0, null]], hoch: true, poster: 2 },
-	'berlin25-robinjonas': { teile: [[IG('18039687767393318'), 0, 22]], hoch: true, poster: 10 },
-	'berlin25-btspyro': { teile: [[IG('18015423290717085'), 0, null]], hoch: true, poster: 2 },
-	'duesseldorf25-paulies': { teile: [[IG('18195162445308395'), 0, null]], hoch: true, poster: 3 },
-	'timmendorf24-ericmomme': { teile: [[IG('18240282706274457'), 0, null]], hoch: true, poster: 3 },
-	'kuehlungsborn24-mvp': { teile: [[IG('17914065161892403'), 0, null]], hoch: true, poster: 6 },
-	'kuehlungsborn24-freak': { teile: [[IG('18364660513103923'), 0, null]], hoch: true, poster: 5 },
-	'duesseldorf24-huette': { teile: [[IG('18036237307747065'), 0, null]], hoch: true, poster: 4 },
-	'bremen24-schalala': { teile: [[IG('18033214378841792'), 0, null]], hoch: true, poster: 5 },
-	'hamburg23gbt-fanclub': { teile: [[IG('18086321017349394'), 0, null]], hoch: true, poster: 1 },
-	'hamburg23gbt-achtelfinale': { teile: [[IG('17969807639235967'), 0, null]], hoch: true, poster: 6 },
-	'hamburg23gbt-sieg': { teile: [[IG('18367444630049570'), 0, null]], hoch: true, poster: 9 },
-	'hamburg23-sverige': { teile: [[IG('18026018026611712'), 0, null]], hoch: true, poster: 7 },
-	'berlin23-zustand': { teile: [[IG('17972904869329090'), 0, null]], hoch: true, poster: 12 },
-	'berlin23-richie': { teile: [[IG('18011640775824456'), 0, null]], hoch: true, poster: 7 },
-	'muenchen25-wirauch': { teile: [[IG('18031603538679791'), 0, null]], hoch: true, poster: 8 },
-	'muenchen25-atmo': { teile: [[IG('17902616607218159'), 0, null]], hoch: true, poster: 6 },
-	'duesseldorf25-fahnen': { teile: [[IG('18048096161525054'), 0, null]], hoch: true, poster: 4 },
-	'duesseldorf24-tuecher': { teile: [[IG('17973986750705600'), 0, null]], hoch: true, poster: 8 },
-	'paris24-allez': { teile: [[IG('18343936270136038'), 0, null]], hoch: true, poster: 5 },
-	'muenchen24-nacht': { teile: [[IG('18050077033794473'), 0, null]], hoch: true, poster: 6 },
-	'muenchen24-feuerwerk': { teile: [[IG('18027380147510704'), 0, null]], hoch: true, poster: 4 },
-	'timmendorf23-trommel': { teile: [[IG('18003094021966675'), 0, null]], hoch: true, poster: 4 },
-	'timmendorf23-gekommen': { teile: [[IG('17922140525775157'), 0, null]], hoch: true, poster: 5 },
-	'hamburg23-support': { teile: [[IG('17989915973488514'), 0, null]], hoch: true, poster: 18 },
-	'timmendorf24-mvp': { teile: [[IG('17934347210913264'), 0, null]], hoch: true, poster: 4 },
-	'bremen24-tim': { teile: [['assets/2024_06_Bremen/037d3652-6598-4984-a00e-8222ac1271c0.MP4', 0, null]], hoch: true, poster: 6 },
+	'dortmund26-brennt': { teile: [['assets/2026_08_Dortmund/2026-08-29_11-07_insta-story_18107768558334052.mp4', 0, null]], hoch: true, poster: 21 },
+	'dortmund26-angezuendet': { teile: [['assets/2026_08_Dortmund/2026-08-28_11-32_insta-story_17988944285851833.mp4', 0, null]], hoch: true, poster: 3 },
+	'dortmund26-nele': { teile: [['assets/2026_08_Dortmund/2026-08-28_09-51_insta-story_17866892640645777.mp4', 0, 20]], hoch: true, poster: 5 },
+	'hamburg26-pyro': { teile: [['assets/2026_08_Elite_Hamburg/2026-08-08_12-19_insta-story_17925667398401067.mp4', 0, 30]], hoch: true, poster: 18 },
+	'muenchen26-goated': { teile: [['assets/2026_07_München1/2026-07-04_12-31_insta-story_18097996475601176.mp4', 0, null]], hoch: true, poster: 4 },
+	'muenchen26-chenoa': { teile: [['assets/2026_07_München1/2026-07-03_09-03_insta-story_18086029685138250.mp4', 0, 18]], hoch: true, poster: 3 },
+	'berlin26-pyrobts': { teile: [['assets/2026_06_Berlin1/2026-06-06_12-38_insta-story_17890284264378149.mp4', 0, null]], hoch: true, poster: 3 },
+	'berlin26-fackelreihe': { teile: [['assets/2026_06_Berlin2/2026-06-13_11-29_insta-story_18046417976571310.mp4', 0, null]], hoch: true, poster: 12 },
+	'berlin26-feuerwerk': { teile: [['assets/2026_06_Berlin1/2026-06-06_18-37_insta-story_18117450868692699.mp4', 0, null]], hoch: true, poster: 33 },
+	'berlin26-trommel': { teile: [['assets/2026_06_Berlin1/2026-06-06_12-39_insta-story_18095074781223588.mp4', 0, null]], hoch: true, poster: 4 },
+	'berlin26-fahnen': { teile: [['assets/2026_06_Berlin2/2026-06-13_06-42_insta-story_17911485870223540.mp4', 0, null]], hoch: true, poster: 3 },
+	'berlin25-hey': { teile: [['assets/2025_08_Berlin2/2025-08-23_09-04_insta-story_18078541817312463.mp4', 0, null]], hoch: true, poster: 4 },
+	'berlin25-licht': { teile: [['assets/2025_08_Berlin2/2025-08-23_11-25_insta-story_17976438464911307.mp4', 0, null]], hoch: true, poster: 2 },
+	'berlin25-robinjonas': { teile: [['assets/2025_08_Berlin1/2025-08-15_09-11_insta-story_18039687767393318.mp4', 0, 22]], hoch: true, poster: 10 },
+	'berlin25-btspyro': { teile: [['assets/2025_08_Berlin1/2025-08-15_09-32_insta-story_18015423290717085.mp4', 0, null]], hoch: true, poster: 2 },
+	'duesseldorf25-paulies': { teile: [['assets/2025_05_Düsseldorf1/2025-05-10_03-24_insta-story_18195162445308395.mp4', 0, null]], hoch: true, poster: 3 },
+	'timmendorf24-ericmomme': { teile: [['assets/2024_09_Timmendorf/2024-08-30_05-32_insta-story_18240282706274457.mp4', 0, null]], hoch: true, poster: 3 },
+	'kuehlungsborn24-mvp': { teile: [['assets/2024_08_Kühlungsborn2/2024-08-16_09-40_insta-story_17914065161892403.mp4', 0, null]], hoch: true, poster: 6 },
+	'kuehlungsborn24-freak': { teile: [['assets/2024_08_Kühlungsborn2/2024-08-17_10-13_insta-story_18364660513103923.mp4', 0, null]], hoch: true, poster: 5 },
+	'duesseldorf24-huette': { teile: [['assets/2024_05_Düsseldorf/2024-05-12_03-57_insta-story_18036237307747065.mp4', 0, null]], hoch: true, poster: 4 },
+	'bremen24-schalala': { teile: [['assets/2024_06_Bremen/2024-06-09_04-24_insta-story_18033214378841792.mp4', 0, null]], hoch: true, poster: 5 },
+	'hamburg23gbt-fanclub': { teile: [['assets/2023_06_Hamburg/2023-06-03_13-09_insta-story_18086321017349394.mp4', 0, null]], hoch: true, poster: 1 },
+	'hamburg23gbt-achtelfinale': { teile: [['assets/2023_06_Hamburg/2023-06-02_11-33_insta-story_17969807639235967.mp4', 0, null]], hoch: true, poster: 6 },
+	'hamburg23gbt-sieg': { teile: [['assets/2023_06_Hamburg/2023-06-03_13-08_insta-story_18367444630049570.mp4', 0, null]], hoch: true, poster: 9 },
+	'hamburg23-sverige': { teile: [['assets/2023_08_Elite_Hamburg/2023-08-20_04-17_insta-story_18026018026611712.mp4', 0, null]], hoch: true, poster: 7 },
+	'berlin23-zustand': { teile: [['assets/2023_08_Berlin/2023-08-16_09-42_insta-reel_17972904869329090.mp4', 0, null]], hoch: true, poster: 12 },
+	'berlin23-richie': { teile: [['assets/2023_08_Berlin/2023-08-13_08-21_insta-story_18011640775824456.mp4', 0, null]], hoch: true, poster: 7 },
+	'muenchen25-wirauch': { teile: [['assets/2025_07_München2/2025-07-12_09-03_insta-story_18031603538679791.mp4', 0, null]], hoch: true, poster: 8 },
+	'muenchen25-atmo': { teile: [['assets/2025_07_München2/2025-07-12_05-50_insta-story_17902616607218159.mp4', 0, null]], hoch: true, poster: 6 },
+	'duesseldorf25-fahnen': { teile: [['assets/2025_05_Düsseldorf1/2025-05-10_09-30_insta-story_18048096161525054.mp4', 0, null]], hoch: true, poster: 4 },
+	'duesseldorf24-tuecher': { teile: [['assets/2024_05_Düsseldorf/2024-05-12_05-36_insta-story_17973986750705600.mp4', 0, null]], hoch: true, poster: 8 },
+	'paris24-allez': { teile: [['assets/2024_08_Paris/2024-08-08_08-11_insta-story_18343936270136038.mp4', 0, null]], hoch: true, poster: 5 },
+	'muenchen24-nacht': { teile: [['assets/2024_07_München/2024-07-19_13-13_insta-story_18050077033794473.mp4', 0, null]], hoch: true, poster: 6 },
+	'muenchen24-feuerwerk': { teile: [['assets/2024_07_München/2024-07-20_12-51_insta-story_18027380147510704.mp4', 0, null]], hoch: true, poster: 4 },
+	'timmendorf23-trommel': { teile: [['assets/2023_09_Timmendorf/2023-08-31_03-21_insta-story_18003094021966675.mp4', 0, null]], hoch: true, poster: 4 },
+	'timmendorf23-gekommen': { teile: [['assets/2023_09_Timmendorf/2023-09-01_02-33_insta-story_17922140525775157.mp4', 0, null]], hoch: true, poster: 5 },
+	'hamburg23-support': { teile: [['assets/2023_08_Elite_Hamburg/2023-08-17_05-17_insta-story_17989915973488514.mp4', 0, null]], hoch: true, poster: 18 },
+	'timmendorf24-mvp': { teile: [['assets/2024_09_Timmendorf/2024-08-31_10-23_insta-story_17934347210913264.mp4', 0, null]], hoch: true, poster: 4 },
+	'bremen24-tim': { teile: [['assets/2024_06_Bremen/ordner_037d3652-6598-4984-a00e-8222ac1271c0.MP4', 0, null]], hoch: true, poster: 6 },
 	// Eigenes Handyvideo, quer gefilmt: mittig auf Hochkant zugeschnitten
-	'bremen24-jubel': { teile: [['assets/2024_06_Bremen/b077f5f9-569e-49d1-8416-f6ed5fea1bdb.MP4', 0, null]], crop: '405:720:437:0', hoch: true, poster: 12 },
-	'paris24-olympia': { teile: [[IG('18347289610137992'), 0, null]], hoch: true, poster: 13 },
-	'muenchen26-rudern': { teile: [[IG('18218353558332396'), 0, null]], hoch: true, poster: 11 },
+	'bremen24-jubel': { teile: [['assets/2024_06_Bremen/ordner_b077f5f9-569e-49d1-8416-f6ed5fea1bdb.MP4', 0, null]], crop: '405:720:437:0', hoch: true, poster: 12 },
+	'paris24-olympia': { teile: [['assets/2024_08_Paris/2024-08-08_09-18_insta-story_18347289610137992.mp4', 0, null]], hoch: true, poster: 13 },
+	'muenchen26-rudern': { teile: [['assets/2026_07_München1/2026-07-10_09-04_insta-reel_18218353558332396.mp4', 0, null]], hoch: true, poster: 11 },
 
 	// Reels und Stories mit unterlegter Musik
-	'hamburg26-legends': { teile: [[IG('18110183801107532'), 0, null]], hoch: true, poster: 6 },
-	'timmendorf25-abfahrt': { teile: [[IG('18087085723869671'), 0, null]], hoch: true, poster: 6 },
-	'timmendorf25-gruen': { teile: [[IG('18053289710210406'), 0, null]], hoch: true, poster: 3 },
-	'reel-crew': { teile: [[IG('18069536500899792'), 0, null]], hoch: true, poster: 4 },
-	'reel-choreo-bts': { teile: [[IG('17877498645476676'), 0, null]], hoch: true, poster: 38 },
-	'reel-award-training': { teile: [[IG('18136506835439222'), 0, null]], hoch: true, poster: 24 },
-	'reel-dortmund-pov': { teile: [[IG('17887438701612901'), 0, null]], hoch: true, poster: 40 },
+	'hamburg26-legends': { teile: [['assets/2026_08_Elite_Hamburg/2026-08-09_04-44_insta-story_18110183801107532.mp4', 0, null]], hoch: true, poster: 6 },
+	'timmendorf25-abfahrt': { teile: [['assets/2025_09_Timmendorf/2025-09-05_08-47_insta-story_18087085723869671.mp4', 0, null]], hoch: true, poster: 6 },
+	'timmendorf25-gruen': { teile: [['assets/2025_09_Timmendorf/2025-09-06_06-45_insta-story_18053289710210406.mp4', 0, null]], hoch: true, poster: 3 },
+	'reel-crew': { teile: [['assets/2025_08_Berlin2/2025-08-28_06-49_insta-reel_18069536500899792.mp4', 0, null]], hoch: true, poster: 4 },
+	'reel-choreo-bts': { teile: [['assets/2026_06_Berlin1/2026-06-10_06-26_insta-reel_17877498645476676.mp4', 0, null]], hoch: true, poster: 38 },
+	'reel-award-training': { teile: [['assets/2025_09_Timmendorf/2025-09-04_01-59_insta-reel_18136506835439222.mp4', 0, null]], hoch: true, poster: 24 },
+	'reel-dortmund-pov': { teile: [['assets/2026_08_Dortmund/2026-08-31_06-40_insta-reel_17887438701612901.mp4', 0, null]], hoch: true, poster: 40 },
 };
 
 function dauer(datei) {
