@@ -122,16 +122,34 @@ const klappbar = stimmen.length > 3;
 		line-height: 1.35;
 	}
 	/* Unter der Blase eine Zeile: links der Ausschnitt-Knopf (ggf. Siegel des Senders), rechts grau Jahr | Monat | Ort */
+	/* Knopf direkt rechts neben dem Sprechblasen-Zipfel (sitzt bei 36–66 px) */
 	.fuss {
-		margin: 30px 0 0 12px;
+		margin: 14px 0 0 80px;
 		display: flex;
 		align-items: center;
 		gap: 12px;
 	}
+	/* Datum dicht unter der Blase oben rechts, nicht auf Höhe der Knopfmitte */
 	.fuss :global(.datum) {
-		margin-left: auto;
+		align-self: flex-start;
+		flex: none;
+		margin: -2px 14px 0 auto;
 		font-size: 0.85rem;
 		opacity: 0.55;
+	}
+	@media (max-width: 459px) {
+		.fuss {
+			margin-left: 62px;
+			gap: 8px;
+		}
+		.fuss .hoeren {
+			padding: 0.4em 0.8em;
+			font-size: 0.9rem;
+		}
+		.fuss :global(.datum) {
+			margin-right: 4px;
+			font-size: 0.8rem;
+		}
 	}
 	.hoeren {
 		flex: none;
