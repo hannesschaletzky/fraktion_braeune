@@ -37,8 +37,8 @@ const erster = sender[0];
 				</div>
 				<div class="bedienung">
 					<p class="anzeige" aria-live="polite"><span class="nur-sr">Sender </span><span class="nummer">{nr(0)}</span></p>
-					<button type="button" class="hoch" aria-label="Nächster Sender">▲</button>
-					<button type="button" class="runter" aria-label="Vorheriger Sender">▼</button>
+					<button type="button" class="hoch" aria-label="Vorheriger Sender (in der Liste nach oben)">▲</button>
+					<button type="button" class="runter" aria-label="Nächster Sender (in der Liste nach unten)">▼</button>
 					<i class="regler" aria-hidden="true"></i>
 					<i class="regler" aria-hidden="true"></i>
 				</div>
@@ -88,8 +88,9 @@ const erster = sender[0];
 	}
 	const jetzt = () => Number(tv.dataset.kanal);
 
-	tv.querySelector('.hoch')!.addEventListener('click', () => schalten(jetzt() + 1));
-	tv.querySelector('.runter')!.addEventListener('click', () => schalten(jetzt() - 1));
+	// Pfeile folgen der Programmliste darunter: ▼ zum nächsten Sender (weiter unten), ▲ zum vorherigen
+	tv.querySelector('.hoch')!.addEventListener('click', () => schalten(jetzt() - 1));
+	tv.querySelector('.runter')!.addEventListener('click', () => schalten(jetzt() + 1));
 	knoepfe.forEach((k) => k.addEventListener('click', () => schalten(Number(k.dataset.nr))));
 
 	// Aus den Zitaten: Sender einschalten, mit Ton, und hinscrollen
