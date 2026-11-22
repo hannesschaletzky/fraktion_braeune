@@ -277,6 +277,18 @@
 	},
 	{
 		"jahr": 2024,
+		"ort": "Karlshagen (Usedom)",
+		"art": "Usedom Beach Cup",
+		"key": "2024-usedom",
+		"ordner": "2024_07_Usedom",
+		"fenster": [
+			"2024-07-24",
+			"2024-07-28"
+		],
+		"quelle": "eigene Auswertung (Stories); keine Station auf der Website"
+	},
+	{
+		"jahr": 2024,
 		"ort": "Kühlungsborn",
 		"tourstopp": 7,
 		"art": "GBT",
