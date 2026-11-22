@@ -90,6 +90,7 @@ export const sender: Sender[] = [
 	{ name: 'hamburg26-elitesieg', titel: 'Elite-Sieg', wann: 'Hamburg 2026' },
 	{ name: 'hamburg26-bilder', titel: 'Schaut euch diese Bilder an', wann: 'Hamburg 2026' },
 	{ name: 'br24-ultras', titel: 'Beachvolleyball-Ultras', wann: 'BR24 Sport · München 2025', hoch: true },
+	{ name: 'gbt-eltern', titel: 'Fraktion oder Eltern?', wann: 'GBT-Interview · München 2025', hoch: true },
 	{ name: 'muenchen24-traum', titel: 'Riesenbanner', wann: 'München 2024' },
 	{ name: 'duesseldorf24-zuendeln', titel: 'Schon wieder am Zündeln', wann: 'Düsseldorf 2024' },
 	{ name: 'duesseldorf24-shirts', titel: 'Fan-Shirts', wann: 'Düsseldorf 2024' },
@@ -107,4 +108,5 @@ export const stimmen = [
 	{ text: 'Herzliches Willkommen an die Fraktion Bräune, die hier schon wieder am Zündeln sind. Schön, dass ihr da seid.', wann: 'Düsseldorf 2024', sender: 'duesseldorf24-zuendeln' },
 	{ text: 'Es gibt Fan-Shirts mit der Fraktion Bräune. … Das ist insane. Viel Liebe für die Fraktion.', wann: 'Düsseldorf 2024', sender: 'duesseldorf24-shirts' },
 	{ text: 'Nebenan die Fraktion Bräune. Das sind Beachvolleyball-Ultras. Sie kommen aus Berlin und fahren von Turnier zu Turnier.', wann: 'München 2025', quelle: 'BR24 Sport', sender: 'br24-ultras' },
+	{ text: 'Fraktion Bräune oder Eltern im Publikum? – Boah, das ist ja richtig unfair … Äh, Fraktion Bräune. – Der kam schnell.', wann: 'München 2025', quelle: 'Interview der German Beach Tour', sender: 'gbt-eltern' },
 ];

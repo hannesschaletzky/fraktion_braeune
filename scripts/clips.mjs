@@ -38,6 +38,8 @@ const clips = {
 
 	// Fernsehbeitrag BR24 Sport über uns (als Story geteilt, hochkant)
 	'br24-ultras': { teile: [[IG('18082518853888070'), 0, null]], hoch: true, poster: 3 },
+	// GBT-Interview Entweder-oder (Story, hochkant)
+	'gbt-eltern': { teile: [[IG('18081912094848707'), 4.4, 24.8]], hoch: true, poster: 12 },
 
 	// Award-Interview auf der Bühne, Timmendorf 2025
 	'award25-interview': { teile: [[A + 'IMG_1422.mov', 89, 166]], hoch: true },
