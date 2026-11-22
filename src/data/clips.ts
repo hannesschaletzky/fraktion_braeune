@@ -93,6 +93,7 @@ export const sender: Sender[] = [
 	{ name: 'wdr4-dortmund', titel: 'Live bei WDR 4', wann: 'Dortmund 2026', hoch: true },
 	{ name: 'twitch-aura', titel: 'Aura-Moment', wann: 'Twitch-Stream · Berlin 2026', hoch: true },
 	{ name: 'gbt-allstars', titel: 'Fraktion vs. Allstars', wann: 'GBT-Interview · Berlin 2 2025', hoch: true },
+	{ name: 'berlin25-chenoa', titel: 'Chenoa vs. Fraktion', wann: 'Berlin 1 2025' },
 	{ name: 'br24-ultras', titel: 'Beachvolleyball-Ultras', wann: 'BR24 Sport · München 2025', hoch: true },
 	{ name: 'gbt-eltern', titel: 'Fraktion oder Eltern?', wann: 'GBT-Interview · München 2025', hoch: true },
 	{ name: 'gbt-geheim', titel: 'Choreo? Geheim!', wann: 'GBT-Interview · München 2025', hoch: true },

@@ -33,6 +33,14 @@ const clips = {
 			[W + 'VIDEO-2024-07-21-21-55-22.mp4', 77.2, 86],
 		],
 	},
+	'berlin25-chenoa': {
+		teile: [
+			[R + 'Screen Recording 2025-08-17 at 21.34.32.mov', 7, 63],
+			[R + 'Screen Recording 2025-08-17 at 21.34.32.mov', 81, 88],
+		],
+		crop: '1806:1016:16:0',
+		poster: 37,
+	},
 	'hamburg26-bilder': { teile: [[R + 'Screen Recording 2026-08-10 at 00.10.56.mov', 0, null]], crop: '2750:1547:8:330' },
 	'hamburg26-respekt': { teile: [[R + 'Screen Recording 2026-08-10 at 00.50.33.mov', 0, null]], crop: '2288:1287:304:388', poster: 20 },
 	'hamburg26-elitesieg': { teile: [[R + 'Screen Recording 2026-08-10 at 01.32.06.mov', 0, null]], crop: '2270:1277:262:84' },

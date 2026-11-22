@@ -1,10 +1,11 @@
 ---
-// Startseite: die drei neuesten Choreos als Karten, alle auf der Choreo-Seite
+// Startseite: je eine Choreo aus 2026, 2025 und 2024 als Karte, alle auf der Choreo-Seite
 import Karten from './Karten.astro';
 import { choreos, slug } from '../data/choreos';
 import { monate } from '../data/stationen';
+import { startChoreos } from '../data/startseite';
 
-const karten = choreos.slice(0, 3).map((c) => ({
+const karten = startChoreos.map((c) => ({
 	href: `/choreos/#${slug(c)}`,
 	bild: c.fotos[0].bild,
 	alt: c.fotos[0].alt,
@@ -17,7 +18,7 @@ const karten = choreos.slice(0, 3).map((c) => ({
 <section class="abschnitt wand" id="choreos">
 	<div class="wrap">
 		<h2>Unsere <span class="bunt">{[...'Choreos'].map((c) => <span>{c}</span>)}</span></h2>
-		<p class="einleitung">Banner, Fahnen, Papptafeln und Rauch. {choreos.length} Choreos, die neuesten:</p>
+		<p class="einleitung">Banner, Fahnen, Papptafeln und Rauch. {choreos.length} Choreos, zum Beispiel:</p>
 		<Karten karten={karten} mehr={{ href: '/choreos/', text: `Alle ${choreos.length} Choreos mit Fotos und Videos →` }} />
 	</div>
 </section>

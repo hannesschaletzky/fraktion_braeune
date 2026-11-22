@@ -1,12 +1,10 @@
 ---
-// Startseite: die drei neuesten Stationen als Karten, alle auf der Stationen-Seite
+// Startseite: je eine Station aus 2026, 2025 und 2024 als Karte, alle auf der Stationen-Seite
 import Karten from './Karten.astro';
 import { stationen, monate, ortName, slug } from '../data/stationen';
+import { startStationen } from '../data/startseite';
 
-const karten = stationen
-	.filter((s) => s.fotos.length)
-	.slice(0, 3)
-	.map((s) => ({
+const karten = startStationen.map((s) => ({
 		href: `/stationen/#${slug(s)}`,
 		bild: s.fotos[0].bild,
 		alt: s.fotos[0].alt,
@@ -19,7 +17,7 @@ const karten = stationen
 <section class="abschnitt chronik" id="stationen">
 	<div class="wrap">
 		<h2>Unsere <span class="bunt">{[...'Stationen'].map((c) => <span>{c}</span>)}</span></h2>
-		<p class="einleitung">Von den ersten Pappschildern in Timmendorf 2022 bis zur Pyro-Wand im Pott. {stationen.length} Turniere, die neuesten:</p>
+		<p class="einleitung">Von den ersten Pappschildern in Timmendorf 2022 bis zur Pyro-Wand im Pott. {stationen.length} Turniere, zum Beispiel:</p>
 		<Karten karten={karten} mehr={{ href: '/stationen/', text: `Alle ${stationen.length} Stationen mit Fotos und Videos →` }} />
 	</div>
 </section>
