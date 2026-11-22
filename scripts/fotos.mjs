@@ -240,7 +240,7 @@ if (import.meta.main) {
 			.jpeg({ quality: 80, mozjpeg: true })
 			.toFile(datei);
 		// Fotograf steht im Dateinamen (@justus.fotos …), GBT_ = Pressefoto der Tour
-		// Originalname ohne Datum und Herkunft davor (2025-08-16_17-26_apple_…, siehe scripts/medien/einsortieren.mjs)
+		// Originalname ohne Datum und Herkunft davor (2025-08-16_17-26_apple_…, siehe assets/_werkzeug/einsortieren.mjs)
 		const basis = path.basename(quelle).replace(/^(\d{4}-\d{2}-\d{2}_\d{2}-\d{2}_)?(apple|apple-ca|whatsapp|stream|insta-[a-z]+|ordner|eingang|standbild|zuschnitt)_/, '');
 		credits[name] =
 			basis.match(/^@([a-z0-9._]+?)[-_]/i)?.[1]?.replace(/\.$/, '') ??

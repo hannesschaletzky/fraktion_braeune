@@ -6,7 +6,7 @@ import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import sharp from 'sharp';
 
-// Quellen liegen in den Stopp-Ordnern unter assets/ (siehe scripts/medien/einsortieren.mjs)
+// Quellen liegen in den Stopp-Ordnern unter assets/ (siehe assets/_werkzeug/einsortieren.mjs)
 
 /**
  * teile: [Datei, Start, Ende] (Ende null = bis Schluss)
