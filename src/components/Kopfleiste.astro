@@ -250,18 +250,29 @@ const links = [
 	.kontext :global(.ort) {
 		font-size: inherit;
 	}
-	.kontext :global(.strich) {
+	.kontext :global(.strich),
+	.kontext :global(.strich:last-child) {
 		margin: 0 0.35em;
 		opacity: 0.35;
 	}
 	.kontext :global(.ort) {
 		color: var(--sonne);
 	}
+	/* Zusatz (z. B. ELITE16) als kleines, gerades Etikett, das in die Leiste passt */
 	.kontext :global(.zusatz) {
+		display: inline-block;
 		margin-left: 0.5em;
-		font-size: 0.75em;
+		padding: 0 0.35em;
+		border: 2px solid var(--sonne);
+		border-radius: 3px;
+		font-size: 0.7em;
+		line-height: 1.35;
+		vertical-align: 0.2em;
 		color: var(--sonne);
-		opacity: 0.8;
+		transform: none;
+	}
+	.kontext {
+		line-height: 1.6;
 	}
 	/* Handy: Platz schaffen, solange die Überschrift steht */
 	@media (max-width: 640px) {
@@ -272,7 +283,8 @@ const links = [
 			font-size: 0.95rem;
 			letter-spacing: 0.01em;
 		}
-		.kontext :global(.strich) {
+		.kontext :global(.strich),
+		.kontext :global(.strich:last-child) {
 			margin: 0 0.2em;
 		}
 	}
