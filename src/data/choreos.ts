@@ -99,8 +99,8 @@ export const choreos: Choreo[] = [
 		monat: 8,
 		stopp: 2,
 		ort: 'Berlin',
-		titel: 'Wir regieren die Hauptstadt',
-		fotos: [foto('choreo-2025-regieren', 'Banner „Wir regieren die Hauptstadt – Hauptstadt Beacher“ mit Rauch')],
+		titel: 'Hier regieren die Hauptstadt Beacher',
+		fotos: [foto('choreo-2025-regieren', 'Banner „Hier regieren die Hauptstadt Beacher“ mit Fackeln und Rauch')],
 	},
 	{
 		jahr: 2025,
