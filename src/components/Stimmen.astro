@@ -5,14 +5,17 @@ import { sender, stimmen } from '../data/clips';
 const farben = ['var(--lila)', 'var(--gruen)', 'var(--fackel)', 'var(--sonne)', 'var(--blau)', 'var(--glut)'];
 const neigung = [-2, 1.5, -1, 2, -1.5, 1];
 const kanal = (name: string) => String(sender.findIndex((s) => s.name === name) + 1).padStart(2, '0');
+// Zuerst nur so viele Zitate, danach schaut die nächste Reihe verblasst hervor und ein Knopf klappt den Rest auf
+const SICHTBAR = 4;
+const klappbar = stimmen.length > SICHTBAR;
 ---
 
 <section class="abschnitt stimmen" id="stimmen">
 	<div class="wrap">
 		<h2>Was über uns <span class="bunt">{[...'gesagt'].map((c) => <span>{c}</span>)}</span> wird</h2>
-		<ul class="blasen" role="list">
+		<ul class="blasen" role="list" id="stimmen-liste">
 			{stimmen.map((s, i) => (
-				<li style={`--farbe: ${farben[i % farben.length]}; --r: ${neigung[i % neigung.length]}deg`}>
+				<li style={`--farbe: ${farben[i % farben.length]}; --r: ${neigung[i % neigung.length]}deg`} class:list={{ mehr: i >= SICHTBAR }} inert={i >= SICHTBAR}>
 					<blockquote>
 						<p>„{s.text}“</p>
 					</blockquote>
@@ -21,10 +24,26 @@ const kanal = (name: string) => String(sender.findIndex((s) => s.name === name) 
 				</li>
 			))}
 		</ul>
+		{klappbar && (
+			<button type="button" class="aufklappen" aria-expanded="false" aria-controls="stimmen-liste" data-zu={`Alle ${stimmen.length} Stimmen zeigen ↓`} data-auf="Weniger zeigen ↑">
+				Alle {stimmen.length} Stimmen zeigen ↓
+			</button>
+		)}
 	</div>
 </section>
 
 <script>
+	const liste = document.querySelector<HTMLElement>('#stimmen-liste');
+	const klapp = document.querySelector<HTMLButtonElement>('.stimmen .aufklappen');
+	klapp?.addEventListener('click', () => {
+		const offen = klapp.getAttribute('aria-expanded') !== 'true';
+		klapp.setAttribute('aria-expanded', String(offen));
+		klapp.textContent = (offen ? klapp.dataset.auf : klapp.dataset.zu) ?? '';
+		liste?.classList.toggle('offen', offen);
+		liste?.querySelectorAll<HTMLElement>('.mehr').forEach((li) => (li.inert = !offen));
+		// Beim Zuklappen zurück zum Anfang des Abschnitts, sonst steht man mitten in der nächsten Sektion
+		if (!offen) document.querySelector('#stimmen')?.scrollIntoView({ block: 'start' });
+	});
 	document.querySelectorAll<HTMLButtonElement>('.stimmen .hoeren').forEach((b) =>
 		b.addEventListener('click', () => document.dispatchEvent(new CustomEvent('fb:sender', { detail: b.dataset.sender }))),
 	);
@@ -101,5 +120,48 @@ const kanal = (name: string) => String(sender.findIndex((s) => s.name === name) 
 	.hoeren:hover {
 		background: var(--papier);
 		color: var(--tinte);
+	}
+
+	/* Zugeklappt: die nächste Reihe (eine Blase am Handy, zwei ab Tablet) schaut verblassend hervor, der Rest ist weg */
+	.blasen:not(.offen) .mehr {
+		display: none;
+	}
+	.blasen:not(.offen) .mehr:nth-child(5) {
+		display: block;
+		max-height: 120px;
+		overflow: hidden;
+		mask-image: linear-gradient(#000 10%, transparent 95%);
+		pointer-events: none;
+	}
+	@media (min-width: 760px) {
+		.blasen:not(.offen) .mehr:nth-child(6) {
+			display: block;
+			max-height: 120px;
+			overflow: hidden;
+			mask-image: linear-gradient(#000 10%, transparent 95%);
+			pointer-events: none;
+		}
+	}
+	.aufklappen {
+		display: block;
+		margin: 8px auto 0;
+		padding: 0.6em 1.4em;
+		border-radius: 999px;
+		border: 2px solid var(--sonne);
+		background: var(--sonne);
+		color: var(--tinte);
+		font-family: var(--display);
+		font-size: 1.15rem;
+		letter-spacing: 0.03em;
+		cursor: pointer;
+		transition: transform 0.2s;
+	}
+	.aufklappen:hover {
+		transform: scale(1.05);
+	}
+	.blasen.offen + .aufklappen {
+		margin-top: 48px;
+		background: transparent;
+		color: var(--sonne);
 	}
 </style>
