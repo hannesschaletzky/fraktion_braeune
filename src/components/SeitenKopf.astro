@@ -9,6 +9,9 @@ interface Props {
 }
 const { wort, eintraege } = Astro.props;
 const jahre = [...new Set(eintraege.map((e) => e.jahr))].sort((a, b) => b - a);
+// Bei „Alle“ zuerst nur etwa ein Drittel der Pillen, der Rest per Knopf
+const ZUERST = Math.max(6, Math.ceil(eintraege.length / 3));
+const mehr = eintraege.length - ZUERST;
 ---
 
 <header class="kopf">
@@ -18,13 +21,16 @@ const jahre = [...new Set(eintraege.map((e) => e.jahr))].sort((a, b) => b - a);
 			<button type="button" data-jahr="alle" aria-pressed="true">Alle</button>
 			{jahre.map((j) => <button type="button" data-jahr={j} aria-pressed="false">{j}</button>)}
 		</div>
-		<nav class="inhalt" aria-label={wort}>
-			{eintraege.map((e) => (
-				<a href={e.href} data-jahr={e.jahr}>
+		<nav class="inhalt eingeklappt" aria-label={wort} data-zuerst={ZUERST}>
+			{eintraege.map((e, i) => (
+				<a href={e.href} data-jahr={e.jahr} class:list={{ spaeter: i >= ZUERST }}>
 					<span class="kurzjahr" aria-label={String(e.jahr)}>’{String(e.jahr).slice(2)}</span>{e.text}
 					{e.nebensache && <span class="nebensache">{e.nebensache}</span>}
 				</a>
 			))}
+			{mehr > 0 && (
+				<button type="button" class="mehr" aria-expanded="false">+ {mehr} weitere</button>
+			)}
 		</nav>
 	</div>
 </header>
@@ -32,11 +38,19 @@ const jahre = [...new Set(eintraege.map((e) => e.jahr))].sort((a, b) => b - a);
 <script>
 	const knoepfe = [...document.querySelectorAll<HTMLButtonElement>('.kopf .filter button')];
 	const ziele = [...document.querySelectorAll<HTMLElement>('.kopf .inhalt a[data-jahr], [data-eintrag][data-jahr]')];
+	const inhalt = document.querySelector<HTMLElement>('.kopf .inhalt')!;
+	const mehr = inhalt.querySelector<HTMLButtonElement>('.mehr');
+	// „+ N weitere“ klappt alle Pillen auf; bei einem gewählten Jahr sind ohnehin alle dieses Jahres zu sehen
+	mehr?.addEventListener('click', () => {
+		inhalt.classList.remove('eingeklappt');
+		mehr.setAttribute('aria-expanded', 'true');
+	});
 	knoepfe.forEach((k) =>
 		k.addEventListener('click', () => {
 			const jahr = k.dataset.jahr!;
 			knoepfe.forEach((x) => x.setAttribute('aria-pressed', String(x === k)));
 			ziele.forEach((e) => (e.hidden = jahr !== 'alle' && e.dataset.jahr !== jahr));
+			inhalt.classList.toggle('jahr-gewaehlt', jahr !== 'alle');
 		}),
 	);
 </script>
@@ -112,6 +126,30 @@ const jahre = [...new Set(eintraege.map((e) => e.jahr))].sort((a, b) => b - a);
 		font-size: 0.8em;
 		font-weight: 600;
 		opacity: 0.5;
+	}
+	/* Eingeklappt (nur bei „Alle“): spätere Pillen ausblenden, dafür der Knopf „+ N weitere“ */
+	.inhalt.eingeklappt:not(.jahr-gewaehlt) .spaeter {
+		display: none;
+	}
+	.mehr {
+		display: none;
+		padding: 0.35em 0.9em;
+		border-radius: 999px;
+		border: 2px dashed var(--sonne);
+		background: transparent;
+		color: var(--sonne);
+		font: inherit;
+		font-size: 0.9rem;
+		font-weight: 800;
+		cursor: pointer;
+		transition: background 0.2s, color 0.2s;
+	}
+	.mehr:hover {
+		background: var(--sonne);
+		color: var(--tinte);
+	}
+	.inhalt.eingeklappt:not(.jahr-gewaehlt) .mehr {
+		display: inline-block;
 	}
 	:global([data-jahr][hidden]) {
 		display: none !important;
