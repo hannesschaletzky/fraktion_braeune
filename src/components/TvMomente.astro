@@ -91,6 +91,12 @@ const erster = sender[0];
 		tv.querySelector('.kanal')!.textContent = `CH ${nr(i)}`;
 		tv.querySelector('.nummer')!.textContent = nr(i);
 		knoepfe.forEach((k, j) => (j === i ? k.setAttribute('aria-current', 'true') : k.removeAttribute('aria-current')));
+		// Handy: aktiven Sender in der Wisch-Leiste in die Mitte holen (nur seitlich, die Seite springt nicht)
+		const leiste = knoepfe[i].closest('.programm') as HTMLElement;
+		if (leiste.scrollWidth > leiste.clientWidth) {
+			const li = knoepfe[i].parentElement!;
+			leiste.scrollTo({ left: li.offsetLeft - (leiste.clientWidth - li.offsetWidth) / 2, behavior: 'smooth' });
+		}
 		// Kurzes Rauschen beim Umschalten
 		tv.classList.remove('wechsel');
 		void tv.offsetWidth;
@@ -356,6 +362,30 @@ const erster = sender[0];
 	.pwann {
 		font-size: 0.85rem;
 		opacity: 0.75;
+	}
+	/* Handy: einzeilige Wisch-Leiste direkt unter dem Fernseher statt langer Liste */
+	@media (max-width: 759px) {
+		.programm {
+			position: relative;
+			display: flex;
+			gap: 10px;
+			margin: 28px -16px 0;
+			padding: 4px 16px 12px;
+			overflow-x: auto;
+			scroll-snap-type: x mandatory;
+			scrollbar-width: none;
+		}
+		.programm::-webkit-scrollbar {
+			display: none;
+		}
+		.programm li {
+			flex: 0 0 auto;
+			width: min(64vw, 240px);
+			scroll-snap-align: center;
+		}
+		.programm button {
+			height: 100%;
+		}
 	}
 	.quelle {
 		margin: 32px auto 0;
