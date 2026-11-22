@@ -100,6 +100,7 @@ export const clips = {
 	'paris24-allez': { teile: [['assets/2024_08_Paris/2024-08-08_08-11_insta-story_18343936270136038.mp4', 0, null]], hoch: true, poster: 5 },
 	'muenchen24-nacht': { teile: [['assets/2024_07_München/2024-07-19_13-13_insta-story_18050077033794473.mp4', 0, null]], hoch: true, poster: 6 },
 	'muenchen24-feuerwerk': { teile: [['assets/2024_07_München/2024-07-20_12-51_insta-story_18027380147510704.mp4', 0, null]], hoch: true, poster: 4 },
+	'timmendorf23-block': { teile: [['assets/2023_09_Timmendorf/2023-09-02_18-30_eingang_58437f5639be43d08ca3ae3242ce815b.MP4', 0, null]], hoch: true, poster: 4 },
 	'timmendorf23-trommel': { teile: [['assets/2023_09_Timmendorf/2023-08-31_03-21_insta-story_18003094021966675.mp4', 0, null]], hoch: true, poster: 4 },
 	'timmendorf23-gekommen': { teile: [['assets/2023_09_Timmendorf/2023-09-01_02-33_insta-story_17922140525775157.mp4', 0, null]], hoch: true, poster: 5 },
 	'hamburg23-support': { teile: [['assets/2023_08_Elite_Hamburg/2023-08-17_05-17_insta-story_17989915973488514.mp4', 0, null]], hoch: true, poster: 18 },

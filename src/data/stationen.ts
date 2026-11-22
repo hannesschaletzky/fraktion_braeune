@@ -243,8 +243,9 @@ export const stationen: Station[] = [
 			foto('2023-timmendorf-1', 'Fans oben ohne singen mit Fahne und Schildern auf der Tribüne'),
 			foto('2023-timmendorf-3', 'Drei Fans oben ohne jubeln an der Bande'),
 			foto('2023-timmendorf-4', 'Selbstgemalte Schilder wie „Ballern“ über dem Banner'),
+			foto('2023-timmendorf-medaillen', 'Zwei Fans an der Bande mit Warsteiner-Medaillen und einem Herz-Schild'),
 		],
-		clips: ['timmendorf23-trommel', 'timmendorf23-gekommen'],
+		clips: ['timmendorf23-trommel', 'timmendorf23-gekommen', 'timmendorf23-block'],
 	},
 	{
 		jahr: 2023,

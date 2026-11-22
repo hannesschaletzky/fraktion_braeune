@@ -20,6 +20,7 @@ function exifFotograf(datei) {
 }
 
 export const auswahl = {
+	'2023-timmendorf-medaillen': '2023_09_Timmendorf/2023-09-02_19-12_ordner_@justus.fotos-20230902-DSC09796.jpg',
 	'2023-timmendorf-1': '2023_09_Timmendorf/2023-09-02_12-00_ordner_@justus.fotos-20230902-DSC04185.jpg',
 	'2023-timmendorf-2': '2023_09_Timmendorf/2023-09-02_19-10_ordner_@justus.fotos-20230902-DSC09514.jpg',
 	'2023-timmendorf-3': '2023_09_Timmendorf/2023-09-02_18-46_ordner_@kevinmtg.fotos-Timmendorf23--444.jpg',

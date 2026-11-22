@@ -51,6 +51,7 @@ export const clips = {
 	'paris24-allez': c('paris24-allez', 'Jubel für Ehlers und Wickler bei Olympia', true, 'Die Fraktion hat euren Rücken ❤️ ALLEZ'),
 	'muenchen24-nacht': c('muenchen24-nacht', 'Abendkonzert der Tour in München', true, 'München schwer zu toppen.'),
 	'muenchen24-feuerwerk': c('muenchen24-feuerwerk', 'Feuerwerk über dem Olympiapark', true),
+	'timmendorf23-block': c('timmendorf23-block', 'Selfie-Video mitten im Block, Fahnen wehen, alle schreien', true),
 	'timmendorf23-trommel': c('timmendorf23-trommel', 'Trommel und Sprechchor „Er legt“', true, 'musikalisch talentiert sind wir auch 🥁'),
 	'timmendorf23-gekommen': c('timmendorf23-gekommen', 'Sprechchor „Er ist gekommen“ im Block', true),
 	'hamburg23-support': c('hamburg23-support', 'Anfeuern im Stadion am Rothenbaum', true, 'Natürlich ist der Support am Start!'),

@@ -56,12 +56,14 @@ function exifDaten(dateien) {
 	fs.writeFileSync(liste, dateien.join('\n'));
 	const out = execFileSync(
 		'exiftool',
-		['-fast2', '-j', '-q', '-api', 'QuickTimeUTC', '-d', '%Y-%m-%d %H:%M', '-DateTimeOriginal', '-CreationDate', '-@', liste],
+		['-fast', '-j', '-q', '-api', 'QuickTimeUTC', '-d', '%Y-%m-%d %H:%M', '-DateTimeOriginal', '-CreationDate', '-CreateDate', '-FileModifyDate', '-@', liste],
 		{ encoding: 'utf8', maxBuffer: 256e6 },
 	);
 	fs.rmSync(liste);
 	const echt = (d) => typeof d === 'string' && /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(d) && !d.startsWith('0000');
-	return Object.fromEntries(JSON.parse(out || '[]').map((x) => [x.SourceFile, [x.DateTimeOriginal, x.CreationDate].find(echt) ?? null]));
+	// CreateDate (Videos) nur, wenn es nicht bloß der Tag des Exports/Kopierens ist (sonst gleich dem Dateidatum)
+	const erstellt = (x) => (echt(x.CreateDate) && Math.abs(Date.parse(x.CreateDate) - Date.parse(String(x.FileModifyDate).slice(0, 16))) > 2 * 864e5 ? x.CreateDate : null);
+	return Object.fromEntries(JSON.parse(out || '[]').map((x) => [x.SourceFile, [x.DateTimeOriginal, x.CreationDate].find(echt) ?? erstellt(x)]));
 }
 
 /** Datum aus dem Dateinamen (WhatsApp, Bildschirmaufnahmen, Kamera-Namen wie 20230902-DSC…) */
