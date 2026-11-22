@@ -23,6 +23,8 @@ const links = [
 	<a href="/" class="marke" aria-label="Fraktion Bräune, zur Startseite">
 		<Image src={logo} widths={[100, 200, 300]} sizes="100px" format="png" loading="eager" alt="" class="logo" />
 	</a>
+	<!-- Auf Stationen und Choreos: zeigt beim Scrollen, wo man gerade ist (Jahr | Monat | Ort) -->
+	<p class="kontext" aria-hidden="true"></p>
 	<nav aria-label="Abschnitte">
 		{links.map((l) => (
 			<a href={l.href} class:list={{ immer: l.immer }} aria-current={Astro.url.pathname === l.href ? 'page' : undefined}>
@@ -59,6 +61,46 @@ const links = [
 		{ passive: true },
 	);
 	pruefen();
+
+	// Mitlaufende Überschrift: solange der Kopf einer Station/Choreo oben aus dem Bild ist, ihr Ende (inkl. Videos)
+	// aber noch nicht, steht „Jahr | Monat | Ort“ in der Leiste.
+	const kontext = leiste.querySelector<HTMLElement>('.kontext')!;
+	const eintraege = [...document.querySelectorAll<HTMLElement>('[data-eintrag]')].filter((e) => e.querySelector('.wann'));
+	if (eintraege.length) {
+		// Linke Kante wie die Köpfe der Einträge, aber nie unter dem Logo; rechts nie unter die Links
+		const ausrichten = () => {
+			const links = eintraege[0].querySelector('.wann')!.getBoundingClientRect().left;
+			const logo = leiste.querySelector('.marke')!.getBoundingClientRect().right + 24;
+			leiste.style.setProperty('--kontext-links', `${Math.round(Math.max(links, logo))}px`);
+			leiste.style.setProperty('--nav-breite', `${leiste.querySelector('nav')!.offsetWidth + 32}px`);
+		};
+		ausrichten();
+		addEventListener('resize', ausrichten);
+		let zeigt: HTMLElement | null = null;
+		let wartetK = false;
+		const kontextPruefen = () => {
+			wartetK = false;
+			const linie = leiste.offsetHeight + 4;
+			const aktiv =
+				eintraege.find((e) => {
+					if (e.hidden) return false;
+					const kopf = e.querySelector('.wann')!.getBoundingClientRect();
+					const r = e.getBoundingClientRect();
+					return kopf.bottom < linie && r.bottom > linie + 40;
+				}) ?? null;
+			if (aktiv === zeigt) return;
+			zeigt = aktiv;
+			if (aktiv) kontext.innerHTML = aktiv.querySelector('.wann')!.innerHTML;
+			leiste.classList.toggle('mit-kontext', !!aktiv);
+		};
+		addEventListener('scroll', () => {
+			if (wartetK) return;
+			wartetK = true;
+			requestAnimationFrame(kontextPruefen);
+		}, { passive: true });
+		kontextPruefen();
+	}
+
 	// Auf der Startseite führt das Logo sanft nach oben statt neu zu laden
 	leiste.querySelector('.marke')!.addEventListener('click', (e) => {
 		if (location.pathname !== '/') return;
@@ -163,6 +205,75 @@ const links = [
 	@media (max-width: 640px) {
 		nav a:not(.immer) {
 			display: none;
+		}
+	}
+	/* Mitlaufende Überschrift neben dem Logo, gleiche Schrift wie die Köpfe der Stationen */
+	.kontext {
+		flex: 1;
+		min-width: 0;
+		margin: 0 0 0 -4px;
+		padding-left: 10px;
+		border-left: 2px solid rgb(248 242 231 / 0.2);
+		font-family: var(--display);
+		font-size: clamp(1rem, 2.2vw, 1.35rem);
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		opacity: 0;
+		visibility: hidden;
+		transition:
+			opacity 0.3s ease,
+			visibility 0s linear 0.3s;
+	}
+	/* Rechner: Überschrift auf derselben linken Kante wie die Köpfe der Einträge (per Skript gemessen);
+	   auf schmaleren Fenstern mindestens rechts vom Logo */
+	@media (min-width: 641px) {
+		.kontext {
+			position: absolute;
+			left: var(--kontext-links, 140px);
+			right: var(--nav-breite, 520px);
+			margin: 0;
+			padding-left: 0;
+			border-left: 0;
+		}
+	}
+	.mit-kontext .kontext {
+		opacity: 1;
+		visibility: visible;
+		transition:
+			opacity 0.3s ease,
+			visibility 0s;
+	}
+	.kontext :global(.datum),
+	.kontext :global(.ort) {
+		font-size: inherit;
+	}
+	.kontext :global(.strich) {
+		margin: 0 0.35em;
+		opacity: 0.35;
+	}
+	.kontext :global(.ort) {
+		color: var(--sonne);
+	}
+	.kontext :global(.zusatz) {
+		margin-left: 0.5em;
+		font-size: 0.75em;
+		color: var(--sonne);
+		opacity: 0.8;
+	}
+	/* Handy: Platz schaffen, solange die Überschrift steht */
+	@media (max-width: 640px) {
+		.mit-kontext nav a:not(.insta) {
+			display: none;
+		}
+		.kontext {
+			font-size: 0.95rem;
+			letter-spacing: 0.01em;
+		}
+		.kontext :global(.strich) {
+			margin: 0 0.2em;
 		}
 	}
 </style>
