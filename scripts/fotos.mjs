@@ -103,6 +103,10 @@ export const auswahl = {
 	'2022-timmendorf-3': '2022_09_Timmendorf/2022-09-09_03-32_insta-post_18313085038026286.webp',
 	'2023-bremen-1': '2023_05_Bremen1/2023-05-14_18-47_eingang_@justus.fotos-20230514-DSC09217.jpg',
 	'2023-bremen-2': '2023_05_Bremen1/2023-05-14_14-11_eingang_@justus.fotos-20230514-DSC09631.jpg',
+	'2023-hamburggbt-sieg': '2023_06_Hamburg/2023-06-05_10-50_eingang_d58bb044-424c-4634-9e98-3f5d313f2e07.JPG',
+	'2023-hamburggbt-block': '2023_06_Hamburg/2023-06-04_16-12_eingang_IMG_6659.JPG',
+	'2023-hamburggbt-bande': '2023_06_Hamburg/zuschnitt_gbt-post-block.jpg',
+	'2023-hamburggbt-selfie': '2023_06_Hamburg/2023-06-02_23-16_eingang_249f45de-2f0d-4f5d-9e37-c11a8369596b.JPG',
 	'2023-berlin-sieg': '2023_08_Berlin/2023-08-13_19-18_eingang_@justus.fotos-20230813-DSC06651.jpg',
 	'2023-berlin-1': '2023_08_Berlin/2023-08-13_15-43_apple_2B1C7E1C-6227-4E7E-B8AB-06363DB59EDE.jpeg',
 	'2023-berlin-2': '2023_08_Berlin/2023-08-13_19-04_apple_0D1828ED-9D1B-42B9-913B-5B8D9BDCBB4B.jpeg',
@@ -149,7 +153,7 @@ if (import.meta.main) {
 			.toFile(datei);
 		// Fotograf steht im Dateinamen (@justus.fotos …), GBT_ = Pressefoto der Tour
 		// Originalname ohne Datum und Herkunft davor (2025-08-16_17-26_apple_…, siehe scripts/medien/einsortieren.mjs)
-		const basis = path.basename(quelle).replace(/^(\d{4}-\d{2}-\d{2}_\d{2}-\d{2}_)?(apple|apple-ca|whatsapp|stream|insta-[a-z]+|ordner|eingang|standbild)_/, '');
+		const basis = path.basename(quelle).replace(/^(\d{4}-\d{2}-\d{2}_\d{2}-\d{2}_)?(apple|apple-ca|whatsapp|stream|insta-[a-z]+|ordner|eingang|standbild|zuschnitt)_/, '');
 		credits[name] =
 			basis.match(/^@([a-z0-9._]+?)[-_]/i)?.[1]?.replace(/\.$/, '') ??
 			(basis.startsWith('GBT_') ? 'German Beach Tour' : exifFotograf(path.join('assets', quelle)));

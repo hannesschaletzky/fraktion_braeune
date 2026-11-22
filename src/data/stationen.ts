@@ -280,7 +280,12 @@ export const stationen: Station[] = [
 		monat: 6,
 		ort: 'Hamburg',
 		motto: '„Verrückte Menschen ❤️“ – Eric Stadie über uns',
-		fotos: [],
+		fotos: [
+			foto('2023-hamburggbt-sieg', 'Stadie und Kühlborn jubeln vor unserem Block, dahinter Schilder und das Banner „Fraktion Bräune“'),
+			foto('2023-hamburggbt-block', 'Der Block oben ohne auf der Tribüne am Heiligengeistfeld'),
+			foto('2023-hamburggbt-bande', 'Einer von uns schwingt das Bein über die Bande, daneben die Jungs oben ohne mit Daumen hoch'),
+			foto('2023-hamburggbt-selfie', 'Selfie auf der Tribüne mit den Schildern „Boom“, „Ballern“ und „Block“'),
+		],
 		clips: ['hamburg23gbt-fanclub', 'hamburg23gbt-achtelfinale', 'hamburg23gbt-sieg'],
 	},
 	{

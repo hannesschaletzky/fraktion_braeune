@@ -21,7 +21,7 @@ const A = 'assets';
 const OHNE = '_ohne_Stopp';
 const OHNE_DATUM = `${OHNE}/ohne_Datum`;
 const MEDIEN = /\.(jpe?g|png|heic|webp|gif|mov|mp4|m4v|avi|3gp)$/i;
-const HERKUNFT = ['apple', 'apple-ca', 'whatsapp', 'stream', 'insta-post', 'insta-reel', 'insta-story', 'insta-profil', 'insta-sonst', 'ordner', 'eingang', 'standbild'];
+const HERKUNFT = ['apple', 'apple-ca', 'whatsapp', 'stream', 'insta-post', 'insta-reel', 'insta-story', 'insta-profil', 'insta-sonst', 'ordner', 'eingang', 'standbild', 'zuschnitt'];
 const EINSORTIERT = new RegExp(`^(\\d{4}-\\d{2}-\\d{2}_\\d{2}-\\d{2}_)?(${HERKUNFT.join('|')})_`);
 /** Tage nach dem Turnier, die je Herkunft noch zählen (Posts kommen oft erst später) */
 const NACHLAUF = { 'insta-post': 10, 'insta-reel': 10, 'insta-story': 1, stream: 1 };

@@ -116,6 +116,10 @@ export const sender: Sender[] = [
 	{ name: 'aufmpferd', titel: 'Aufm Pferd', wann: 'Timmendorf 2023' },
 	{ name: 'biertaufe', titel: 'Biertaufe', wann: 'Timmendorf 2023' },
 	{ name: 'friesenjung', titel: 'Friesenjung', wann: 'Timmendorf 2023' },
+	{ name: 'hamburg23gbt-mvp', titel: 'Einfach MVP', wann: 'Hamburg 2023' },
+	{ name: 'hamburg23gbt-platz', titel: 'Der Platz passt zu denen', wann: 'Hamburg 2023' },
+	{ name: 'hamburg23gbt-sehen', titel: 'Die muss man doch sehen', wann: 'Hamburg 2023' },
+	{ name: 'hamburg23gbt-dancecam', titel: 'Kühlborn, Stadie!', wann: 'Hamburg 2023' },
 	{ name: 'timmendorf22-clipit', titel: 'Clip it!', wann: 'Timmendorf 2022' },
 	{ name: 'kw21-kommentar', titel: 'Die Fraktion Bräune', wann: 'Königs Wusterhausen 2021' },
 ];
