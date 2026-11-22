@@ -2,6 +2,7 @@
 // Ein Fernseher mit Senderwahl: Mitschnitte aus dem Livestream. Steuerung: src/scripts/videos.ts
 import '../styles/spieler.css';
 import DatumZeile from './DatumZeile.astro';
+import Siegel from './Siegel.astro';
 import { sender, wannText } from '../data/clips';
 
 const nr = (i: number) => String(i + 1).padStart(2, '0');
@@ -60,7 +61,7 @@ const erster = sender[0];
 						<span class="pnr">{nr(i)}</span>
 						<span class="ptitel">{s.titel}</span>
 						<DatumZeile class="pwann" jahr={s.jahr} monat={s.monat} ort={s.ort} />
-						{s.anbieter && <span class="siegel" title={`Ausgestrahlt bei ${s.anbieter}`}>{s.anbieter}</span>}
+						{s.anbieter && <Siegel class="psiegel" anbieter={s.anbieter} />}
 					</button>
 				</li>
 			))}
@@ -383,22 +384,13 @@ const erster = sender[0];
 		line-height: 1.25;
 	}
 	/* Datumszeile unter dem Titel (Komponente DatumZeile) */
-	/* Fremder Sender (BR24, WDR 4): kleines schräges Siegel rechts im Kasten */
-	.siegel {
+	/* Fremder Sender (BR24, WDR 4): Siegel rechts im Kasten */
+	.programm :global(.psiegel) {
 		grid-column: 3;
 		grid-row: 1 / span 2;
 		align-self: center;
-		padding: 0.2em 0.5em;
-		border: 2px solid var(--sonne);
-		border-radius: 6px;
-		color: var(--sonne);
-		font-family: var(--display);
-		font-size: 0.8rem;
-		letter-spacing: 0.04em;
-		white-space: nowrap;
-		transform: rotate(-6deg);
 	}
-	[aria-current='true'] .siegel {
+	[aria-current='true'] :global(.psiegel) {
 		border-color: var(--tinte);
 		color: var(--tinte);
 	}

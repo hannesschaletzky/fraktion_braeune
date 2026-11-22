@@ -1,0 +1,26 @@
+---
+// Kleines schräges Siegel für fremde Sender (z. B. „BR24“, „WDR 4“), in TV-Programm und Zitaten
+interface Props {
+	anbieter: string;
+	class?: string;
+}
+const { anbieter, class: klasse } = Astro.props;
+---
+
+<span class:list={['siegel', klasse]} title={`Ausgestrahlt bei ${anbieter}`}>{anbieter}</span>
+
+<style>
+	.siegel {
+		display: inline-block;
+		padding: 0.2em 0.5em;
+		border: 2px solid var(--sonne);
+		border-radius: 6px;
+		color: var(--sonne);
+		font-family: var(--display);
+		font-size: 0.8rem;
+		letter-spacing: 0.04em;
+		line-height: 1.1;
+		white-space: nowrap;
+		transform: rotate(-6deg);
+	}
+</style>

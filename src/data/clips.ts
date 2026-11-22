@@ -138,7 +138,7 @@ export const sender: Sender[] = [
 export const stimmen = [
 	{ text: 'Schöne, schöne Stimmung hier! Und Fraktion Bräune wirklich einfach MVP.', sender: 'hamburg23gbt-mvp' },
 	{ text: 'Also ein absoluter Traum an die Fraktion. … Ich liebe, wie das aussieht auf der Tribüne. Mit diesen Riesenbannern.', sender: 'muenchen24-traum' },
-	{ text: 'Fraktion Bräune oder Eltern im Publikum? – Boah, das ist ja richtig unfair … Äh, Fraktion Bräune. – Der kam schnell.', quelle: 'Interview der German Beach Tour', sender: 'gbt-eltern' },
+	{ text: 'Fraktion Bräune oder Eltern im Publikum? – Boah, das ist ja richtig unfair … Äh, Fraktion Bräune. – Der kam schnell.', sender: 'gbt-eltern' },
 	{ text: 'Herzliches Willkommen an die Fraktion Bräune, die hier schon wieder am Zündeln sind. Schön, dass ihr da seid.', sender: 'duesseldorf24-zuendeln' },
 	{ text: 'Es gibt Fan-Shirts mit der Fraktion Bräune. … Das ist insane. Viel Liebe für die Fraktion.', sender: 'duesseldorf24-shirts' },
 	{ text: 'Nebenan die Fraktion Bräune. Das sind Beachvolleyball-Ultras. Sie kommen aus Berlin und fahren von Turnier zu Turnier.', anbieter: 'BR24', sender: 'br24-ultras' },
