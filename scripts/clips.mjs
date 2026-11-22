@@ -36,6 +36,9 @@ const clips = {
 	'hamburg26-bilder': { teile: [[R + 'Screen Recording 2026-08-10 at 00.10.56.mov', 0, null]], crop: '2750:1547:8:330' },
 	'hamburg26-elitesieg': { teile: [[R + 'Screen Recording 2026-08-10 at 01.32.06.mov', 0, null]], crop: '2270:1277:262:84' },
 
+	// Fernsehbeitrag BR24 Sport über uns (als Story geteilt, hochkant)
+	'br24-ultras': { teile: [[IG('18082518853888070'), 0, null]], hoch: true, poster: 3 },
+
 	// Award-Interview auf der Bühne, Timmendorf 2025
 	'award25-interview': { teile: [[A + 'IMG_1422.mov', 89, 166]], hoch: true },
 

@@ -63,7 +63,7 @@ const erster = sender[0];
 				</li>
 			))}
 		</ol>
-		<p class="quelle">Mitschnitte aus dem Livestream der German Beach Tour.</p>
+		<p class="quelle">Mitschnitte aus dem Livestream der German Beach Tour und von BR24 Sport.</p>
 	</div>
 </section>
 
@@ -87,6 +87,7 @@ const erster = sender[0];
 		const s = sender[i];
 		tv.dataset.kanal = String(i);
 		quelle(tv, `/videos/vorschau/${s.name}.mp4`, `/videos/${s.name}.mp4`, `/videos/${s.name}.webp`);
+		tv.classList.toggle('hochkant', !!s.hoch);
 		video.setAttribute('aria-label', `${s.titel}, ${s.wann}`);
 		tv.querySelector('.kanal')!.textContent = `CH ${nr(i)}`;
 		tv.querySelector('.nummer')!.textContent = nr(i);
@@ -119,6 +120,10 @@ const erster = sender[0];
 </script>
 
 <style>
+	/* Hochkant-Clips: ganz zeigen, links und rechts schwarz */
+	.fernseher:global(.hochkant) video {
+		object-fit: contain;
+	}
 	/* Großer Play-Knopf mitten im Bild, solange der Clip nur stumm als Vorschau läuft */
 	.abspielen {
 		position: absolute;

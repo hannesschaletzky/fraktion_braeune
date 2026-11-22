@@ -16,7 +16,7 @@ const kanal = (name: string) => String(sender.findIndex((s) => s.name === name) 
 					<blockquote>
 						<p>„{s.text}“</p>
 					</blockquote>
-					<p class="wer">Kommentar im Livestream · {s.wann}</p>
+					<p class="wer">{s.quelle ?? 'Kommentar im Livestream'} · {s.wann}</p>
 					<button type="button" class="hoeren" data-sender={s.sender}>📺 Ausschnitt {Number(kanal(s.sender))}</button>
 				</li>
 			))}

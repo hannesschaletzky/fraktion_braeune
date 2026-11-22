@@ -76,17 +76,20 @@ export const clips = {
 
 export type ClipName = keyof typeof clips;
 
-/** Fernsehen: Mitschnitte aus dem Livestream der German Beach Tour */
+/** Fernsehen: Mitschnitte aus dem Livestream der German Beach Tour und aus Fernsehbeiträgen */
 export interface Sender {
 	name: string;
 	titel: string;
 	wann: string;
+	/** Hochkant-Video: im Fernseher mit schwarzen Rändern statt beschnitten */
+	hoch?: boolean;
 }
 
 // Neueste zuerst, wie die Stationen
 export const sender: Sender[] = [
 	{ name: 'hamburg26-elitesieg', titel: 'Elite-Sieg', wann: 'Hamburg 2026' },
 	{ name: 'hamburg26-bilder', titel: 'Schaut euch diese Bilder an', wann: 'Hamburg 2026' },
+	{ name: 'br24-ultras', titel: 'Beachvolleyball-Ultras', wann: 'BR24 Sport · München 2025', hoch: true },
 	{ name: 'muenchen24-traum', titel: 'Riesenbanner', wann: 'München 2024' },
 	{ name: 'duesseldorf24-zuendeln', titel: 'Schon wieder am Zündeln', wann: 'Düsseldorf 2024' },
 	{ name: 'duesseldorf24-shirts', titel: 'Fan-Shirts', wann: 'Düsseldorf 2024' },
@@ -103,5 +106,5 @@ export const stimmen = [
 	{ text: 'Also ein absoluter Traum an die Fraktion. … Ich liebe, wie das aussieht auf der Tribüne. Mit diesen Riesenbannern.', wann: 'München 2024', sender: 'muenchen24-traum' },
 	{ text: 'Herzliches Willkommen an die Fraktion Bräune, die hier schon wieder am Zündeln sind. Schön, dass ihr da seid.', wann: 'Düsseldorf 2024', sender: 'duesseldorf24-zuendeln' },
 	{ text: 'Es gibt Fan-Shirts mit der Fraktion Bräune. … Das ist insane. Viel Liebe für die Fraktion.', wann: 'Düsseldorf 2024', sender: 'duesseldorf24-shirts' },
-	{ text: 'Das wird viral gehen, ohne Witz. … Timmendorf ist besser.', wann: 'Timmendorf 2023', sender: 'taube' },
+	{ text: 'Nebenan die Fraktion Bräune. Das sind Beachvolleyball-Ultras. Sie kommen aus Berlin und fahren von Turnier zu Turnier.', wann: 'München 2025', quelle: 'BR24 Sport', sender: 'br24-ultras' },
 ];
