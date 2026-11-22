@@ -13,7 +13,7 @@ import sharp from 'sharp';
  * crop:  ffmpeg-crop "w:h:x:y" in Pixeln der Quelle (für Bildschirmaufnahmen)
  * hoch:  Hochkant-Video vom Handy
  * poster: Sekunde im fertigen Clip für das Vorschaubild (Standard 1)
- * stumm: ohne Tonspur (Reels und Stories mit unterlegter Musik: die Rechte daran haben wir nicht)
+ * stumm: ohne Tonspur (nur im Ausnahmefall: Stories und Reels behalten ihren Ton, auch mit Musik, so will es Hannes)
  */
 export const clips = {
 	// Im Fernsehen: Kommentar über die Fraktion
@@ -104,8 +104,8 @@ export const clips = {
 	'timmendorf23-gekommen': { teile: [['assets/2023_09_Timmendorf/2023-09-01_02-33_insta-story_17922140525775157.mp4', 0, null]], hoch: true, poster: 5 },
 	'hamburg23-support': { teile: [['assets/2023_08_Elite_Hamburg/2023-08-17_05-17_insta-story_17989915973488514.mp4', 0, null]], hoch: true, poster: 18 },
 	'timmendorf24-mvp': { teile: [['assets/2024_09_Timmendorf/2024-08-31_10-23_insta-story_17934347210913264.mp4', 0, null]], hoch: true, poster: 4 },
-	'bremen23-abfahrt': { teile: [['assets/2023_05_Bremen1/2023-05-13_23-54_insta-story_17893895657750574.mp4', 0, null]], hoch: true, stumm: true, poster: 4 },
-	'bremen23-block': { teile: [['assets/2023_05_Bremen1/2023-05-14_06-44_insta-story_17986052834029717.mp4', 0, null]], hoch: true, stumm: true, poster: 12 },
+	'bremen23-abfahrt': { teile: [['assets/2023_05_Bremen1/2023-05-13_23-54_insta-story_17893895657750574.mp4', 0, null]], hoch: true, poster: 4 },
+	'bremen23-block': { teile: [['assets/2023_05_Bremen1/2023-05-14_06-44_insta-story_17986052834029717.mp4', 0, null]], hoch: true, poster: 12 },
 	'bremen24-tim': { teile: [['assets/2024_06_Bremen/ordner_037d3652-6598-4984-a00e-8222ac1271c0.MP4', 0, null]], hoch: true, poster: 6 },
 	// Eigenes Handyvideo, quer gefilmt: mittig auf Hochkant zugeschnitten
 	'bremen24-jubel': { teile: [['assets/2024_06_Bremen/ordner_b077f5f9-569e-49d1-8416-f6ed5fea1bdb.MP4', 0, null]], crop: '405:720:437:0', hoch: true, poster: 12 },
