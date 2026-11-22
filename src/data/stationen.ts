@@ -52,6 +52,7 @@ export const stationen: Station[] = [
 		fotos: [
 			foto('2026-muenchen-1', 'Der Block bei Nacht, rote Fackeln und Rauch über den Köpfen'),
 			foto('2026-muenchen-2', 'Ein Fan hält eine Fackel in die Luft, alles in rotes Licht getaucht'),
+			foto('choreo-2026-brezel-2', 'Banner „Zerbrezelt sie!“ im Rauch, dahinter das Netz und der Olympiaturm'),
 		],
 		clips: ['muenchen26-rudern', 'muenchen26-chenoa', 'muenchen26-goated'],
 	},

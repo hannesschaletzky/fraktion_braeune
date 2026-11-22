@@ -52,6 +52,18 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2026,
+		monat: 7,
+		stopp: 1,
+		ort: 'München',
+		titel: 'Zerbrezelt sie!',
+		fotos: [
+			foto('choreo-2026-brezel', 'Brezel-Fahne über dem Fraktion-Banner vor dem Olympiaturm unter blauem Himmel'),
+			foto('choreo-2026-brezel-2', 'Banner „Zerbrezelt sie!“ im Rauch, dahinter das Netz und der Olympiaturm'),
+			foto('choreo-2026-brezel-3', 'Brezel-Fahne über dem Banner „Zerbrezelt sie!“, davor das Netz'),
+		],
+	},
+	{
+		jahr: 2026,
 		monat: 6,
 		stopp: 2,
 		ort: 'Berlin',
