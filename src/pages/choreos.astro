@@ -5,7 +5,7 @@ import Lightbox from '../components/Lightbox.astro';
 import Fuss from '../components/Fuss.astro';
 import Handy from '../components/Handy.astro';
 import logo from '../assets/logo-bunt.png';
-import { choreos, slug } from '../data/choreos';
+import { choreos, jahre, slug } from '../data/choreos';
 import { grossUrl } from '../data/fotos';
 
 const gross = new Map<string, string>();
@@ -28,15 +28,23 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 				<Image src={logo} widths={[300, 600]} sizes="200px" alt="Fraktion Bräune" class="logo" />
 			</a>
 			<h1>Unsere <span class="bunt">{[...'Choreos'].map((c) => <span>{c}</span>)}</span></h1>
+			<div class="filter" role="group" aria-label="Nach Jahr filtern">
+				<button type="button" data-jahr="alle" aria-pressed="true">Alle</button>
+				{jahre.map((j) => <button type="button" data-jahr={j} aria-pressed="false">{j}</button>)}
+			</div>
 			<nav class="inhalt" aria-label="Choreos">
-				{choreos.map((c) => <a href={`#${slug(c)}`}>{c.titel}</a>)}
+				{choreos.map((c) => (
+					<a href={`#${slug(c)}`} data-jahr={c.jahr}>
+						{c.titel}<span class="kurzjahr" aria-label={String(c.jahr)}>’{String(c.jahr).slice(2)}</span>
+					</a>
+				))}
 			</nav>
 		</div>
 	</header>
 
 	<main class="wrap liste">
 		{choreos.map((c, i) => (
-			<article id={slug(c)} class="choreo" style={`--schatten: ${farben[i % farben.length]}`}>
+			<article id={slug(c)} class="choreo" data-jahr={c.jahr} style={`--schatten: ${farben[i % farben.length]}`}>
 				<header class="info">
 					<p class="wann">
 						<span class="datum">{monate[c.monat - 1]} {c.jahr}</span>
@@ -88,6 +96,19 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 	<Lightbox />
 </Layout>
 
+<script>
+	// Jahres-Filter: blendet Pillen und Choreos anderer Jahre aus
+	const knoepfe = [...document.querySelectorAll<HTMLButtonElement>('.filter button')];
+	const eintraege = [...document.querySelectorAll<HTMLElement>('.inhalt a[data-jahr], .choreo[data-jahr]')];
+	knoepfe.forEach((k) =>
+		k.addEventListener('click', () => {
+			const jahr = k.dataset.jahr!;
+			knoepfe.forEach((x) => x.setAttribute('aria-pressed', String(x === k)));
+			eintraege.forEach((e) => (e.hidden = jahr !== 'alle' && e.dataset.jahr !== jahr));
+		}),
+	);
+</script>
+
 <style>
 	.kopf {
 		padding: 32px 0 56px;
@@ -129,6 +150,38 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 		border: 2px solid rgb(248 242 231 / 0.3);
 		text-decoration: none;
 		transition: background 0.2s, color 0.2s;
+	}
+	.kurzjahr {
+		margin-left: 0.45em;
+		font-size: 0.75em;
+		font-weight: 800;
+		opacity: 0.55;
+	}
+	.filter {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+		margin-bottom: 18px;
+	}
+	.filter button {
+		padding: 0.35em 1em;
+		border-radius: 999px;
+		border: 2px solid var(--sonne);
+		background: transparent;
+		color: var(--sonne);
+		font-family: var(--display);
+		font-size: 1.05rem;
+		letter-spacing: 0.03em;
+		cursor: pointer;
+		transition: background 0.2s, color 0.2s;
+	}
+	.filter button:hover,
+	.filter button[aria-pressed='true'] {
+		background: var(--sonne);
+		color: var(--tinte);
+	}
+	[data-jahr][hidden] {
+		display: none !important;
 	}
 	.inhalt a:hover {
 		background: var(--papier);

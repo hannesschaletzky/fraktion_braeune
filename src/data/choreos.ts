@@ -58,16 +58,6 @@ export const choreos: Choreo[] = [
 	{
 		jahr: 2026,
 		monat: 6,
-		stopp: 1,
-		ort: 'Berlin',
-		titel: 'Fünf Jahre Fraktion Bräune',
-		zutaten: ['Unser Lieblingsbanner, recycelt', 'Fackeln'],
-		fotos: [foto('choreo-2026-fuenf', 'Fackeln rund um das Fraktion-Banner auf dem Sand bei Nacht')],
-		clips: ['reel-choreo-bts', 'berlin26-pyrobts'],
-	},
-	{
-		jahr: 2026,
-		monat: 6,
 		stopp: 2,
 		ort: 'Berlin',
 		titel: 'Unser Wunsch: Toursieg',
@@ -82,6 +72,16 @@ export const choreos: Choreo[] = [
 		titel: 'Alles Gute, Eric ♥',
 		zutaten: ['Buchstabentafeln'],
 		fotos: [foto('choreo-berlin-eric', 'Buchstabentafeln „Alles Gute Eric“ mit Herz auf der leeren Tribüne')],
+	},
+	{
+		jahr: 2026,
+		monat: 6,
+		stopp: 1,
+		ort: 'Berlin',
+		titel: 'Fünf Jahre Fraktion Bräune',
+		zutaten: ['Unser Lieblingsbanner, recycelt', 'Fackeln'],
+		fotos: [foto('choreo-2026-fuenf', 'Fackeln rund um das Fraktion-Banner auf dem Sand bei Nacht')],
+		clips: ['reel-choreo-bts', 'berlin26-pyrobts'],
 	},
 	{
 		jahr: 2025,
@@ -220,6 +220,9 @@ export const choreos: Choreo[] = [
 		],
 	},
 ];
+
+/** Alle Jahre mit Choreos, neueste zuerst (für den Filter) */
+export const jahre = [...new Set(choreos.map((c) => c.jahr))].sort((a, b) => b - a);
 
 export function slug(c: Choreo) {
 	return `choreo-${c.jahr}-${c.titel}`
