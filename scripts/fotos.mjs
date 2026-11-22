@@ -108,6 +108,8 @@ export const auswahl = {
 	'2023-berlin-2': '2023_08_Berlin/2023-08-13_19-04_apple_0D1828ED-9D1B-42B9-913B-5B8D9BDCBB4B.jpeg',
 	'2023-berlin-3': '2023_08_Berlin/2023-08-13_14-59_apple_26CB0AB4-E6C0-44BC-9BAC-645B26416CD8.jpeg',
 	'2023-berlin-4': '2023_08_Berlin/2023-08-13_19-04_apple_F97F307F-1B26-43C3-8083-ADE8D282D11B.jpeg',
+	'2023-hamburg-shirts': '2023_08_Elite_Hamburg/2023-08-18_23-38_eingang_PHOTO-2023-08-18-23-38-06.jpg',
+	'2023-hamburg-netz': '2023_08_Elite_Hamburg/2023-08-18_23-42_eingang_PHOTO-2023-08-18-23-42-21.jpg',
 	'2023-hamburg-1': '2023_08_Elite_Hamburg/2023-08-18_17-17_apple_IMG_1958.jpeg',
 	'2023-hamburg-2': '2023_08_Elite_Hamburg/2023-08-20_17-31_apple_IMG_5836.jpeg',
 	'2024-duesseldorf-vollgas': '2024_05_Düsseldorf/ordner_IMG_8534.jpg',

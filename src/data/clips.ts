@@ -116,7 +116,7 @@ export const sender: Sender[] = [
 	{ name: 'biertaufe', titel: 'Biertaufe', wann: 'Timmendorf 2023' },
 	{ name: 'friesenjung', titel: 'Friesenjung', wann: 'Timmendorf 2023' },
 	{ name: 'timmendorf22-clipit', titel: 'Clip it!', wann: 'Timmendorf 2022' },
-	{ name: 'kw21-kommentar', titel: 'Zum ersten Mal genannt', wann: 'Königs Wusterhausen 2021' },
+	{ name: 'kw21-kommentar', titel: 'Die Fraktion Bräune', wann: 'Königs Wusterhausen 2021' },
 ];
 
 /** Was im Livestream über uns gesagt wurde (wörtlich, gekürzt), mit Verweis auf den Sender */

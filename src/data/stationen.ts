@@ -254,7 +254,9 @@ export const stationen: Station[] = [
 		zusatz: 'Elite16',
 		motto: 'Fraktion Bräune wurde zur Fraktion Sverige 🇸🇪',
 		fotos: [
+			foto('2023-hamburg-shirts', 'Die Gruppe oben ohne schwenkt die Shirts über den Köpfen, unten das Schild „Fraktion Bräune“'),
 			foto('2023-hamburg-1', 'Pappschild „Fraktion Bräune“ im Stadion am Rothenbaum'),
+			foto('2023-hamburg-netz', 'Durchs Netz fotografiert: die Gruppe oben ohne auf der Tribüne am Rothenbaum'),
 			foto('2023-hamburg-2', 'Das Fraktion-Bräune-Banner auf den leeren Rängen am Rothenbaum'),
 		],
 		clips: ['hamburg23-sverige', 'hamburg23-support'],
