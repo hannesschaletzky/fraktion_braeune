@@ -325,7 +325,7 @@ export const stationen: Station[] = [
 		monat: 7,
 		ort: 'Königs Wusterhausen',
 		motto: '„… immer wieder auf die Fraktion Bräune“ – der Livestream bei unserem ersten Turnier',
-		fotos: [],
+		fotos: [foto('2021-kw-tribuene', 'Standbild aus dem Livestream: unsere Reihe oben ohne auf den roten Sitzen')],
 		clips: ['kw21-story', 'kw21-poniewaz', 'kw21-kommentar'],
 	},
 ];

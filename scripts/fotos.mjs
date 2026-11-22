@@ -88,6 +88,7 @@ export const auswahl = {
 	'2025-berlin-1': '2025_08_Berlin1/2025-08-17_09-41_insta-post_18056828822454398.jpg',
 	'2025-berlin-2': '2025_08_Berlin1/2025-08-17_09-41_insta-post_18068541907915654.jpg',
 	'2025-berlin-3': '2025_08_Berlin1/2025-08-16_18-58_apple_@kevinmtg.fotos-_DSC4617.jpeg',
+	'2021-kw-tribuene': '2021_07_Königs_Wusterhausen/standbild_livestream-tribuene.jpg',
 	'2022-em-schilder': '2022_08_München_EM/eingang_WhatsApp Image 2026-11-22 at 16.24.52 (1).jpeg',
 	'2022-em-zelt': '2022_08_München_EM/eingang_WhatsApp Image 2026-11-22 at 16.24.51 (1).jpeg',
 	'2022-em-bodypainting': '2022_08_München_EM/eingang_WhatsApp Image 2026-11-22 at 16.24.51 (7).jpeg',
@@ -146,7 +147,7 @@ if (import.meta.main) {
 			.toFile(datei);
 		// Fotograf steht im Dateinamen (@justus.fotos …), GBT_ = Pressefoto der Tour
 		// Originalname ohne Datum und Herkunft davor (2025-08-16_17-26_apple_…, siehe scripts/medien/einsortieren.mjs)
-		const basis = path.basename(quelle).replace(/^(\d{4}-\d{2}-\d{2}_\d{2}-\d{2}_)?(apple|apple-ca|whatsapp|stream|insta-[a-z]+|ordner|eingang)_/, '');
+		const basis = path.basename(quelle).replace(/^(\d{4}-\d{2}-\d{2}_\d{2}-\d{2}_)?(apple|apple-ca|whatsapp|stream|insta-[a-z]+|ordner|eingang|standbild)_/, '');
 		credits[name] =
 			basis.match(/^@([a-z0-9._]+?)[-_]/i)?.[1]?.replace(/\.$/, '') ??
 			(basis.startsWith('GBT_') ? 'German Beach Tour' : exifFotograf(path.join('assets', quelle)));
