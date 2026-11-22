@@ -2,8 +2,10 @@
 // Was im Livestream über uns gesagt wurde. Ein Klick schaltet den Fernseher auf den Mitschnitt (mit Ton).
 import { sender, stimmen } from '../data/clips';
 
-// Reihenfolge der Farben passend zur Reihenfolge der Zitate: MVP lila, Riesenbanner grün, Eltern blau
-const farben = ['var(--lila)', 'var(--gruen)', 'var(--blau)', 'var(--fackel)', 'var(--sonne)', 'var(--glut)'];
+// Jede Blase eine eigene Farbe (MVP lila, Riesenbanner grün, Eltern blau, …). Kommen mehr Zitate dazu als Farben,
+// meldet der Build einen Fehler, statt eine Farbe doppelt zu vergeben.
+const farben = ['var(--lila)', 'var(--gruen)', 'var(--blau)', 'var(--fackel)', 'var(--sonne)', 'var(--glut)', 'var(--pink)', 'var(--sand)'];
+if (stimmen.length > farben.length) throw new Error(`Stimmen: ${stimmen.length} Zitate, aber nur ${farben.length} Farben`);
 const neigung = [-2, 1.5, -1, 2, -1.5, 1];
 const kanal = (name: string) => String(sender.findIndex((s) => s.name === name) + 1).padStart(2, '0');
 // Zuerst nur so viele Zitate (Handy 3, ab Tablet 4), danach schaut die nächste Reihe verblasst hervor
