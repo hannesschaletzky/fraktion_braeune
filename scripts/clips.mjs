@@ -114,6 +114,7 @@ export const clips = {
 	'hamburg23gbt-sehen': { teile: [['assets/2023_06_Hamburg/2023-06-06_21-08_eingang_RPReplay_Final1686071354.mov', 55.2, 71.2]], crop: '1330:750:2:0', poster: 6 },
 	'hamburg23gbt-mvp': { teile: [['assets/2023_06_Hamburg/2023-06-06_19-29_eingang_RPReplay_Final1686072557 2.MOV', 0, 13.9]], crop: '1330:750:2:0', poster: 9 },
 	'hamburg23gbt-dancecam': { teile: [['assets/2023_06_Hamburg/2023-06-06_19-23_eingang_RPReplay_Final1686072214.MOV', 0, null]], crop: '1330:750:2:0', poster: 12 },
+	'muenchen24-ben': { teile: [['assets/2024_07_München/2024-07-22_14-21_whatsapp_VIDEO-2024-07-22-14-21-47.mp4', 97.5, 119.6]], crop: '384:220:0:316', poster: 18, nachlauf: 0.6 },
 	'timmendorf22-clipit': { teile: [['assets/2022_09_Timmendorf/eingang_WhatsApp Video 2026-11-22 at 12.05.41.mp4', 0, null]], crop: '1142:592:72:0', poster: 20 },
 	'em22-tv': { teile: [['assets/2022_08_München_EM/eingang_WhatsApp Video 2026-11-22 at 18.01.10.mp4', 0, null]], hoch: true, poster: 5 },
 	'em22-court': { teile: [['assets/2022_08_München_EM/eingang_WhatsApp Video 2026-11-22 at 17.45.30.mp4', 0, null]], poster: 11 },

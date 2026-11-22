@@ -142,6 +142,22 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2025,
+		monat: 7,
+		stopp: 2,
+		ort: 'München',
+		titel: 'Gemeinsam zum Toursieg',
+		fotos: [foto('choreo-2025-toursieg', 'Schilder „Gemeinsam“ und „Zum Toursieg“ mit Regenbogenfahne über der Tribüne')],
+	},
+	{
+		jahr: 2025,
+		monat: 7,
+		stopp: 2,
+		ort: 'München',
+		titel: 'Willkommen Lina ♥',
+		fotos: [foto('choreo-2025-lina', 'Banner „Willkommen Lina“ mit Herzen, dahinter blauer Rauch')],
+	},
+	{
+		jahr: 2025,
 		monat: 5,
 		stopp: 1,
 		ort: 'Düsseldorf',
@@ -149,6 +165,7 @@ export const choreos: Choreo[] = [
 		fotos: [
 			foto('choreo-2025-pott', 'Banner „Unser Pott hat richtig Dampf“ mit blauem Rauch'),
 			foto('choreo-2025-pott-2', 'Banner „Unser Pott dampft immer noch“ an der Bande'),
+			foto('2025-05-duesseldorf1-66744133995954', 'Zwei von uns halten das gemalte Banner „MS Stadie, CPT Kirchner“'),
 		],
 	},
 	{
@@ -193,6 +210,15 @@ export const choreos: Choreo[] = [
 		ort: 'München',
 		titel: 'Auf geht’s, kämpfen und siegen',
 		fotos: [foto('choreo-2024-aufgehts', 'Banner „Auf geht’s, kämpfen und siegen“ im grünen Rauch')],
+	},
+	{
+		jahr: 2024,
+		monat: 7,
+		stopp: 1,
+		ort: 'München',
+		titel: 'Gute Besserung, Ben',
+		fotos: [foto('choreo-2024-ben', 'Standbild aus dem Livestream: pinker Rauch im Block, dahinter das Schild für Ben')],
+		clips: ['muenchen24-ben'],
 	},
 	{
 		jahr: 2024,
