@@ -1,0 +1,81 @@
+---
+// Knopf unten rechts: erscheint nach einer Bildschirmhöhe Scrollen und bringt zurück nach oben
+---
+
+<a href="#" class="nach-oben" aria-label="Nach oben" hidden>
+	<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /></svg>
+</a>
+
+<script>
+	const knopf = document.querySelector<HTMLAnchorElement>('.nach-oben')!;
+	knopf.hidden = false;
+	let sichtbar = false;
+	let wartet = false;
+	function pruefen() {
+		wartet = false;
+		const soll = scrollY > innerHeight;
+		if (soll !== sichtbar) {
+			sichtbar = soll;
+			knopf.classList.toggle('da', soll);
+		}
+	}
+	addEventListener(
+		'scroll',
+		() => {
+			if (wartet) return;
+			wartet = true;
+			requestAnimationFrame(pruefen);
+		},
+		{ passive: true },
+	);
+	pruefen();
+	knopf.addEventListener('click', (e) => {
+		e.preventDefault();
+		const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		scrollTo({ top: 0, behavior: ruhig ? 'auto' : 'smooth' });
+		knopf.blur();
+	});
+</script>
+
+<style>
+	.nach-oben {
+		position: fixed;
+		right: max(16px, env(safe-area-inset-right));
+		bottom: max(16px, env(safe-area-inset-bottom));
+		z-index: 50;
+		width: 52px;
+		height: 52px;
+		display: grid;
+		place-items: center;
+		border-radius: 50%;
+		border: 3px solid var(--tinte);
+		background: var(--sonne);
+		color: var(--tinte);
+		box-shadow: 4px 4px 0 var(--tinte);
+		opacity: 0;
+		pointer-events: none;
+		transform: translateY(16px) rotate(-20deg);
+		transition:
+			opacity 0.25s,
+			transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1);
+	}
+	.nach-oben.da {
+		opacity: 1;
+		pointer-events: auto;
+		transform: none;
+	}
+	.nach-oben:hover,
+	.nach-oben:focus-visible {
+		transform: translateY(-3px) scale(1.08);
+	}
+	.nach-oben svg {
+		width: 24px;
+		height: 24px;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.nach-oben {
+			transition: opacity 0.2s;
+			transform: none;
+		}
+	}
+</style>
