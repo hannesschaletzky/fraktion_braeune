@@ -1,8 +1,12 @@
 ---
-import { Picture } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 import credits from '../assets/fotos/credits.json';
 import foto from '../assets/fotos/2025-timmendorf-4.jpg';
 import Handy from './Handy.astro';
+
+// Große Fassung für die Lightbox
+const gross = (await getImage({ src: foto, width: 1800, format: 'webp' })).src;
+const alt = 'Gruppenfoto der Fraktion Bräune im Sand vor der Tribüne, mit Fahnen';
 
 const sticker = [
 	{ text: 'Laut 📣', farbe: 'var(--fackel)', r: -6 },
@@ -33,7 +37,9 @@ const sticker = [
 
 		<div class="bild">
 			<figure class="polaroid">
-				<Picture src={foto} formats={['avif', 'webp']} widths={[480, 800, 1200]} sizes="(min-width: 900px) 480px, 92vw" alt="Gruppenfoto der Fraktion Bräune im Sand vor der Tribüne, mit Fahnen" />
+				<button type="button" class="foto-knopf" data-gross={gross} data-alt={alt} data-credit={credits['2025-timmendorf-4'] ?? ''} aria-label={`Groß anzeigen: ${alt}`}>
+					<Picture src={foto} formats={['avif', 'webp']} widths={[480, 800, 1200]} sizes="(min-width: 900px) 480px, 92vw" alt={alt} />
+				</button>
 				<figcaption class="marker">Timmendorf 2025 · 📸 @{credits['2025-timmendorf-4']}</figcaption>
 			</figure>
 			<button type="button" class="pokal" aria-haspopup="dialog" aria-label="Fan Group of the Year, GBT Awards 2025: Videos von der Preisverleihung ansehen">
@@ -151,6 +157,15 @@ const sticker = [
 		color: var(--tinte);
 		transform: rotate(3deg);
 		box-shadow: 0 20px 50px rgb(0 0 0 / 0.5);
+	}
+	.foto-knopf {
+		all: unset;
+		display: block;
+		cursor: zoom-in;
+	}
+	.foto-knopf:focus-visible {
+		outline: 3px solid var(--sonne);
+		outline-offset: 4px;
 	}
 	.polaroid :global(img) {
 		width: 100%;
