@@ -126,12 +126,12 @@ export const sender: Sender[] = [
 
 /** Was im Livestream über uns gesagt wurde (wörtlich, gekürzt), mit Verweis auf den Sender */
 export const stimmen = [
+	{ text: 'Schöne, schöne Stimmung hier! Und Fraktion Bräune wirklich einfach MVP.', wann: 'Hamburg 2023', sender: 'hamburg23gbt-mvp' },
 	{ text: 'Also ein absoluter Traum an die Fraktion. … Ich liebe, wie das aussieht auf der Tribüne. Mit diesen Riesenbannern.', wann: 'München 2024', sender: 'muenchen24-traum' },
+	{ text: 'Fraktion Bräune oder Eltern im Publikum? – Boah, das ist ja richtig unfair … Äh, Fraktion Bräune. – Der kam schnell.', wann: 'München 2025', quelle: 'Interview der German Beach Tour', sender: 'gbt-eltern' },
 	{ text: 'Herzliches Willkommen an die Fraktion Bräune, die hier schon wieder am Zündeln sind. Schön, dass ihr da seid.', wann: 'Düsseldorf 2024', sender: 'duesseldorf24-zuendeln' },
 	{ text: 'Es gibt Fan-Shirts mit der Fraktion Bräune. … Das ist insane. Viel Liebe für die Fraktion.', wann: 'Düsseldorf 2024', sender: 'duesseldorf24-shirts' },
 	{ text: 'Nebenan die Fraktion Bräune. Das sind Beachvolleyball-Ultras. Sie kommen aus Berlin und fahren von Turnier zu Turnier.', wann: 'München 2025', quelle: 'BR24 Sport', sender: 'br24-ultras' },
-	{ text: 'Fraktion Bräune oder Eltern im Publikum? – Boah, das ist ja richtig unfair … Äh, Fraktion Bräune. – Der kam schnell.', wann: 'München 2025', quelle: 'Interview der German Beach Tour', sender: 'gbt-eltern' },
 	{ text: 'Die sind hier mit einem Elite-Sieg-Banner hergekommen, für Lui und für Nils. … Und wenn sie den durchbringen, dann sag ich auch Respekt.', wann: 'Hamburg 2026', sender: 'hamburg26-respekt' },
-	{ text: 'Schöne, schöne Stimmung hier! Und Fraktion Bräune wirklich einfach MVP.', wann: 'Hamburg 2023', sender: 'hamburg23gbt-mvp' },
 	{ text: 'Ich finde es auch gut, dass die Fraktion Bräune diesen Platz sich wieder gekrallt hat. … Hier ist es mega geil, und der Platz passt auch sehr gut zu denen.', wann: 'Hamburg 2023', sender: 'hamburg23gbt-platz' },
 ];
