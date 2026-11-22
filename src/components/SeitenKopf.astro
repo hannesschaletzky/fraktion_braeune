@@ -21,7 +21,7 @@ const jahre = [...new Set(eintraege.map((e) => e.jahr))].sort((a, b) => b - a);
 		<nav class="inhalt" aria-label={wort}>
 			{eintraege.map((e) => (
 				<a href={e.href} data-jahr={e.jahr}>
-					{e.text}<span class="kurzjahr" aria-label={String(e.jahr)}>’{String(e.jahr).slice(2)}</span>
+					<span class="kurzjahr" aria-label={String(e.jahr)}>’{String(e.jahr).slice(2)}</span>{e.text}
 				</a>
 			))}
 		</nav>
@@ -98,8 +98,10 @@ const jahre = [...new Set(eintraege.map((e) => e.jahr))].sort((a, b) => b - a);
 		background: var(--papier);
 		color: var(--tinte);
 	}
+	/* Jahr vorne, damit man beim Überfliegen vergleichen kann */
 	.kurzjahr {
-		margin-left: 0.45em;
+		margin-right: 0.5em;
+		font-variant-numeric: tabular-nums;
 		font-size: 0.75em;
 		font-weight: 800;
 		opacity: 0.55;
