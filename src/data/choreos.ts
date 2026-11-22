@@ -207,10 +207,11 @@ export const choreos: Choreo[] = [
 		jahr: 2023,
 		monat: 9,
 		ort: 'Timmendorfer Strand',
-		titel: 'Fraktion Bräune',
+		titel: 'Auf geht’s – kämpfen und siegen!',
 		fotos: [
-			foto('2023-timmendorf-2', 'Das Banner „Fraktion Bräune“ mit bunten Buchstaben'),
-			foto('2023-timmendorf-4', 'Pappschilder wie „Ballern“ über dem Banner'),
+			foto('choreo-2023-kaempfen', 'Die Gruppe hält das Banner „Auf geht’s kämpfen und siegen!“ auf der leeren Tribüne hoch'),
+			foto('choreo-2023-kaempfen-tv', 'Im Stream: das Banner „Auf geht’s kämpfen und siegen!“ über „Ehlers/Wickler“, davor blauer Rauch'),
+			foto('choreo-2023-kaempfen-2', 'Zwei Fans mit Medaille rollen das Banner auf der Tribüne ein'),
 		],
 	},
 	{
@@ -221,7 +222,6 @@ export const choreos: Choreo[] = [
 		titel: 'BOOOM',
 		fotos: [
 			foto('2022-em-zelt', 'Fünf Fans oben ohne mit B, O, O, O, M auf dem Bauch, davor einer mit Herz und das Schild „Fraktion Bräune“'),
-			foto('2022-em-boom-2', 'Die BOOOM-Bäuche vor dem weißen Zelt, noch einmal aus einem anderen Moment'),
 		],
 		clips: ['em22-tv'],
 	},
