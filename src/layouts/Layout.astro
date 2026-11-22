@@ -17,6 +17,8 @@ interface Props {
 	bildAlt?: string;
 	/** Fehlerseiten nicht in die Suche */
 	nichtIndexieren?: boolean;
+	/** Unterseiten: Kopfleiste von Anfang an mit Hintergrund und Logo */
+	unterseite?: boolean;
 }
 const {
 	titel = 'Fraktion Bräune – Europas lauteste Beachvolleyball-Fans',
@@ -24,6 +26,7 @@ const {
 	bild = heroBild,
 	bildAlt = 'Fraktion Bräune im Block: Fans jubeln im roten Licht brennender Fackeln',
 	nichtIndexieren = false,
+	unterseite = false,
 } = Astro.props;
 
 const site = Astro.site!;
@@ -78,7 +81,7 @@ const jsonLd = {
 		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 	</head>
 	<body>
-		<Kopfleiste />
+		<Kopfleiste fest={unterseite} />
 		<slot />
 		<NachOben />
 	</body>

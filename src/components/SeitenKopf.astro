@@ -1,8 +1,6 @@
 ---
-// Kopf der Unterseiten (Choreos, Stationen): Logo, große Überschrift, Jahres-Filter, Pillen zu den Einträgen.
+// Kopf der Unterseiten (Choreos, Stationen): große Überschrift, Jahres-Filter, Pillen zu den Einträgen.
 // Der Filter blendet Pillen und alle Elemente mit data-eintrag und passendem data-jahr aus.
-import { Image } from 'astro:assets';
-import logo from '../assets/logo-bunt.png';
 
 interface Props {
 	/** Bunt geschriebenes Wort nach "Unsere" */
@@ -15,9 +13,6 @@ const jahre = [...new Set(eintraege.map((e) => e.jahr))].sort((a, b) => b - a);
 
 <header class="kopf">
 	<div class="wrap">
-		<a href="/" class="heim" aria-label="Zur Startseite">
-			<Image src={logo} widths={[300, 600]} sizes="200px" alt="Fraktion Bräune" class="logo" />
-		</a>
 		<h1>Unsere <span class="bunt">{[...wort].map((c) => <span>{c}</span>)}</span></h1>
 		<div class="filter" role="group" aria-label="Nach Jahr filtern">
 			<button type="button" data-jahr="alle" aria-pressed="true">Alle</button>
@@ -47,23 +42,12 @@ const jahre = [...new Set(eintraege.map((e) => e.jahr))].sort((a, b) => b - a);
 
 <style>
 	.kopf {
-		padding: 32px 0 56px;
+		/* Platz für die feste Kopfleiste (56 px) */
+		padding: 96px 0 56px;
 		background:
 			radial-gradient(ellipse at 20% 0%, rgb(255 46 77 / 0.2), transparent 55%),
 			radial-gradient(ellipse at 90% 30%, rgb(47 212 122 / 0.14), transparent 50%),
 			var(--nacht);
-	}
-	.heim {
-		display: inline-block;
-	}
-	.logo {
-		width: 180px;
-		height: auto;
-		filter: drop-shadow(3px 4px 0 var(--tinte));
-		transition: transform 0.25s cubic-bezier(0.3, 1.8, 0.5, 1);
-	}
-	.heim:hover .logo {
-		transform: rotate(-3deg) scale(1.05);
 	}
 	h1 {
 		font-family: var(--display);
@@ -71,7 +55,7 @@ const jahre = [...new Set(eintraege.map((e) => e.jahr))].sort((a, b) => b - a);
 		text-transform: uppercase;
 		font-size: clamp(3.2rem, 12vw, 7rem);
 		line-height: 0.95;
-		margin: 40px 0 28px;
+		margin: 0 0 28px;
 	}
 	.filter {
 		display: flex;
