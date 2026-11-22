@@ -1,5 +1,6 @@
 ---
-// Schmale Leiste oben: gleitet beim Scrollen herein, damit "Fraktion Bräune" immer klein mitfliegt
+// Schmale Leiste oben, immer da. Ganz oben durchsichtig ohne kleines Logo (dort steht das große),
+// beim Scrollen blenden Hintergrund und Logo ein.
 import { Image } from 'astro:assets';
 import logo from '../assets/logo-bunt.png';
 
@@ -30,8 +31,8 @@ const links = [
 	let wartet = false;
 	function pruefen() {
 		wartet = false;
-		// Erst nach gut einer halben Bildschirmhöhe, damit der Hero frei bleibt
-		const soll = scrollY > innerHeight * 0.6;
+		// Hintergrund und kleines Logo, sobald das große Logo oben aus dem Bild ist
+		const soll = scrollY > innerHeight * 0.45;
 		if (soll !== da) {
 			da = soll;
 			leiste.classList.toggle('da', soll);
@@ -66,36 +67,43 @@ const links = [
 		gap: 16px;
 		height: 56px;
 		padding: 0 max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
-		background: rgb(20 13 22 / 0.86);
-		backdrop-filter: blur(10px);
-		-webkit-backdrop-filter: blur(10px);
-		border-bottom: 3px solid var(--tinte);
-		box-shadow: 0 3px 0 rgb(255 46 77 / 0.5);
-		/* Weich einblenden statt hereinspringen */
-		opacity: 0;
-		visibility: hidden;
-		pointer-events: none;
-		transform: translateY(-10px);
+		border-bottom: 3px solid transparent;
+		/* Immer da; ganz oben durchsichtig, gescrollt mit Hintergrund (weich überblendet) */
+		background: transparent;
+		border-bottom-color: transparent;
+		box-shadow: none;
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
 		transition:
-			opacity 0.45s ease,
-			transform 0.45s ease,
-			visibility 0s linear 0.45s;
+			background-color 0.45s ease,
+			border-color 0.45s ease,
+			box-shadow 0.45s ease;
 	}
 	.kopfleiste.da {
-		opacity: 1;
-		visibility: visible;
-		pointer-events: auto;
-		transform: none;
+		background: rgb(20 13 22 / 0.86);
+		border-bottom-color: var(--tinte);
+		box-shadow: 0 3px 0 rgb(255 46 77 / 0.5);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+	}
+	/* Kleines Logo erst gescrollt, oben steht das große */
+	.marke {
+		opacity: 0;
+		visibility: hidden;
 		transition:
 			opacity 0.45s ease,
-			transform 0.45s ease,
+			visibility 0s linear 0.45s;
+	}
+	.da .marke {
+		opacity: 1;
+		visibility: visible;
+		transition:
+			opacity 0.45s ease,
 			visibility 0s;
 	}
-	@media (prefers-reduced-motion: reduce) {
-		.kopfleiste,
-		.kopfleiste.da {
-			transform: none;
-		}
+	/* Ganz oben über dem Foto: Schatten, damit die Links lesbar bleiben */
+	.kopfleiste:not(.da) nav a {
+		text-shadow: 0 1px 8px rgb(0 0 0 / 0.7);
 	}
 	.marke {
 		display: block;
