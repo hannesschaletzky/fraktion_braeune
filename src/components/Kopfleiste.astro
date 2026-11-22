@@ -72,15 +72,18 @@ const links = [
 			const links = eintraege[0].querySelector('.wann')!.getBoundingClientRect().left;
 			const logo = leiste.querySelector('.marke')!.getBoundingClientRect().right + 24;
 			leiste.style.setProperty('--kontext-links', `${Math.round(Math.max(links, logo))}px`);
+			leiste.style.setProperty('--inhalt-links', `${Math.round(links)}px`);
 			leiste.style.setProperty('--nav-breite', `${leiste.querySelector('nav')!.offsetWidth + 32}px`);
 		};
 		ausrichten();
 		addEventListener('resize', ausrichten);
+		const handy = matchMedia('(max-width: 640px)');
 		let zeigt: HTMLElement | null = null;
 		let wartetK = false;
 		const kontextPruefen = () => {
 			wartetK = false;
-			const linie = leiste.offsetHeight + 4;
+			// Handy: die Zeile steht unter der Leiste, also erst wechseln, wenn der Kopf auch unter ihr verschwunden ist
+			const linie = leiste.offsetHeight + 4 + (handy.matches ? kontext.offsetHeight : 0);
 			const aktiv =
 				eintraege.find((e) => {
 					if (e.hidden) return false;
@@ -274,14 +277,35 @@ const links = [
 	.kontext {
 		line-height: 1.6;
 	}
-	/* Handy: Platz schaffen, solange die Überschrift steht */
+	/* Handy: Leiste bleibt unverändert, die Überschrift steht als eigene Zeile darunter (bleibt oben stehen),
+	   bündig mit der linken Kante der Köpfe */
 	@media (max-width: 640px) {
-		.mit-kontext nav a:not(.insta) {
-			display: none;
-		}
 		.kontext {
-			font-size: 0.95rem;
-			letter-spacing: 0.01em;
+			position: absolute;
+			top: calc(100% + 3px);
+			left: 0;
+			right: 0;
+			margin: 0;
+			padding: 3px 16px 3px var(--inhalt-links, 16px);
+			border-left: 0;
+			border-bottom: 2px solid var(--tinte);
+			background: rgb(20 13 22 / 0.92);
+			backdrop-filter: blur(10px);
+			-webkit-backdrop-filter: blur(10px);
+			font-size: 1.05rem;
+			letter-spacing: 0.02em;
+			translate: 0 -6px;
+			transition:
+				opacity 0.3s ease,
+				translate 0.3s ease,
+				visibility 0s linear 0.3s;
+		}
+		.mit-kontext .kontext {
+			translate: 0 0;
+			transition:
+				opacity 0.3s ease,
+				translate 0.3s ease,
+				visibility 0s;
 		}
 		.kontext :global(.strich),
 		.kontext :global(.strich:last-child) {

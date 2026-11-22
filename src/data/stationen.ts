@@ -36,7 +36,7 @@ export const stationen: Station[] = [
 			foto('2026-08-dortmund-60827-dsc08322', 'Gruppe an roter Bande mit Fackel bei Tag'),
 			foto('2026-08-dortmund-60829-dsc00849', 'Spieler jubelt mitten in der Gruppe'),
 		],
-		clips: ['dortmund26-brennt', 'dortmund26-nele', 'dortmund26-angezuendet'],
+		clips: ['dortmund26-brennt', 'dortmund26-nele', 'dortmund26-angezuendet', 'dortmund26-1a', 'dortmund26-1b', 'dortmund26-1c', 'dortmund26-1d', 'dortmund26-1e'],
 	},
 	{
 		jahr: 2026,
@@ -56,7 +56,7 @@ export const stationen: Station[] = [
 			foto('choreo-2026-elitesieg', 'Gruppe mit Fahnen, Fackeln, „Elite Sieg“'),
 			foto('choreo-hamburg-legends', '„Norge – Living Legends“ mit roter Pyro'),
 		],
-		clips: ['hamburg26-pyro', 'hamburg26-legends'],
+		clips: ['hamburg26-pyro', 'hamburg26-legends', 'hamburg26-2a', 'hamburg26-2b', 'hamburg26-2c'],
 	},
 	{
 		jahr: 2026,
@@ -76,7 +76,7 @@ export const stationen: Station[] = [
 			foto('2026-07-muenchen1-img-8441', '„Zerbrezelt sie!“ mit Rauch'),
 			foto('2026-07-muenchen1-img-8450', 'Olympiaturm über der Choreo'),
 		],
-		clips: ['muenchen26-rudern', 'muenchen26-chenoa', 'muenchen26-goated'],
+		clips: ['muenchen26-rudern', 'muenchen26-chenoa', 'muenchen26-goated', 'muenchen26-3a', 'muenchen26-3b', 'muenchen26-3c', 'muenchen26-3d', 'muenchen26-3e'],
 	},
 	{
 		jahr: 2026,
@@ -90,7 +90,7 @@ export const stationen: Station[] = [
 			foto('2026-berlin2-1', 'Die Spieler kommen an die Bande und klatschen mit dem Block ab'),
 			foto('2026-berlin2-banner', 'Unser Banner „Fraktion Bräune“ über der Bande, davor umarmen sich zwei Spieler'),
 		],
-		clips: ['berlin26-fackelreihe', 'berlin26-fahnen'],
+		clips: ['berlin26-fackelreihe', 'berlin26-fahnen', 'berlin26-4a', 'berlin26-4b', 'berlin26-4c', 'berlin26-4d'],
 	},
 	{
 		jahr: 2026,
@@ -110,7 +110,7 @@ export const stationen: Station[] = [
 			foto('2026-06-berlin1-img-6942', 'Volle Tribüne jubelt hinter dem Banner'),
 			foto('2026-06-berlin1-img-6959', 'Gruppe nah hinter dem Banner, abends'),
 		],
-		clips: ['berlin26-feuerwerk', 'berlin26-pyrobts', 'berlin26-trommel'],
+		clips: ['berlin26-feuerwerk', 'berlin26-pyrobts', 'berlin26-trommel', 'berlin26-5a', 'berlin26-5b', 'berlin26-5c', 'berlin26-5d'],
 	},
 	{
 		jahr: 2025,
@@ -131,7 +131,7 @@ export const stationen: Station[] = [
 			foto('2025-timmendorf-abklatschen', 'Ein Spieler klatscht mit den Fans an der Bande ab'),
 			foto('2025-timmendorf-z60', 'Die Spieler kommen nach dem Sieg zum Block an die Bande'),
 		],
-		clips: ['timmendorf25-fackel', 'timmendorf25-fahne'],
+		clips: ['timmendorf25-fackel', 'timmendorf25-fahne', 'timmendorf25-6a', 'timmendorf25-6b', 'timmendorf25-6c', 'timmendorf25-6d', 'timmendorf25-6e'],
 	},
 	{
 		jahr: 2025,
@@ -143,7 +143,7 @@ export const stationen: Station[] = [
 			foto('2025-berlin2-1', 'Ein Spieler klatscht mit dem jubelnden Block ab'),
 			foto('choreo-2025-regieren', 'Choreo „Hier regieren die Hauptstadt Beacher“ mit Fackeln und Rauch'),
 		],
-		clips: ['berlin25-licht', 'berlin25-hey'],
+		clips: ['berlin25-licht', 'berlin25-hey', 'berlin25-7a', 'berlin25-7b', 'berlin25-7c', 'berlin25-7d', 'berlin25-7e'],
 	},
 	{
 		jahr: 2025,
@@ -164,7 +164,7 @@ export const stationen: Station[] = [
 			foto('2025-08-berlin1-50816-dsc06593', 'Hauptstadt-Beacher-Fahnen und Fackel'),
 			foto('2025-08-berlin1-mtg-fotos-0063', 'Spieler vor Fackeln'),
 		],
-		clips: ['berlin25-robinjonas', 'berlin25-btspyro'],
+		clips: ['berlin25-robinjonas', 'berlin25-btspyro', 'berlin25-8a', 'berlin25-8b', 'berlin25-8c', 'berlin25-8d', 'berlin25-8e'],
 	},
 	{
 		jahr: 2025,
@@ -184,7 +184,7 @@ export const stationen: Station[] = [
 			foto('2025-07-muenchen2-50712-dsc06378', 'Jubel mit Spieler an der Bande'),
 			foto('2025-07-muenchen2-50713-dsc06046', 'Spieler grüßt vor Spruchband und Funken'),
 		],
-		clips: ['muenchen25-wirauch', 'muenchen25-atmo'],
+		clips: ['muenchen25-wirauch', 'muenchen25-atmo', 'muenchen25-9a', 'muenchen25-9b', 'muenchen25-9c', 'muenchen25-9d'],
 	},
 	{
 		jahr: 2025,
@@ -204,7 +204,7 @@ export const stationen: Station[] = [
 			foto('2025-05-duesseldorf1-img-6086', 'Arme im Gegenlicht über dem Banner'),
 			foto('2025-05-duesseldorf1-66744133995954', 'Schild „MS Stadie CPT Kirchner“'),
 		],
-		clips: ['duesseldorf25-paulies', 'duesseldorf25-fahnen'],
+		clips: ['duesseldorf25-paulies', 'duesseldorf25-fahnen', 'duesseldorf25-10a', 'duesseldorf25-10b', 'duesseldorf25-10c', 'duesseldorf25-10d', 'duesseldorf25-10e'],
 	},
 	{
 		jahr: 2024,
@@ -223,7 +223,7 @@ export const stationen: Station[] = [
 			foto('2024-timmendorf-u43', 'Eine von uns zeigt lachend in die Kamera'),
 			foto('2024-09-timmendorf-mendorf24-3818', 'Fan kopfüber über der Bande'),
 		],
-		clips: ['timmendorf24-mvp', 'timmendorf24-ericmomme'],
+		clips: ['timmendorf24-mvp', 'timmendorf24-ericmomme', 'timmendorf24-11a', 'timmendorf24-11b', 'timmendorf24-11d', 'timmendorf24-11e'],
 	},
 	{
 		jahr: 2024,
@@ -243,7 +243,7 @@ export const stationen: Station[] = [
 			foto('2024-08-kuehlungsborn2-img-9494', 'Trikots schwenken'),
 			foto('2024-08-kuehlungsborn2-img-9314', 'Selfie am Banner'),
 		],
-		clips: ['kuehlungsborn24-mvp', 'kuehlungsborn24-freak'],
+		clips: ['kuehlungsborn24-mvp', 'kuehlungsborn24-freak', 'kuehlungsborn24-12a', 'kuehlungsborn24-12b', 'kuehlungsborn24-12c', 'kuehlungsborn24-12d', 'kuehlungsborn24-12e'],
 	},
 	{
 		jahr: 2024,
@@ -276,7 +276,7 @@ export const stationen: Station[] = [
 			foto('2024-muenchen-2', 'Die Gruppe jubelt an der Bande'),
 			foto('2024-07-muenchen-32704076284108', 'Spielerinnen vor der Gruppe mit Banner'),
 		],
-		clips: ['muenchen24-nacht', 'muenchen24-feuerwerk'],
+		clips: ['muenchen24-nacht', 'muenchen24-feuerwerk', 'muenchen24-14a', 'muenchen24-14b', 'muenchen24-14c'],
 	},
 	{
 		jahr: 2024,
@@ -286,7 +286,7 @@ export const stationen: Station[] = [
 		fotos: [
 			foto('2024-bremen-1', 'Gruppenfoto in Fraktion-Shirts mit Medaillen vor dem Gelände in Bremen'),
 		],
-		clips: ['bremen24-schalala', 'bremen24-tim', 'bremen24-jubel'],
+		clips: ['bremen24-schalala', 'bremen24-tim', 'bremen24-jubel', 'bremen24-15a', 'bremen24-15b', 'bremen24-15c', 'bremen24-15d'],
 	},
 	{
 		jahr: 2024,
@@ -299,7 +299,7 @@ export const stationen: Station[] = [
 			foto('2024-duesseldorf-vollgas', 'Choreo „Dieses Jahr wieder Vollgas“ mit Fahnen und rosa Rauch'),
 			foto('2024-duesseldorf-court', 'Blick aus dem Block auf den Court in Düsseldorf'),
 		],
-		clips: ['duesseldorf24-huette', 'duesseldorf24-tuecher'],
+		clips: ['duesseldorf24-huette', 'duesseldorf24-tuecher', 'duesseldorf24-16a', 'duesseldorf24-16b', 'duesseldorf24-16c', 'duesseldorf24-16d'],
 	},
 	{
 		jahr: 2023,
@@ -318,7 +318,7 @@ export const stationen: Station[] = [
 			foto('2023-timmendorf-medaillen', 'Zwei Fans an der Bande mit Warsteiner-Medaillen und einem Herz-Schild'),
 			foto('2023-09-timmendorf-img-6033', 'Selfie mit Zunge raus, Medaille, Sonnenbrillen'),
 		],
-		clips: ['timmendorf23-trommel', 'timmendorf23-gekommen', 'timmendorf23-block'],
+		clips: ['timmendorf23-trommel', 'timmendorf23-gekommen', 'timmendorf23-block', 'timmendorf23-17a', 'timmendorf23-17b', 'timmendorf23-17c', 'timmendorf23-17d', 'timmendorf23-17e'],
 	},
 	{
 		jahr: 2023,
@@ -332,7 +332,7 @@ export const stationen: Station[] = [
 			foto('2023-hamburg-netz', 'Durchs Netz fotografiert: die Gruppe oben ohne auf der Tribüne am Rothenbaum'),
 			foto('2023-hamburg-2', 'Das Fraktion-Bräune-Banner auf den leeren Rängen am Rothenbaum'),
 		],
-		clips: ['hamburg23-tribuene', 'hamburg23-sverige', 'hamburg23-support'],
+		clips: ['hamburg23-tribuene', 'hamburg23-sverige', 'hamburg23-support', 'hamburg23-18a', 'hamburg23-18b', 'hamburg23-18c', 'hamburg23-18d', 'hamburg23-18e'],
 	},
 	{
 		jahr: 2023,
@@ -352,7 +352,7 @@ export const stationen: Station[] = [
 			foto('2023-08-berlin-img-5590', 'Spieler klatschen mit Fans an der Bande ab'),
 			foto('2023-08-berlin-9-90116036771d', 'Spieler beim Aufschlag vor jubelnder Fankurve'),
 		],
-		clips: ['berlin23-zustand', 'berlin23-richie'],
+		clips: ['berlin23-zustand', 'berlin23-richie', 'berlin23-19a', 'berlin23-19b', 'berlin23-19c'],
 	},
 	{
 		jahr: 2023,
@@ -365,7 +365,7 @@ export const stationen: Station[] = [
 			foto('2023-hamburggbt-bande', 'Einer von uns schwingt das Bein über die Bande, daneben die Jungs oben ohne mit Daumen hoch'),
 			foto('2023-hamburggbt-selfie', 'Selfie auf der Tribüne mit den Schildern „Boom“, „Ballern“ und „Block“'),
 		],
-		clips: ['hamburg23gbt-fanclub', 'hamburg23gbt-achtelfinale', 'hamburg23gbt-sieg'],
+		clips: ['hamburg23gbt-fanclub', 'hamburg23gbt-achtelfinale', 'hamburg23gbt-sieg', 'hamburg23gbt-20a'],
 	},
 	{
 		jahr: 2023,
