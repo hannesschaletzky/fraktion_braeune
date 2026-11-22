@@ -37,8 +37,10 @@ const erster = sender[0];
 				</div>
 				<div class="bedienung">
 					<p class="anzeige" aria-live="polite"><span class="nur-sr">Sender </span><span class="nummer">{nr(0)}</span></p>
-					<button type="button" class="hoch" aria-label="Vorheriger Sender (in der Liste nach oben)">▲</button>
-					<button type="button" class="runter" aria-label="Nächster Sender (in der Liste nach unten)">▼</button>
+					<span class="pfeile">
+						<button type="button" class="zurueck" aria-label="Vorheriger Sender">◀</button>
+						<button type="button" class="weiter" aria-label="Nächster Sender">▶</button>
+					</span>
 					<i class="regler" aria-hidden="true"></i>
 					<i class="regler" aria-hidden="true"></i>
 				</div>
@@ -88,9 +90,8 @@ const erster = sender[0];
 	}
 	const jetzt = () => Number(tv.dataset.kanal);
 
-	// Pfeile folgen der Programmliste darunter: ▼ zum nächsten Sender (weiter unten), ▲ zum vorherigen
-	tv.querySelector('.hoch')!.addEventListener('click', () => schalten(jetzt() - 1));
-	tv.querySelector('.runter')!.addEventListener('click', () => schalten(jetzt() + 1));
+	tv.querySelector('.zurueck')!.addEventListener('click', () => schalten(jetzt() - 1));
+	tv.querySelector('.weiter')!.addEventListener('click', () => schalten(jetzt() + 1));
 	knoepfe.forEach((k) => k.addEventListener('click', () => schalten(Number(k.dataset.nr))));
 
 	// Aus den Zitaten: Sender einschalten, mit Ton, und hinscrollen
@@ -150,7 +151,7 @@ const erster = sender[0];
 	}
 	@media (min-width: 640px) {
 		.gehaeuse {
-			grid-template-columns: 1fr 64px;
+			grid-template-columns: 1fr 104px;
 		}
 	}
 	.schirm {
@@ -218,8 +219,12 @@ const erster = sender[0];
 		color: #6cff8a;
 		text-shadow: 0 0 6px #2fd47a;
 	}
-	.hoch,
-	.runter {
+	.pfeile {
+		display: flex;
+		gap: 8px;
+	}
+	.zurueck,
+	.weiter {
 		width: 44px;
 		height: 44px;
 		border-radius: 50%;
@@ -231,8 +236,8 @@ const erster = sender[0];
 		box-shadow: 2px 3px 0 var(--tinte);
 		transition: transform 0.15s;
 	}
-	.hoch:active,
-	.runter:active {
+	.zurueck:active,
+	.weiter:active {
 		transform: translate(2px, 3px);
 		box-shadow: none;
 	}
