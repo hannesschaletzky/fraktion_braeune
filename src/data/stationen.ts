@@ -259,7 +259,7 @@ export const stationen: Station[] = [
 			foto('2023-hamburg-netz', 'Durchs Netz fotografiert: die Gruppe oben ohne auf der Tribüne am Rothenbaum'),
 			foto('2023-hamburg-2', 'Das Fraktion-Bräune-Banner auf den leeren Rängen am Rothenbaum'),
 		],
-		clips: ['hamburg23-sverige', 'hamburg23-support'],
+		clips: ['hamburg23-tribuene', 'hamburg23-sverige', 'hamburg23-support'],
 	},
 	{
 		jahr: 2023,

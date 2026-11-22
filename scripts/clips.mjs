@@ -90,6 +90,7 @@ export const clips = {
 	'hamburg23gbt-fanclub': { teile: [['assets/2023_06_Hamburg/2023-06-03_13-09_insta-story_18086321017349394.mp4', 0, null]], hoch: true, poster: 1 },
 	'hamburg23gbt-achtelfinale': { teile: [['assets/2023_06_Hamburg/2023-06-02_11-33_insta-story_17969807639235967.mp4', 0, null]], hoch: true, poster: 6 },
 	'hamburg23gbt-sieg': { teile: [['assets/2023_06_Hamburg/2023-06-03_13-08_insta-story_18367444630049570.mp4', 0, null]], hoch: true, poster: 9 },
+	'hamburg23-tribuene': { teile: [['assets/2023_08_Elite_Hamburg/2023-08-18_23-38_eingang_VIDEO-2023-08-18-23-38-15.mp4', 0, null]], hoch: true, poster: 14 },
 	'hamburg23-sverige': { teile: [['assets/2023_08_Elite_Hamburg/2023-08-20_04-17_insta-story_18026018026611712.mp4', 0, null]], hoch: true, poster: 7 },
 	'berlin23-zustand': { teile: [['assets/2023_08_Berlin/2023-08-16_09-42_insta-reel_17972904869329090.mp4', 0, null]], hoch: true, poster: 12 },
 	'berlin23-richie': { teile: [['assets/2023_08_Berlin/2023-08-13_08-21_insta-story_18011640775824456.mp4', 0, null]], hoch: true, poster: 7 },
