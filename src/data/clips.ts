@@ -95,28 +95,28 @@ export interface Sender {
 	monat: number;
 	/** Ort wie bei den Stationen, mit Stopp-Nummer, z. B. „Berlin 2“ */
 	ort: string;
-	/** Wo es lief, wenn nicht im Livestream der German Beach Tour, z. B. „BR24 Sport“ */
-	quelle?: string;
+	/** Fremder Sender (nicht German Beach Tour), bekommt im Programm ein kleines Siegel, z. B. „BR24“ */
+	anbieter?: string;
 	/** Hochkant-Video: im Fernseher mit schwarzen Rändern statt beschnitten */
 	hoch?: boolean;
 }
 
 /** Klartext für Screenreader, z. B. „Juni 2023, Hamburg, Twitch-Stream“ */
-export const wannText = (s: Sender) => `${monate[s.monat - 1]} ${s.jahr}, ${s.ort}${s.quelle ? `, ${s.quelle}` : ''}`;
+export const wannText = (s: Sender) => `${monate[s.monat - 1]} ${s.jahr}, ${s.ort}${s.anbieter ? `, ${s.anbieter}` : ''}`;
 
 // Neueste zuerst, wie die Stationen
 export const sender: Sender[] = [
 	{ name: 'hamburg26-elitesieg', titel: 'Elite-Sieg', jahr: 2026, monat: 8, ort: 'Hamburg' },
 	{ name: 'hamburg26-respekt', titel: 'Respekt fürs Banner', jahr: 2026, monat: 8, ort: 'Hamburg' },
 	{ name: 'hamburg26-bilder', titel: 'Diese Bilder!', jahr: 2026, monat: 8, ort: 'Hamburg' },
-	{ name: 'wdr4-dortmund', titel: 'Live bei WDR 4', jahr: 2026, monat: 8, ort: 'Dortmund', hoch: true },
-	{ name: 'twitch-aura', titel: 'Aura-Moment', jahr: 2026, monat: 6, ort: 'Berlin', quelle: 'Twitch-Stream', hoch: true },
-	{ name: 'gbt-allstars', titel: 'Fraktion vs. Allstars', jahr: 2025, monat: 8, ort: 'Berlin 2', quelle: 'GBT-Interview', hoch: true },
+	{ name: 'wdr4-dortmund', titel: 'Live bei WDR 4', jahr: 2026, monat: 8, ort: 'Dortmund', anbieter: 'WDR 4', hoch: true },
+	{ name: 'twitch-aura', titel: 'Aura-Moment', jahr: 2026, monat: 6, ort: 'Berlin', hoch: true },
+	{ name: 'gbt-allstars', titel: 'Fraktion vs. Allstars', jahr: 2025, monat: 8, ort: 'Berlin 2', hoch: true },
 	{ name: 'berlin25-chenoa', titel: 'Chenoa vs. Fraktion', jahr: 2025, monat: 8, ort: 'Berlin 1' },
-	{ name: 'br24-ultras', titel: 'Beachvolleyball-Ultras', jahr: 2025, monat: 7, ort: 'München', quelle: 'BR24 Sport', hoch: true },
-	{ name: 'gbt-eltern', titel: 'Fraktion oder Eltern?', jahr: 2025, monat: 7, ort: 'München', quelle: 'GBT-Interview', hoch: true },
-	{ name: 'gbt-geheim', titel: 'Choreo? Geheim!', jahr: 2025, monat: 7, ort: 'München', quelle: 'GBT-Interview', hoch: true },
-	{ name: 'gbt-ericdani', titel: 'Eric & Dani fordern', jahr: 2025, monat: 5, ort: 'Düsseldorf', quelle: 'GBT-Interview', hoch: true },
+	{ name: 'br24-ultras', titel: 'Beachvolleyball-Ultras', jahr: 2025, monat: 7, ort: 'München', anbieter: 'BR24', hoch: true },
+	{ name: 'gbt-eltern', titel: 'Fraktion oder Eltern?', jahr: 2025, monat: 7, ort: 'München', hoch: true },
+	{ name: 'gbt-geheim', titel: 'Choreo? Geheim!', jahr: 2025, monat: 7, ort: 'München', hoch: true },
+	{ name: 'gbt-ericdani', titel: 'Eric & Dani fordern', jahr: 2025, monat: 5, ort: 'Düsseldorf', hoch: true },
 	{ name: 'muenchen24-traum', titel: 'Riesenbanner', jahr: 2024, monat: 7, ort: 'München' },
 	{ name: 'duesseldorf24-zuendeln', titel: 'Schon wieder am Zündeln', jahr: 2024, monat: 5, ort: 'Düsseldorf' },
 	{ name: 'duesseldorf24-shirts', titel: 'Fan-Shirts', jahr: 2024, monat: 5, ort: 'Düsseldorf' },
@@ -141,7 +141,7 @@ export const stimmen = [
 	{ text: 'Fraktion Bräune oder Eltern im Publikum? – Boah, das ist ja richtig unfair … Äh, Fraktion Bräune. – Der kam schnell.', quelle: 'Interview der German Beach Tour', sender: 'gbt-eltern' },
 	{ text: 'Herzliches Willkommen an die Fraktion Bräune, die hier schon wieder am Zündeln sind. Schön, dass ihr da seid.', sender: 'duesseldorf24-zuendeln' },
 	{ text: 'Es gibt Fan-Shirts mit der Fraktion Bräune. … Das ist insane. Viel Liebe für die Fraktion.', sender: 'duesseldorf24-shirts' },
-	{ text: 'Nebenan die Fraktion Bräune. Das sind Beachvolleyball-Ultras. Sie kommen aus Berlin und fahren von Turnier zu Turnier.', quelle: 'BR24 Sport', sender: 'br24-ultras' },
+	{ text: 'Nebenan die Fraktion Bräune. Das sind Beachvolleyball-Ultras. Sie kommen aus Berlin und fahren von Turnier zu Turnier.', anbieter: 'BR24', sender: 'br24-ultras' },
 	{ text: 'Die sind hier mit einem Elite-Sieg-Banner hergekommen, für Lui und für Nils. … Und wenn sie den durchbringen, dann sag ich auch Respekt.', sender: 'hamburg26-respekt' },
 	{ text: 'Ich finde es auch gut, dass die Fraktion Bräune diesen Platz sich wieder gekrallt hat. … Hier ist es mega geil, und der Platz passt auch sehr gut zu denen.', sender: 'hamburg23gbt-platz' },
 ];
