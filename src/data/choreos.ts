@@ -4,6 +4,10 @@ import type { ClipName } from './clips';
 
 export interface Choreo {
 	jahr: number;
+	/** Monat (1–12), aus Fotodatum bzw. Story */
+	monat: number;
+	/** Welcher Stopp in der Stadt (meist zwei pro Jahr), nur wenn sicher */
+	stopp?: 1 | 2;
 	ort: string;
 	zusatz?: string;
 	/** Text auf dem Banner */
@@ -19,7 +23,9 @@ export interface Choreo {
 export const choreos: Choreo[] = [
 	{
 		jahr: 2026,
+		monat: 8,
 		ort: 'Dortmund',
+		zusatz: 'GBC',
 		titel: 'Jetzt brennt der Pott',
 		zutaten: ['Banner mit Förderturm', 'Pyro-Wand'],
 		fotos: [foto('2026-dortmund-1', 'Pyro-Wand vor dem Banner „Jetzt brennt der Pott“')],
@@ -27,6 +33,7 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2026,
+		monat: 8,
 		ort: 'Hamburg',
 		zusatz: 'Elite16',
 		titel: 'Elite Sieg',
@@ -35,6 +42,7 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2026,
+		monat: 8,
 		ort: 'Hamburg',
 		zusatz: 'Elite16',
 		titel: 'Living Legends',
@@ -47,6 +55,8 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2026,
+		monat: 6,
+		stopp: 1,
 		ort: 'Berlin',
 		titel: 'Fünf Jahre Fraktion Bräune',
 		zutaten: ['Unser Lieblingsbanner, recycelt', 'Fackeln'],
@@ -55,6 +65,8 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2026,
+		monat: 6,
+		stopp: 2,
 		ort: 'Berlin',
 		titel: 'Unser Wunsch: Toursieg',
 		zutaten: ['Schilder'],
@@ -62,6 +74,8 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2026,
+		monat: 6,
+		stopp: 1,
 		ort: 'Berlin',
 		titel: 'Alles Gute, Eric ♥',
 		zutaten: ['Buchstabentafeln'],
@@ -69,6 +83,7 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2025,
+		monat: 9,
 		ort: 'Timmendorfer Strand',
 		titel: '33 Jahre – Danke Timmendorf – One Last Dance',
 		zutaten: ['Riesenbanner', 'Grüne Papptafeln', 'Grüner Rauch'],
@@ -80,6 +95,7 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2025,
+		monat: 9,
 		ort: 'Timmendorfer Strand',
 		titel: 'Auf geht’s, kämpfen und siegen',
 		zutaten: ['Banner', 'Fahnen', 'Fackeln'],
@@ -88,24 +104,27 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2025,
+		monat: 8,
+		stopp: 2,
 		ort: 'Berlin',
-		zusatz: 'II',
 		titel: 'Wir regieren die Hauptstadt',
 		zutaten: ['Für die Hauptstadt Beacher', 'Banner', 'Rauch'],
 		fotos: [foto('choreo-2025-regieren', 'Banner „Wir regieren die Hauptstadt – Hauptstadt Beacher“ mit Rauch')],
 	},
 	{
 		jahr: 2025,
+		monat: 8,
+		stopp: 1,
 		ort: 'Berlin',
-		zusatz: 'I',
 		titel: 'Die Bärenhorde stürmt das Feld – für den geilsten Club der Welt',
 		zutaten: ['Unsere bislang aufwendigste Choreo', 'Bären-Banner', 'Rauch'],
 		fotos: [foto('choreo-2025-baerenhorde', 'Choreo „Die Bärenhorde stürmt das Feld – für den geilsten Club der Welt“ mit Bären-Banner')],
 	},
 	{
 		jahr: 2025,
+		monat: 8,
+		stopp: 1,
 		ort: 'Berlin',
-		zusatz: 'I',
 		titel: 'Wir brenn’ für euch – aus BER, für BER',
 		zutaten: ['Bären-Banner', 'Fackeln'],
 		fotos: [foto('choreo-2025-brenn', 'Banner „Wir brenn’ für euch“ und „Fraktion Bräune aus BER – für BER“ mit Fackeln')],
@@ -113,6 +132,8 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2025,
+		monat: 7,
+		stopp: 2,
 		ort: 'München',
 		titel: 'Wir sind eure Hauptstadt – ihr Bayern!',
 		zutaten: ['Banner', 'Rauch'],
@@ -120,6 +141,8 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2025,
+		monat: 5,
+		stopp: 1,
 		ort: 'Düsseldorf',
 		titel: 'Unser Pott hat richtig Dampf',
 		zutaten: ['Banner', 'Blauer Rauch'],
@@ -130,6 +153,8 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2025,
+		monat: 5,
+		stopp: 1,
 		ort: 'Düsseldorf',
 		titel: 'Der König ist zurück',
 		zutaten: ['Banner', 'Fahnen', 'Rauch'],
@@ -137,6 +162,7 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2024,
+		monat: 9,
 		ort: 'Timmendorfer Strand',
 		titel: 'Unsere Helden aus Paris',
 		zutaten: ['Banner mit olympischen Ringen', 'Konfetti'],
@@ -144,6 +170,7 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2024,
+		monat: 8,
 		ort: 'Timmendorfer Strand',
 		titel: 'Christ · Grüne · Abfaaahrt',
 		zutaten: ['Side-Court-Choreo', 'Banner am Oberrang', 'Rauch'],
@@ -151,6 +178,7 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2024,
+		monat: 8,
 		ort: 'Timmendorfer Strand',
 		titel: 'Purple Party',
 		zutaten: ['Banner', 'Lila Rauch'],
@@ -161,6 +189,7 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2024,
+		monat: 7,
 		ort: 'München',
 		titel: 'Auf geht’s, kämpfen und siegen',
 		zutaten: ['Banner', 'Grüner Rauch'],
@@ -168,6 +197,7 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2024,
+		monat: 5,
 		ort: 'Düsseldorf',
 		titel: 'Dieses Jahr wieder Vollgas',
 		zutaten: ['Banner', 'Fahnen', 'Rosa Rauch'],
@@ -176,6 +206,7 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2023,
+		monat: 9,
 		ort: 'Timmendorfer Strand',
 		titel: 'Fraktion Bräune',
 		zutaten: ['Banner mit Regenbogen-Buchstaben', 'Pappschilder'],

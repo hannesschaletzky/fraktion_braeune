@@ -11,6 +11,7 @@ import { grossUrl } from '../data/fotos';
 const gross = new Map<string, string>();
 for (const c of choreos) for (const f of c.fotos) gross.set(f.bild.src, await grossUrl(f));
 
+const monate = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
 const neigungen = [-2, 1.5, -1, 2, -1.5, 1];
 const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 'var(--blau)', 'var(--glut)'];
 ---
@@ -38,7 +39,10 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 			<article id={slug(c)} class="choreo" style={`--schatten: ${farben[i % farben.length]}`}>
 				<header class="info">
 					<p class="wann">
-						{c.jahr} · {c.ort}{c.zusatz && <span class="zusatz">{c.zusatz}</span>}
+						<span class="datum">{monate[c.monat - 1]} {c.jahr}</span>
+						<span class="ort">{c.ort}</span>
+						{c.stopp && <span class="zusatz">Stopp {c.stopp}</span>}
+						{c.zusatz && <span class="zusatz">{c.zusatz}</span>}
 					</p>
 					<h2 class="titel marker">{c.titel}</h2>
 					<ul class="zutaten" role="list">
@@ -207,21 +211,32 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 		object-fit: cover;
 		display: block;
 	}
+	/* Wann und wo: groß in der Plakatschrift, Stopp bzw. Turnierart als Etikett */
 	.wann {
 		margin: 0;
-		font-weight: 800;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 4px 14px;
+		font-family: var(--display);
 		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		font-size: 0.85rem;
-		opacity: 0.8;
+		line-height: 1.05;
+	}
+	.datum {
+		font-size: clamp(1.6rem, 4vw, 2.3rem);
+		color: var(--sonne);
+	}
+	.ort {
+		font-size: clamp(1.6rem, 4vw, 2.3rem);
 	}
 	.zusatz {
-		display: inline-block;
-		margin-left: 0.6em;
-		padding: 0.1em 0.5em;
+		align-self: center;
+		padding: 0.15em 0.55em;
 		background: var(--sonne);
 		color: var(--tinte);
+		font-size: clamp(0.95rem, 2.2vw, 1.15rem);
 		letter-spacing: 0.04em;
+		transform: rotate(-3deg);
 	}
 	.titel {
 		display: inline-block;
