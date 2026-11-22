@@ -12,30 +12,25 @@ const erster = sender[0];
 <section class="abschnitt tv" id="tv">
 	<div class="wrap">
 		<h2>Fanblock <span class="live">im TV</span></h2>
-		<p class="einleitung">Die Regie hat schnell gemerkt, wo die Party ist. Sender wählen, Tipp aufs Bild hält an, 🔇 macht Ton an.</p>
+		<p class="einleitung">Die Regie hat schnell gemerkt, wo die Party ist. Sender wählen und ▶ drücken.</p>
 
 		<div class="fernseher" data-spieler data-kanal="0">
 			<div class="gehaeuse">
 				<div class="schirm">
 					<video
-						src={`/videos/vorschau/${erster.name}.mp4`}
-						data-voll={`/videos/${erster.name}.mp4`}
-						data-poster={`/videos/${erster.name}.webp`}
-						muted
-						loop
+						src={`/videos/${erster.name}.mp4`}
+						poster={`/videos/${erster.name}.webp`}
 						playsinline
 						preload="none"
 						aria-label={`${erster.titel}, ${wannText(erster)}`}
 					></video>
 					<span class="rauschen" aria-hidden="true"></span>
 					<span class="kanal" aria-hidden="true">CH {nr(0)}</span>
-					<span class="pausezeichen" aria-hidden="true">▶</span>
-					<button type="button" class="abspielen" aria-label="Mit Ton abspielen">
+					<button type="button" class="abspielen" aria-label="Abspielen">
 						<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
-						<span>Mit Ton</span>
 					</button>
 					<span class="knoepfe">
-						<button type="button" class="ton" aria-label="Mit Ton abspielen" aria-pressed="false">🔇</button>
+						<button type="button" class="ton" aria-label="Ton aus" aria-pressed="true">🔊</button>
 						<button type="button" class="gross" aria-label="Im Vollbild abspielen">
 							<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
 						</button>
@@ -71,32 +66,66 @@ const erster = sender[0];
 </section>
 
 <script>
-	import { spieler, quelle, mitTon } from '../scripts/videos';
+	// Ganz normaler Player: ▶ bzw. Tipp aufs Bild spielt/pausiert (mit Ton, an der aktuellen Stelle),
+	// Lautsprecher schaltet nur den Ton um, ⛶ Vollbild. Kein Autoplay, keine Vorschau-Schleife.
+	import { tonAus } from '../scripts/videos';
 	import { sender, wannText } from '../data/clips';
 
 	const tv = document.querySelector<HTMLElement>('.fernseher')!;
 	const video = tv.querySelector('video')!;
+	const ton = tv.querySelector<HTMLButtonElement>('.ton')!;
 	const knoepfe = [...document.querySelectorAll<HTMLButtonElement>('.programm button')];
 	const nr = (i: number) => String(i + 1).padStart(2, '0');
-	spieler(tv);
-	// Großer Play-Knopf: Clip mit Ton von vorn
+
+	function zeigen() {
+		tv.classList.toggle('laeuft', !video.paused);
+		ton.textContent = video.muted ? '🔇' : '🔊';
+		ton.setAttribute('aria-label', video.muted ? 'Ton an' : 'Ton aus');
+		ton.setAttribute('aria-pressed', String(!video.muted));
+	}
+	for (const ereignis of ['play', 'pause', 'ended', 'volumechange']) video.addEventListener(ereignis, zeigen);
+
+	// Immer nur ein Video mit Ton: läuft der Fernseher, werden die Handys stumm; bekommt ein Handy Ton, pausiert der Fernseher
+	video.addEventListener('play', () => tonAus());
+	const fremd = (e: Event) => {
+		const v = e.target as HTMLVideoElement;
+		if (v !== video && v instanceof HTMLVideoElement && !v.muted && !v.paused) video.pause();
+	};
+	document.addEventListener('play', fremd, true);
+	document.addEventListener('volumechange', fremd, true);
+
+	const abspielen = () => video.play().catch(() => {});
+	tv.querySelector('.schirm')!.addEventListener('click', () => (video.paused ? abspielen() : video.pause()));
 	tv.querySelector('.abspielen')!.addEventListener('click', (e) => {
 		e.stopPropagation();
-		mitTon(tv);
+		abspielen();
+	});
+	ton.addEventListener('click', (e) => {
+		e.stopPropagation();
+		video.muted = !video.muted;
+	});
+	tv.querySelector('.gross')!.addEventListener('click', (e) => {
+		e.stopPropagation();
+		abspielen();
+		const ios = video as HTMLVideoElement & { webkitEnterFullscreen?: () => void };
+		if (video.requestFullscreen) video.requestFullscreen().catch(() => ios.webkitEnterFullscreen?.());
+		else ios.webkitEnterFullscreen?.();
 	});
 
-	function schalten(i: number, ton = false) {
+	/** Sender wechseln. Lief der Fernseher (oder spielen = true), läuft der neue Sender gleich weiter. */
+	function schalten(i: number, spielen = false) {
 		i = (i + sender.length) % sender.length;
 		const s = sender[i];
+		const lief = !video.paused;
 		tv.dataset.kanal = String(i);
-		quelle(tv, `/videos/vorschau/${s.name}.mp4`, `/videos/${s.name}.mp4`, `/videos/${s.name}.webp`);
+		video.src = `/videos/${s.name}.mp4`;
+		video.poster = `/videos/${s.name}.webp`;
 		tv.classList.toggle('hochkant', !!s.hoch);
 		video.setAttribute('aria-label', `${s.titel}, ${wannText(s)}`);
 		tv.querySelector('.kanal')!.textContent = `CH ${nr(i)}`;
 		tv.querySelector('.nummer')!.textContent = nr(i);
 		knoepfe.forEach((k, j) => (j === i ? k.setAttribute('aria-current', 'true') : k.removeAttribute('aria-current')));
-		// Aktiven Sender in der Liste in die Mitte holen: am Handy seitlich in der Wisch-Leiste, am Rechner
-		// senkrecht in der Liste neben dem Fernseher. Nur die Liste scrollt, die Seite springt nicht.
+		// Aktiven Sender in der Liste in die Mitte holen: am Handy seitlich, am Rechner senkrecht. Die Seite springt nicht.
 		const leiste = knoepfe[i].closest('.programm') as HTMLElement;
 		const li = knoepfe[i].parentElement!;
 		if (leiste.scrollWidth > leiste.clientWidth)
@@ -107,7 +136,8 @@ const erster = sender[0];
 		tv.classList.remove('wechsel');
 		void tv.offsetWidth;
 		tv.classList.add('wechsel');
-		if (ton) mitTon(tv);
+		if (lief || spielen) abspielen();
+		zeigen();
 	}
 	const jetzt = () => Number(tv.dataset.kanal);
 
@@ -115,13 +145,14 @@ const erster = sender[0];
 	tv.querySelector('.weiter')!.addEventListener('click', () => schalten(jetzt() + 1));
 	knoepfe.forEach((k) => k.addEventListener('click', () => schalten(Number(k.dataset.nr))));
 
-	// Aus den Zitaten: Sender einschalten, mit Ton, und hinscrollen
+	// Aus den Zitaten: Sender einschalten, abspielen und hinscrollen
 	document.addEventListener('fb:sender', (e) => {
 		const i = sender.findIndex((s) => s.name === (e as CustomEvent<string>).detail);
 		if (i < 0) return;
 		tv.scrollIntoView({ behavior: 'smooth', block: 'center' });
 		schalten(i, true);
 	});
+	zeigen();
 </script>
 
 <style>
@@ -129,7 +160,7 @@ const erster = sender[0];
 	.fernseher:global(.hochkant) video {
 		object-fit: contain;
 	}
-	/* Großer Play-Knopf mitten im Bild, solange der Clip nur stumm als Vorschau läuft */
+	/* Großer Play-Knopf mitten im Bild */
 	.abspielen {
 		position: absolute;
 		top: 50%;
@@ -138,7 +169,7 @@ const erster = sender[0];
 		display: grid;
 		justify-items: center;
 		gap: 2px;
-		padding: 18px 22px 12px;
+		padding: 18px;
 		border-radius: 999px;
 		border: 3px solid var(--tinte);
 		background: var(--sonne);
@@ -157,14 +188,13 @@ const erster = sender[0];
 	.abspielen svg {
 		width: clamp(28px, 6vw, 44px);
 		height: clamp(28px, 6vw, 44px);
-		margin-left: 4px;
+		margin-left: 3px;
 	}
 	.abspielen:hover {
 		transform: translate(-50%, -50%) scale(1.08);
 	}
-	/* Mit Ton oder angehalten (eigenes ▶): ausblenden */
-	.fernseher:global(.an) .abspielen,
-	.fernseher:global(.pause) .abspielen {
+	/* Der große ▶ steht da, solange nichts läuft */
+	.fernseher:global(.laeuft) .abspielen {
 		opacity: 0;
 		pointer-events: none;
 	}

@@ -75,6 +75,7 @@ function tonAn(s: HTMLElement) {
 function voll(v: HTMLVideoElement) {
 	const src = v.dataset.voll;
 	if (src && !v.currentSrc.endsWith(src)) v.src = src;
+	v.closest('[data-spieler]')?.classList.add('voll');
 }
 
 /** Mit Ton einmal von vorn abspielen */
@@ -128,6 +129,7 @@ export function quelle(s: HTMLElement, vorschau: string, ganz: string, poster: s
 	anzeigen(s, false);
 	v.dataset.voll = ganz;
 	v.src = vorschau;
+	s.classList.remove('voll');
 	v.poster = poster;
 	if (sichtbar.has(v) && vonSelbst) v.play().catch(() => {});
 }
