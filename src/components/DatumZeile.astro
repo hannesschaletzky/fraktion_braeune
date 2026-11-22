@@ -1,5 +1,6 @@
 ---
-// Einheitliche Datumszeile „2023 | JUN | HAMBURG“ wie in den Köpfen der Stationen, für TV-Programm und Zitate.
+// Einheitliche Datumszeile „2023 | JUN | HAMBURG“ für TV-Programm und Zitate. Bewusst in der Textfarbe
+// (anders als der gelbe Ort in den Stationsköpfen), damit sie nicht das Auge lenkt.
 // Optional klein dahinter die Quelle (z. B. „Twitch-Stream“).
 import { monate } from '../data/stationen';
 
@@ -32,9 +33,6 @@ const { jahr, monat, ort, quelle, class: klasse } = Astro.props;
 	.dz-strich {
 		margin: 0 0.35em;
 		opacity: 0.35;
-	}
-	.dz-ort {
-		color: var(--sonne);
 	}
 	.dz-quelle {
 		font-family: var(--text);
