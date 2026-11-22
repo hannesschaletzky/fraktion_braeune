@@ -52,7 +52,10 @@ export const stationen: Station[] = [
 		fotos: [
 			foto('2026-muenchen-1', 'Der Block bei Nacht, rote Fackeln und Rauch über den Köpfen'),
 			foto('2026-muenchen-2', 'Ein Fan hält eine Fackel in die Luft, alles in rotes Licht getaucht'),
+			foto('2026-muenchen-block', 'Die Gruppe oben ohne in der Sonne hinter dem Banner „Fraktion Bräune“'),
 			foto('choreo-2026-brezel-spieler', 'Zwei Spieler drehen sich auf dem Court zur Choreo „Zerbrezelt sie!“ um'),
+			foto('2026-muenchen-rauch', 'Fraktion-Fahnen wehen im blauen Rauch'),
+			foto('2026-muenchen-tribuene', 'Volle Tribüne unter blauem Himmel, vorne ein Fan oben ohne am Banner'),
 		],
 		clips: ['muenchen26-rudern', 'muenchen26-chenoa', 'muenchen26-goated'],
 	},
