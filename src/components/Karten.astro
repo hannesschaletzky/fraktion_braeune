@@ -66,10 +66,10 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)'];
 		object-fit: cover;
 		display: block;
 	}
+	/* Immer gleich: Zeile 1 Monat und Jahr, Zeile 2 Ort, mit Abstand der Satz */
 	.wann {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 2px 10px;
+		display: grid;
+		gap: 2px;
 		padding: 0 4px;
 		font-family: var(--display);
 		text-transform: uppercase;
@@ -79,7 +79,13 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)'];
 	.datum {
 		color: #b8860b;
 	}
+	.ort {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 	.text {
+		margin-top: 6px;
 		padding: 0 4px;
 		font-size: 1rem;
 		line-height: 1.3;
