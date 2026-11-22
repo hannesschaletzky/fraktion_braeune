@@ -18,7 +18,7 @@ const erste = stationen.find((s) => s.fotos.length)!;
 >
 	<SeitenKopf
 		wort="Stationen"
-		eintraege={stationen.map((s) => ({ href: `#${slug(s)}`, text: `${ortName(s)}${s.zusatz ? ` ${s.zusatz}` : ''} · ${monate[s.monat - 1].slice(0, 3)}`, jahr: s.jahr }))}
+		eintraege={stationen.map((s) => ({ href: `#${slug(s)}`, text: `${ortName(s)}${s.zusatz ? ` ${s.zusatz}` : ''}`, nebensache: monate[s.monat - 1], jahr: s.jahr }))}
 	/>
 	<main class="wrap seite">
 		<StationenListe />

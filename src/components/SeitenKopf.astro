@@ -5,7 +5,7 @@
 interface Props {
 	/** Bunt geschriebenes Wort nach "Unsere" */
 	wort: string;
-	eintraege: { href: string; text: string; jahr: number }[];
+	eintraege: { href: string; text: string; jahr: number; /** klein und grau dahinter, z. B. der Monat */ nebensache?: string }[];
 }
 const { wort, eintraege } = Astro.props;
 const jahre = [...new Set(eintraege.map((e) => e.jahr))].sort((a, b) => b - a);
@@ -22,6 +22,7 @@ const jahre = [...new Set(eintraege.map((e) => e.jahr))].sort((a, b) => b - a);
 			{eintraege.map((e) => (
 				<a href={e.href} data-jahr={e.jahr}>
 					<span class="kurzjahr" aria-label={String(e.jahr)}>’{String(e.jahr).slice(2)}</span>{e.text}
+					{e.nebensache && <span class="nebensache">{e.nebensache}</span>}
 				</a>
 			))}
 		</nav>
@@ -105,6 +106,12 @@ const jahre = [...new Set(eintraege.map((e) => e.jahr))].sort((a, b) => b - a);
 		font-size: 0.85em;
 		font-weight: 800;
 		color: var(--sonne);
+	}
+	.nebensache {
+		margin-left: 0.5em;
+		font-size: 0.8em;
+		font-weight: 600;
+		opacity: 0.5;
 	}
 	:global([data-jahr][hidden]) {
 		display: none !important;
