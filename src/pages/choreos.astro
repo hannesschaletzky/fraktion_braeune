@@ -40,8 +40,7 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 				<header class="info">
 					<p class="wann">
 						<span class="datum">{monate[c.monat - 1]} {c.jahr}</span>
-						<span class="ort">{c.ort}</span>
-						{c.stopp && <span class="zusatz">Stopp {c.stopp}</span>}
+						<span class="ort">{c.ort}{c.stopp && ` ${c.stopp}`}</span>
 						{c.zusatz && <span class="zusatz">{c.zusatz}</span>}
 					</p>
 					<h2 class="titel marker">{c.titel}</h2>

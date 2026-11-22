@@ -190,6 +190,7 @@ export const choreos: Choreo[] = [
 	{
 		jahr: 2024,
 		monat: 7,
+		stopp: 1,
 		ort: 'München',
 		titel: 'Auf geht’s, kämpfen und siegen',
 		zutaten: ['Banner', 'Grüner Rauch'],
@@ -198,6 +199,7 @@ export const choreos: Choreo[] = [
 	{
 		jahr: 2024,
 		monat: 5,
+		stopp: 1,
 		ort: 'Düsseldorf',
 		titel: 'Dieses Jahr wieder Vollgas',
 		zutaten: ['Banner', 'Fahnen', 'Rosa Rauch'],
