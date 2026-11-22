@@ -1,14 +1,7 @@
 # syntax=docker/dockerfile:1
 
-# Build läuft auf der Plattform des Builders, nur das schlanke Caddy-Image wird pro Architektur gebaut.
-FROM --platform=$BUILDPLATFORM node:26.13.1-alpine3.24 AS build
-WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci
-COPY . .
-RUN npm run build
-
+# Die Seite baut GitHub Actions vorher (npm run build, mit Bild-Cache), das Image packt nur dist/ in Caddy.
 FROM caddy:2.11.9-alpine
 COPY deploy/Caddyfile /etc/caddy/Caddyfile
-COPY --from=build /app/dist /srv
+COPY dist /srv
 EXPOSE 80

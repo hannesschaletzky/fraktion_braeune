@@ -131,7 +131,7 @@ export const auswahl = {
 	'2025-berlin-l56': '2025_08_Berlin1/2025-08-16_19-06_eingang_@kevinmtg.fotos-_DSC1277.jpeg',
 	'2025-berlin-l50': '2025_08_Berlin1/2025-08-16_18-59_eingang_@kevinmtg.fotos-_DSC4634.jpeg',
 	'2025-timmendorf-gruen': '2025_09_Timmendorf/2025-09-05_19-50_eingang_@kevinmtg.fotos_DSC7694.jpeg',
-	'2025-timmendorf-fackelspieler': '2025_09_Timmendorf/2025-09-05_15-28_eingang_@kevinmtg.fotos_DSC9895.jpeg',
+	'2025-timmendorf-rauch': '2025_09_Timmendorf/2025-09-06_21-06_eingang_@kevinmtg.fotos_DSC4326.jpeg',
 	'2025-timmendorf-abklatschen': '2025_09_Timmendorf/2025-09-05_15-29_eingang_@kevinmtg.fotos_DSC9985.jpeg',
 	'2025-timmendorf-kaempfen': '2025_09_Timmendorf/2025-09-05_18-40_eingang_@justus.fotos-20250905-DSC02024.jpeg',
 	'2025-timmendorf-z48': '2025_09_Timmendorf/2025-09-06_19-24_eingang_@kevinmtg.fotos_DSC2060.jpeg',
@@ -225,9 +225,20 @@ if (import.meta.main) {
 	const ziel = 'src/assets/fotos';
 	fs.mkdirSync(ziel, { recursive: true });
 
+	// Nur neue oder geänderte Fotos rechnen: Ist die Datei in src/assets/fotos neuer als das Original und der
+	// Fotograf schon bekannt, bleibt sie, wie sie ist. Alles neu rechnen: node scripts/fotos.mjs --alle
+	const alle = process.argv.includes('--alle');
+	const creditsDatei = path.join(ziel, 'credits.json');
+	const bisher = fs.existsSync(creditsDatei) ? JSON.parse(fs.readFileSync(creditsDatei, 'utf8')) : {};
 	const credits = {};
+	let neu = 0;
 	for (const [name, quelle] of Object.entries(auswahl)) {
 		const datei = path.join(ziel, `${name}.jpg`);
+		if (!alle && name in bisher && fs.existsSync(datei) && fs.statSync(datei).mtimeMs >= fs.statSync(path.join('assets', quelle)).mtimeMs) {
+			credits[name] = bisher[name];
+			continue;
+		}
+		neu++;
 		// HEIC (iPhone) kann sharp nicht lesen: vorher mit sips (macOS) nach JPEG wandeln
 		let eingabe = path.join('assets', quelle);
 		if (/\.heic$/i.test(quelle)) {
@@ -248,5 +259,13 @@ if (import.meta.main) {
 			(basis.startsWith('GBT_') ? 'German Beach Tour' : exifFotograf(path.join('assets', quelle)));
 		console.log(name, (fs.statSync(datei).size / 1024).toFixed(0), 'KB', credits[name] ?? '');
 	}
-	fs.writeFileSync(path.join(ziel, 'credits.json'), JSON.stringify(credits, null, '\t') + '\n');
+	fs.writeFileSync(creditsDatei, JSON.stringify(credits, null, '\t') + '\n');
+	// Fotos, die nicht mehr in der Auswahl stehen, wegräumen (sonst hängt der Dev-Server an alten Dateien)
+	for (const f of fs.readdirSync(ziel)) {
+		if (f.endsWith('.jpg') && !(f.slice(0, -4) in auswahl)) {
+			fs.rmSync(path.join(ziel, f));
+			console.log('entfernt', f);
+		}
+	}
+	console.log(`${neu} Foto(s) neu gerechnet, ${Object.keys(auswahl).length - neu} unverändert`);
 }

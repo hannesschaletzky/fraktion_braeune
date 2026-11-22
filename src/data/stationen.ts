@@ -124,7 +124,7 @@ export const stationen: Station[] = [
 			foto('2025-timmendorf-gruen', 'Fäuste hoch im grünen Rauch an der Bande'),
 			foto('2025-timmendorf-z48', 'Die Jungs schreien an der Bande, alle in Weiß'),
 			foto('2025-timmendorf-kaempfen', 'Rote Fackel vor dem Banner „Auf geht’s kämpfen“'),
-			foto('2025-timmendorf-fackelspieler', 'Ein Spieler mit Fackel jubelt vor dem Block'),
+			foto('2025-timmendorf-rauch', 'Roter Rauch in der Nacht, einer schwenkt die Fackel'),
 			foto('2025-timmendorf-z27', 'Ein Spieler läuft vor den brennenden Fackeln des Blocks'),
 			foto('2025-timmendorf-z53', 'Rote Fackel im Dunkeln, der Block jubelt'),
 			foto('2025-timmendorf-z17', 'Fackeln und Fahnen im Block hinter dem Banner'),

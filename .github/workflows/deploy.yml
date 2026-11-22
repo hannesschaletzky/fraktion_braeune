@@ -29,6 +29,15 @@ jobs:
       - run: npm ci
       - run: npm run check
 
+      # Astro legt die verkleinerten Fotos (AVIF/WebP) in node_modules/.astro ab. Den Ordner zwischen den Läufen
+      # aufheben, sonst rechnet jeder Build alle Fotos neu (rund 9 Minuten). Neu berechnet werden nur geänderte Fotos.
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: node_modules/.astro
+          key: astro-bilder-${{ hashFiles('package-lock.json', 'src/assets/**') }}
+          restore-keys: astro-bilder-
+      - run: npm run build
+
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
       - uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4.8.0
         with:
