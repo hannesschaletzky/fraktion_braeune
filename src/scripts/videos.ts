@@ -1,6 +1,6 @@
 // Gemeinsame Steuerung für alle Videos der Seite (Fernseher und Handys):
 // eine kleine stumme Vorschau-Schleife läuft, solange das Video sichtbar ist (bei Datensparmodus nicht); Tipp aufs Bild hält an; 🔇 spielt einmal mit Ton von vorn
-// (immer nur ein Video mit Ton); Vollbild mit Bedienelementen. Vorschaubilder werden erst kurz vorher geladen.
+// (immer nur ein Video mit Ton), 🔊 schaltet nur den Ton ab und lässt das Video weiterlaufen; Vollbild mit Bedienelementen. Vorschaubilder werden erst kurz vorher geladen.
 import { ruhigGewuenscht } from './bewegung';
 
 const ruhig = ruhigGewuenscht();
@@ -41,6 +41,16 @@ export function tonAus(ausser?: HTMLElement) {
 		else if (warZuEnde && !angehalten.has(v)) v.play().catch(() => {});
 		anzeigen(s, false);
 	}
+}
+
+/** Ton aus, aber weiterlaufen lassen: stumm an derselben Stelle weiter, danach in der Schleife.
+ *  (Nur die anderen Videos werden bei tonAus() je nach Einstellung angehalten.) */
+function stumm(s: HTMLElement) {
+	const v = vid(s);
+	v.muted = true;
+	v.loop = true;
+	anzeigen(s, false);
+	if (v.paused && !angehalten.has(v)) v.play().catch(() => {});
 }
 
 /** Vom Vorschau-Schnipsel auf das volle Video wechseln (lädt erst jetzt) */
@@ -115,7 +125,7 @@ export function spieler(s: HTMLElement) {
 	s.querySelector('.ton')?.addEventListener('click', (e) => {
 		e.stopPropagation();
 		if (v.muted) mitTon(s);
-		else tonAus();
+		else stumm(s);
 	});
 
 	s.querySelector('.gross')?.addEventListener('click', (e) => {
