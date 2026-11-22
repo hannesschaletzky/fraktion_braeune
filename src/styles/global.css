@@ -98,7 +98,8 @@ h2 {
 	*::before,
 	*::after {
 		animation: none !important;
-		transition: none !important;
+		/* Keine Bewegung (Rutschen, Drehen, Federn), aber sanftes Ein-/Ausblenden und Farbwechsel sind okay */
+		transition-property: opacity, visibility, color, background-color, border-color !important;
 	}
 	html {
 		scroll-behavior: auto;
