@@ -1,139 +1,36 @@
 ---
+// Startseite: die drei neuesten Choreos als Karten, alle auf der Choreo-Seite
+import Karten from './Karten.astro';
 import { choreos, slug } from '../data/choreos';
+import { monate } from '../data/stationen';
 
-const neigungen = [-3, 2, -1.5, 3, -2.5, 1.5, -2, 2.5, -1, 1];
-// So viele Banner sind sofort zu sehen, der Rest klappt auf
-const sichtbar = 4;
-const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 'var(--blau)', 'var(--glut)'];
+const karten = choreos.slice(0, 3).map((c) => ({
+	href: `/choreos/#${slug(c)}`,
+	bild: c.fotos[0].bild,
+	alt: c.fotos[0].alt,
+	datum: `${monate[c.monat - 1]} ${c.jahr}`,
+	ort: `${c.ort}${c.stopp ? ` ${c.stopp}` : ''}${c.zusatz ? ` · ${c.zusatz}` : ''}`,
+	text: c.vonAnderen ? `${c.titel} · für uns 💜` : c.titel,
+}));
 ---
 
 <section class="abschnitt wand" id="choreos">
 	<div class="wrap">
 		<h2>Unsere <span class="bunt">{[...'Choreos'].map((c) => <span>{c}</span>)}</span></h2>
-		<ul class="banner-liste" role="list" id="choreo-banner">
-			{choreos.map((c, i) => (
-				<li class:list={{ mehr: i >= sichtbar }} style={`--r: ${neigungen[i % neigungen.length]}deg; --schatten: ${farben[i % farben.length]}`}>
-					<a href={`/choreos/#${slug(c)}`} class="stoff">
-						<span class="text marker">{c.titel}</span>
-						<span class="wo">{c.ort} {c.jahr}{c.vonAnderen && ' · für uns 💜'}</span>
-					</a>
-				</li>
-			))}
-		</ul>
-		<div class="aktionen">
-			{choreos.length > sichtbar && (
-				<button type="button" class="aufklappen" aria-expanded="false" aria-controls="choreo-banner">
-					Alle {choreos.length} Choreos zeigen ↓
-				</button>
-			)}
-			<a class="alle" href="/choreos/">Alle Choreos mit Fotos →</a>
-		</div>
+		<p class="einleitung">Banner, Fahnen, Papptafeln und Rauch. {choreos.length} Choreos, die neuesten:</p>
+		<Karten karten={karten} mehr={{ href: '/choreos/', text: `Alle ${choreos.length} Choreos mit Fotos und Videos →` }} />
 	</div>
 </section>
 
-<script>
-	const knopf = document.querySelector<HTMLButtonElement>('#choreos .aufklappen');
-	const liste = document.getElementById('choreo-banner')!;
-	const text = knopf?.textContent?.trim();
-	knopf?.addEventListener('click', () => {
-		const offen = liste.classList.toggle('offen');
-		knopf.setAttribute('aria-expanded', String(offen));
-		knopf.textContent = offen ? 'Weniger zeigen ↑' : text!;
-	});
-</script>
-
 <style>
-	.banner-liste:not(.offen) .mehr {
-		display: none;
-	}
-	.offen .mehr {
-		animation: reinfallen 0.4s cubic-bezier(0.3, 1.6, 0.5, 1) both;
-	}
-	@keyframes reinfallen {
-		from { opacity: 0; transform: translateY(-14px); }
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.offen .mehr { animation: none; }
-	}
-	.aktionen {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 16px 28px;
-		margin-top: 40px;
-	}
-	.aufklappen {
-		padding: 0.6em 1.3em;
-		border-radius: 999px;
-		border: 3px solid var(--papier);
-		background: transparent;
-		color: var(--papier);
-		font-family: var(--display);
-		text-transform: uppercase;
-		font-size: 1.1rem;
-		letter-spacing: 0.02em;
-		cursor: pointer;
-		transition: transform 0.2s cubic-bezier(0.3, 1.8, 0.5, 1);
-	}
-	.aufklappen:hover {
-		transform: rotate(-2deg) scale(1.05);
-	}
 	.wand {
 		background:
 			radial-gradient(ellipse at 80% 0%, rgb(47 212 122 / 0.12), transparent 50%),
 			var(--nacht-2);
 	}
-	.banner-liste {
-		list-style: none;
-		margin: 40px 0 0;
-		padding: 0;
-		display: flex;
-		flex-wrap: wrap;
-		gap: 22px 18px;
-	}
-	.stoff {
-		display: grid;
-		gap: 2px;
-		padding: 0.55em 1.1em 0.5em;
-		background: var(--papier);
-		color: var(--tinte);
-		text-decoration: none;
-		transform: rotate(var(--r));
-		box-shadow: 5px 5px 0 var(--schatten);
-		transition: transform 0.25s cubic-bezier(0.3, 1.8, 0.5, 1);
-		/* leicht ausgefranste Stoffkante */
-		clip-path: polygon(0 3%, 4% 0, 30% 2%, 60% 0, 96% 1%, 100% 4%, 99% 50%, 100% 96%, 95% 100%, 50% 98%, 5% 100%, 0 97%, 1% 50%);
-	}
-	.stoff:hover,
-	.stoff:focus-visible {
-		transform: rotate(0) scale(1.06);
-	}
-	.text {
-		font-size: clamp(1.15rem, 2.8vw, 1.6rem);
-		line-height: 1.15;
-	}
-	.wo {
-		font-size: 0.75rem;
-		font-weight: 800;
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-		opacity: 0.6;
-	}
-	.alle {
-		display: inline-block;
-		padding: 0.7em 1.4em;
-		border-radius: 999px;
-		border: 3px solid var(--tinte);
-		background: var(--sonne);
-		color: var(--tinte);
-		font-family: var(--display);
-		text-transform: uppercase;
-		font-size: clamp(1.1rem, 3vw, 1.4rem);
-		text-decoration: none;
-		box-shadow: 5px 5px 0 var(--tinte);
-		transition: transform 0.2s cubic-bezier(0.3, 1.8, 0.5, 1);
-	}
-	.alle:hover {
-		transform: rotate(-2deg) scale(1.05);
+	.einleitung {
+		max-width: 52ch;
+		margin: 0 0 48px;
+		font-size: 1.15rem;
 	}
 </style>
