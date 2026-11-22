@@ -119,14 +119,16 @@ const klappbar = stimmen.length > 3;
 		line-height: 1.35;
 	}
 	/* Unter der Blase: Datumszeile, darunter klein die Quelle */
+	/* Unauffällig grau: die Blase ist das Wichtige */
 	li :global(.datum) {
 		margin: 30px 0 0 12px;
-		font-size: 1.05rem;
+		font-size: 1rem;
+		opacity: 0.55;
 	}
 	.wer {
 		margin: 2px 0 8px 12px;
 		font-size: 0.85rem;
-		opacity: 0.7;
+		opacity: 0.5;
 	}
 	.hoeren {
 		margin-left: 12px;
