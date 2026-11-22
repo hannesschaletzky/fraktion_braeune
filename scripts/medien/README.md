@@ -1,7 +1,7 @@
 # Medien-Auswertung
 
 > Seit 2026-11-22 gibt es `assets/insta_export/` nicht mehr (alles einsortiert, siehe `assets/README.md`).
-> `parse.py`, `index.py`, `transkribiere.py`, `boegen.py`, `abgleich.mjs` und `einsortieren.mjs --umzug` brauchten
+> `parse.py`, `index.py`, `transkribiere.py`, `boegen.py` und `abgleich.mjs` brauchten
 > den Export; ihre Ergebnisse liegen in `assets/_index/`. Für einen neuen Export müssten sie angepasst werden.
 
 Index über das Rohmaterial in `assets/`. Der Ordner ist ein eigenes privates Repo
@@ -12,7 +12,11 @@ Text (Index, Transkripte, Zuordnungen, Dateiliste), keine Medien. Nach neuer Aus
 
 Ablage der Medien (Stopp-Ordner, _Eingang, _ohne_Stopp): siehe `assets/README.md`.
 
-    node scripts/medien/einsortieren.mjs     # _Eingang/ nach Datum in die Stopp-Ordner verschieben
+`termine.json` = alle Turniere der German Beach Tour 2021–2026 (offizielle Tage, von Hannes am 2026-11-22 geliefert)
+plus Elite16/Olympia. Wo wir dabei waren, stehen `ordner` und `fenster` (Sortierzeitraum: offizielle Tage ±1 bzw.
+unsere früheren Zeiträume). Neues Turnier: Eintrag mit `ordner` + `fenster` ergänzen, dann `einsortieren.mjs` laufen lassen.
+
+    node scripts/medien/einsortieren.mjs     # _Eingang/ nach Datum in die Stopp-Ordner verschieben (Kalender: termine.json)
     node scripts/medien/markiere.mjs         # Finder-Tag „Auf der Seite“ für alles, was die Website benutzt
     node scripts/medien/pruefe.mjs           # Prüfsummen-Abgleich mit _index/vorher.sha1
  Die Ergebnisse liegen in `assets/_index/` und
