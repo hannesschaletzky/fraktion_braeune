@@ -3,7 +3,11 @@ import type { ClipName } from './clips';
 
 export interface Station {
 	jahr: number;
+	/** Monat (1–12) */
+	monat: number;
 	ort: string;
+	/** Welcher Stopp in der Stadt, wenn es in dem Jahr mehrere gab */
+	stopp?: 1 | 2;
 	zusatz?: string;
 	/** Unsere eigenen Worte aus dem Instagram-Post bzw. der Story zum Turnier */
 	motto: string;
@@ -16,6 +20,7 @@ export interface Station {
 export const stationen: Station[] = [
 	{
 		jahr: 2026,
+		monat: 8,
 		ort: 'Dortmund',
 		zusatz: 'GBC',
 		motto: 'Long story short, das Wochenende war eine 10/10.',
@@ -27,6 +32,7 @@ export const stationen: Station[] = [
 	},
 	{
 		jahr: 2026,
+		monat: 8,
 		ort: 'Hamburg',
 		zusatz: 'Elite16',
 		motto: 'Unser Wunsch wurde erfüllt – ELITE SIEG 🧞‍♂️',
@@ -39,7 +45,9 @@ export const stationen: Station[] = [
 	},
 	{
 		jahr: 2026,
+		monat: 7,
 		ort: 'München',
+		stopp: 1,
 		motto: 'Letztes Wochenende wurde in München ordentlich gerudert.',
 		fotos: [
 			foto('2026-muenchen-1', 'Der Block bei Nacht, rote Fackeln und Rauch über den Köpfen'),
@@ -49,19 +57,34 @@ export const stationen: Station[] = [
 	},
 	{
 		jahr: 2026,
+		monat: 6,
 		ort: 'Berlin',
+		stopp: 2,
 		motto: 'Die Hauptstadt hat geliefert.',
+		fotos: [
+			foto('2026-berlin-2', 'Fans schreien hinter dem Banner mit den bunten Buchstaben'),
+			foto('choreo-berlin-toursieg', 'Schilder „Unser Wunsch: Toursieg“ an der Bande'),
+			foto('2026-berlin2-1', 'Die Spieler kommen an die Bande und klatschen mit dem Block ab'),
+		],
+		clips: ['berlin26-fackelreihe', 'berlin26-fahnen'],
+	},
+	{
+		jahr: 2026,
+		monat: 6,
+		ort: 'Berlin',
+		stopp: 1,
+		motto: 'Es geht loooos 🎉',
 		fotos: [
 			foto('2026-berlin-1', 'Feuerwand aus Fackeln am Spielfeldrand bei Nacht'),
 			foto('2026-berlin-4', 'Die Gruppe in weißen Shirts jubelt hinter dem Fraktion-Bräune-Banner'),
 			foto('2026-berlin-3', 'Nahaufnahme einer Fackel in dichtem rotem Rauch'),
-			foto('2026-berlin-2', 'Fans schreien hinter dem Banner mit den bunten Buchstaben'),
 			foto('2026-berlin-5', 'Der Center Court von oben bei Nacht, Fackeln leuchten im Block'),
 		],
-		clips: ['berlin26-pyrobts', 'berlin26-fackelreihe'],
+		clips: ['berlin26-pyrobts', 'berlin26-trommel'],
 	},
 	{
 		jahr: 2025,
+		monat: 9,
 		ort: 'Timmendorfer Strand',
 		motto: 'Ein allerletzter Tanz … aber was für einer!',
 		fotos: [
@@ -74,20 +97,35 @@ export const stationen: Station[] = [
 	},
 	{
 		jahr: 2025,
+		monat: 8,
 		ort: 'Berlin',
-		zusatz: 'I + II',
+		stopp: 2,
 		motto: 'Berlin, was war das denn?!',
+		fotos: [
+			foto('choreo-2025-regieren', 'Choreo „Hier regieren die Hauptstadt Beacher“ mit Fackeln und Rauch'),
+			foto('2025-berlin2-1', 'Ein Spieler klatscht mit dem jubelnden Block ab'),
+		],
+		clips: ['berlin25-licht', 'berlin25-hey'],
+	},
+	{
+		jahr: 2025,
+		monat: 8,
+		ort: 'Berlin',
+		stopp: 1,
+		motto: 'Wir holen unseren 1. Titel in der Geschichte der Fraktion! 🥹',
 		fotos: [
 			foto('2025-berlin-1', 'Die Gruppe jubelt auf der roten Tribüne mit einem Pokal'),
 			foto('choreo-2025-baerenhorde', 'Choreo „Die Bärenhorde stürmt das Feld – für den geilsten Club der Welt“'),
 			foto('2025-berlin-2', 'Selfie aus dem Block, alle lachen in die Kamera'),
 			foto('2025-berlin-3', 'Der Block von oben, Fahnen und Rauch über der Tribüne'),
 		],
-		clips: ['berlin25-licht', 'berlin25-robinjonas', 'berlin25-btspyro'],
+		clips: ['berlin25-robinjonas', 'berlin25-btspyro'],
 	},
 	{
 		jahr: 2025,
+		monat: 7,
 		ort: 'München',
+		stopp: 2,
 		motto: 'München liefert. Wir auch.',
 		fotos: [
 			foto('choreo-2025-bayern', 'Choreo „Wir sind eure Hauptstadt – ihr Bayern!“'),
@@ -98,7 +136,9 @@ export const stationen: Station[] = [
 	},
 	{
 		jahr: 2025,
+		monat: 5,
 		ort: 'Düsseldorf',
+		stopp: 1,
 		motto: 'Und die Fahnen wehen wieder.',
 		fotos: [
 			foto('2025-duesseldorf-1', 'Der Block reißt die Arme hoch'),
@@ -109,6 +149,7 @@ export const stationen: Station[] = [
 	},
 	{
 		jahr: 2024,
+		monat: 9,
 		ort: 'Timmendorfer Strand',
 		motto: 'Wie GEISTESKRANK war bitte dieses Jahr Timmendorf?!',
 		fotos: [
@@ -123,7 +164,9 @@ export const stationen: Station[] = [
 	},
 	{
 		jahr: 2024,
+		monat: 8,
 		ort: 'Kühlungsborn',
+		stopp: 2,
 		motto: 'Fraktion Bräune im Rentnerparadies 2.0',
 		fotos: [
 			foto('2024-kuehlungsborn-3', 'Zwei Fans mit Fackeln und rotem Rauch vor der Bande'),
@@ -135,6 +178,7 @@ export const stationen: Station[] = [
 	},
 	{
 		jahr: 2024,
+		monat: 8,
 		ort: 'Paris',
 		zusatz: 'Olympia',
 		motto: 'Nett hier, wann GBT in Paris?',
@@ -147,7 +191,9 @@ export const stationen: Station[] = [
 	},
 	{
 		jahr: 2024,
+		monat: 7,
 		ort: 'München',
+		stopp: 1,
 		motto: 'München hat richtig geschmeckt.',
 		fotos: [
 			foto('2024-muenchen-sieg', 'Die Sieger knien jubelnd im Sand, dahinter der Block mit dem Fraktion-Bräune-Banner reißt die Arme hoch'),
@@ -159,6 +205,7 @@ export const stationen: Station[] = [
 	},
 	{
 		jahr: 2024,
+		monat: 6,
 		ort: 'Bremen',
 		motto: 'Was ein geiler Tag!',
 		fotos: [foto('2024-bremen-1', 'Gruppenfoto in Fraktion-Shirts mit Medaillen vor dem Gelände in Bremen')],
@@ -166,7 +213,9 @@ export const stationen: Station[] = [
 	},
 	{
 		jahr: 2024,
+		monat: 5,
 		ort: 'Düsseldorf',
+		stopp: 1,
 		motto: 'Es geht wieder looooos!',
 		fotos: [
 			foto('2024-duesseldorf-vollgas', 'Choreo „Dieses Jahr wieder Vollgas“ mit Fahnen und rosa Rauch'),
@@ -177,6 +226,7 @@ export const stationen: Station[] = [
 	},
 	{
 		jahr: 2023,
+		monat: 9,
 		ort: 'Timmendorfer Strand',
 		motto: 'Wer hätte gedacht, dass aus ein paar Freunden … sowas unfassbar Geiles entsteht?',
 		fotos: [
@@ -189,6 +239,7 @@ export const stationen: Station[] = [
 	},
 	{
 		jahr: 2023,
+		monat: 8,
 		ort: 'Hamburg',
 		zusatz: 'Elite16',
 		motto: 'Fraktion Bräune wurde zur Fraktion Sverige 🇸🇪',
@@ -200,6 +251,7 @@ export const stationen: Station[] = [
 	},
 	{
 		jahr: 2023,
+		monat: 8,
 		ort: 'Berlin',
 		motto: 'Zustand nach GBT Berlin: Stimmen im Sparmodus, Ohren taub, Bock auf Timmendorf!',
 		fotos: [
@@ -212,6 +264,7 @@ export const stationen: Station[] = [
 	},
 	{
 		jahr: 2023,
+		monat: 6,
 		ort: 'Hamburg',
 		motto: '„Verrückte Menschen ❤️“ – Eric Stadie über uns',
 		fotos: [],
@@ -219,6 +272,7 @@ export const stationen: Station[] = [
 	},
 	{
 		jahr: 2022,
+		monat: 9,
 		ort: 'Timmendorfer Strand',
 		motto: 'Hallooo ihr da drüüübeeen ✌🏼❤️',
 		fotos: [

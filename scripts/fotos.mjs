@@ -95,6 +95,8 @@ const auswahl = {
 	'2024-paris-banner': '2024_Paris/IMG_1028.JPG',
 	'2024-paris-1': '2024_Paris/IMG_1072.JPG',
 	'2024-paris-2': '2024_Paris/IMG_1039.JPG',
+	'2025-berlin2-1': 'shared_album_apple/IMG_4087.jpeg',
+	'2026-berlin2-1': '2026_Berlin/IMG_3393.JPG',
 	'2024-kuehlungsborn-1': 'shared_album_apple/IMG_9492.jpeg',
 	'2024-kuehlungsborn-2': 'shared_album_apple/IMG_9495.jpeg',
 	'2024-kuehlungsborn-3': 'shared_album_apple/IMG_9497.jpeg',
