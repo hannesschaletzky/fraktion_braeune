@@ -320,6 +320,14 @@ export const stationen: Station[] = [
 		],
 		clips: ['em22-tv', 'em22-court'],
 	},
+	{
+		jahr: 2021,
+		monat: 7,
+		ort: 'Königs Wusterhausen',
+		motto: '„… immer wieder auf die Fraktion Bräune“ – der Livestream bei unserem ersten Turnier',
+		fotos: [],
+		clips: ['kw21-story', 'kw21-poniewaz', 'kw21-kommentar'],
+	},
 ];
 
 export const monate = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];

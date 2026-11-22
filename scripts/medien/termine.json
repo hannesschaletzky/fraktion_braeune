@@ -29,7 +29,14 @@
 		"tourstopp": 4,
 		"art": "GBT",
 		"von": "2021-07-23",
-		"bis": "2021-07-25"
+		"bis": "2021-07-25",
+		"key": "2021-kw",
+		"ordner": "2021_07_Königs_Wusterhausen",
+		"fenster": [
+			"2021-07-22",
+			"2021-07-26"
+		],
+		"quelle": "Gründung der Fraktion Bräune (Hannes 2026-11-22)"
 	},
 	{
 		"jahr": 2021,

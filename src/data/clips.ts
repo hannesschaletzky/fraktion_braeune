@@ -56,6 +56,9 @@ export const clips = {
 	'timmendorf23-gekommen': c('timmendorf23-gekommen', 'Sprechchor „Er ist gekommen“ im Block', true),
 	'hamburg23-support': c('hamburg23-support', 'Anfeuern im Stadion am Rothenbaum', true, 'Natürlich ist der Support am Start!'),
 	'timmendorf24-mvp': c('timmendorf24-mvp', 'Rote Fackeln bei Nacht, der Block feiert den MVP', true, 'MVP!!!'),
+	'kw21-poniewaz': c('kw21-poniewaz', 'Interview mit den Poniewaz-Brüdern im Livestream, es geht um die Fans hinter dem Feld', true),
+	'kw21-story': c('kw21-story', 'Story eines Spielers nach dem Sieg: „Die Gang auf unserer Seite hat ordentlich gepusht“', true),
+	'kw21-kommentar': c('kw21-kommentar', 'Die Kamera zeigt unsere Reihe, der Kommentar nennt die Fraktion Bräune', true),
 	'em22-tv': c('em22-tv', 'Unser Block mit dem Schild „Fraktion Bräune“ in der TV-Übertragung der EM', true),
 	'em22-court': c('em22-court', 'Blick vom Block auf den Court am Königsplatz, vorne wird ein Schild hochgehalten', true),
 	'bremen23-block': c('bremen23-block', 'Der Block feuert Eric Stadie direkt an der Bande an', true),
@@ -113,6 +116,7 @@ export const sender: Sender[] = [
 	{ name: 'biertaufe', titel: 'Biertaufe', wann: 'Timmendorf 2023' },
 	{ name: 'friesenjung', titel: 'Friesenjung', wann: 'Timmendorf 2023' },
 	{ name: 'timmendorf22-clipit', titel: 'Clip it!', wann: 'Timmendorf 2022' },
+	{ name: 'kw21-kommentar', titel: 'Zum ersten Mal genannt', wann: 'Königs Wusterhausen 2021' },
 ];
 
 /** Was im Livestream über uns gesagt wurde (wörtlich, gekürzt), mit Verweis auf den Sender */
