@@ -5,9 +5,9 @@ import { sender, stimmen } from '../data/clips';
 const farben = ['var(--lila)', 'var(--gruen)', 'var(--fackel)', 'var(--sonne)', 'var(--blau)', 'var(--glut)'];
 const neigung = [-2, 1.5, -1, 2, -1.5, 1];
 const kanal = (name: string) => String(sender.findIndex((s) => s.name === name) + 1).padStart(2, '0');
-// Zuerst nur so viele Zitate, danach schaut die nächste Reihe verblasst hervor und ein Knopf klappt den Rest auf
-const SICHTBAR = 4;
-const klappbar = stimmen.length > SICHTBAR;
+// Zuerst nur so viele Zitate (Handy 3, ab Tablet 4), danach schaut die nächste Reihe verblasst hervor
+// und ein Knopf klappt den Rest auf. Die Zahlen stehen auch im CSS unten (nth-child).
+const klappbar = stimmen.length > 3;
 ---
 
 <section class="abschnitt stimmen" id="stimmen">
@@ -15,7 +15,7 @@ const klappbar = stimmen.length > SICHTBAR;
 		<h2>Was über uns <span class="bunt">{[...'gesagt'].map((c) => <span>{c}</span>)}</span> wird</h2>
 		<ul class="blasen" role="list" id="stimmen-liste">
 			{stimmen.map((s, i) => (
-				<li style={`--farbe: ${farben[i % farben.length]}; --r: ${neigung[i % neigung.length]}deg`} class:list={{ mehr: i >= SICHTBAR }} inert={i >= SICHTBAR}>
+				<li style={`--farbe: ${farben[i % farben.length]}; --r: ${neigung[i % neigung.length]}deg`} >
 					<blockquote>
 						<p>„{s.text}“</p>
 					</blockquote>
@@ -35,12 +35,23 @@ const klappbar = stimmen.length > SICHTBAR;
 <script>
 	const liste = document.querySelector<HTMLElement>('#stimmen-liste');
 	const klapp = document.querySelector<HTMLButtonElement>('.stimmen .aufklappen');
+	const breit = matchMedia('(min-width: 760px)');
+	// Zugeklappte und angeschnittene Zitate sind weder klick- noch per Tastatur erreichbar
+	const sperren = () => {
+		const offen = liste?.classList.contains('offen') ?? true;
+		const sichtbar = breit.matches ? 4 : 3;
+		liste?.querySelectorAll<HTMLElement>(':scope > li').forEach((li, i) => (li.inert = !offen && i >= sichtbar));
+	};
+	if (klapp) {
+		sperren();
+		breit.addEventListener('change', sperren);
+	}
 	klapp?.addEventListener('click', () => {
 		const offen = klapp.getAttribute('aria-expanded') !== 'true';
 		klapp.setAttribute('aria-expanded', String(offen));
 		klapp.textContent = (offen ? klapp.dataset.auf : klapp.dataset.zu) ?? '';
 		liste?.classList.toggle('offen', offen);
-		liste?.querySelectorAll<HTMLElement>('.mehr').forEach((li) => (li.inert = !offen));
+		sperren();
 		// Beim Zuklappen zurück zum Anfang des Abschnitts, sonst steht man mitten in der nächsten Sektion
 		if (!offen) document.querySelector('#stimmen')?.scrollIntoView({ block: 'start' });
 	});
@@ -122,19 +133,24 @@ const klappbar = stimmen.length > SICHTBAR;
 		color: var(--tinte);
 	}
 
-	/* Zugeklappt: die nächste Reihe (eine Blase am Handy, zwei ab Tablet) schaut verblassend hervor, der Rest ist weg */
-	.blasen:not(.offen) .mehr {
+	/* Zugeklappt: am Handy 3 Zitate und das vierte schaut verblassend hervor, ab Tablet 4 und die nächsten zwei */
+	.blasen:not(.offen) > li:nth-child(n + 5) {
 		display: none;
 	}
-	.blasen:not(.offen) .mehr:nth-child(5) {
-		display: block;
+	.blasen:not(.offen) > li:nth-child(4) {
 		max-height: 120px;
 		overflow: hidden;
 		mask-image: linear-gradient(#000 10%, transparent 95%);
 		pointer-events: none;
 	}
 	@media (min-width: 760px) {
-		.blasen:not(.offen) .mehr:nth-child(6) {
+		.blasen:not(.offen) > li:nth-child(4) {
+			max-height: none;
+			overflow: visible;
+			mask-image: none;
+			pointer-events: auto;
+		}
+		.blasen:not(.offen) > li:is(:nth-child(5), :nth-child(6)) {
 			display: block;
 			max-height: 120px;
 			overflow: hidden;
