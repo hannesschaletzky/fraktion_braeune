@@ -315,7 +315,6 @@ export const stationen: Station[] = [
 			foto('2022-em-zelt', 'Die Gruppe oben ohne mit dem Schild „Fraktion Bräune“ vor einem weißen Zelt'),
 			foto('2022-em-bodypainting', 'Drei Fans oben ohne mit aufgemalten Buchstaben und Herz'),
 			foto('2022-em-selfie', 'Selfie mitten im Block'),
-			foto('2022-em-schmeckt', 'Zwei Fans mit Dosen und dem Schild „Schmeckt“'),
 		],
 		clips: ['em22-tv', 'em22-court'],
 	},

@@ -213,6 +213,17 @@ export const choreos: Choreo[] = [
 			foto('2023-timmendorf-4', 'Pappschilder wie „Ballern“ über dem Banner'),
 		],
 	},
+	{
+		jahr: 2022,
+		monat: 8,
+		ort: 'München',
+		zusatz: 'EM',
+		titel: 'BOOOM',
+		fotos: [
+			foto('2022-em-zelt', 'Fünf Fans oben ohne mit B, O, O, O, M auf dem Bauch, davor einer mit Herz und das Schild „Fraktion Bräune“'),
+			foto('2022-em-boom-2', 'Die BOOOM-Bäuche vor dem weißen Zelt, noch einmal aus einem anderen Moment'),
+		],
+	},
 ];
 
 export function slug(c: Choreo) {

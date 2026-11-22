@@ -91,7 +91,7 @@ export const auswahl = {
 	'2022-em-zelt': '2022_08_München_EM/eingang_WhatsApp Image 2026-11-22 at 16.24.51 (1).jpeg',
 	'2022-em-bodypainting': '2022_08_München_EM/eingang_WhatsApp Image 2026-11-22 at 16.24.51 (7).jpeg',
 	'2022-em-selfie': '2022_08_München_EM/eingang_WhatsApp Image 2026-11-22 at 16.24.51 (4).jpeg',
-	'2022-em-schmeckt': '2022_08_München_EM/eingang_WhatsApp Image 2026-11-22 at 16.24.52 (3).jpeg',
+	'2022-em-boom-2': '2022_08_München_EM/eingang_WhatsApp Image 2026-11-22 at 16.24.51.jpeg',
 	'2022-timmendorf-vollgas': '2022_09_Timmendorf/2022-09-04_18-37_eingang_@justus.fotos-DM-Timmendorf-20220904-A1_01963.jpg',
 	'2022-timmendorf-leidergeil': '2022_09_Timmendorf/2022-09-04_18-39_eingang_@justus.fotos-DM-Timmendorf-20220904-A1_02041.jpg',
 	'2022-timmendorf-1': '2022_09_Timmendorf/whatsapp_WhatsApp Image 2026-11-22 at 12.05.36.jpeg',
