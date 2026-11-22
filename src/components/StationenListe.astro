@@ -1,6 +1,6 @@
 ---
 // Alle Stationen, neueste zuerst (Stationen-Seite). Jede Station gleich aufgebaut wie eine Choreo:
-// Datum und Ort groß, unser Satz zum Turnier, ein großes Foto, darunter weitere Fotos und Videos in einer Reihe.
+// Datum und Ort groß, unser Satz zum Turnier, ein großes Foto, darunter eine Reihe Fotos und eine Reihe Videos.
 import { Picture } from 'astro:assets';
 import Handy from './Handy.astro';
 import { grossUrl, type Foto } from '../data/fotos';
@@ -32,14 +32,18 @@ const knopf = (f: Foto) => ({ 'data-gross': gross.get(f.bild.src), 'data-alt': f
 					<Picture src={s.fotos[0].bild} formats={['avif', 'webp']} widths={[480, 800, 1200, 1600]} sizes="(min-width: 1100px) 1068px, 92vw" alt={s.fotos[0].alt} loading="lazy" />
 				</button>
 			)}
-			{(s.fotos.length > 1 || s.clips) && (
+			{s.fotos.length > 1 && (
 				<div class="weitere">
 					{s.fotos.slice(1).map((f, j) => (
 						<button type="button" class="foto klein" style={`--r: ${neigungen[(i + j + 1) % neigungen.length]}deg`} {...knopf(f)}>
 							<Picture src={f.bild} formats={['avif', 'webp']} widths={[360, 640, 960]} sizes="(min-width: 760px) 400px, 70vw" alt={f.alt} loading="lazy" />
 						</button>
 					))}
-					{s.clips?.map((c, j) => (
+				</div>
+			)}
+			{s.clips && (
+				<div class="weitere">
+					{s.clips.map((c, j) => (
 						<div class="handy-platz">
 							<Handy clip={c} r={neigungen[(i + j + 2) % neigungen.length]} />
 						</div>
@@ -148,13 +152,22 @@ const knopf = (f: Foto) => ({ 'data-gross': gross.get(f.bild.src), 'data-alt': f
 		height: auto;
 		max-height: 72vh;
 	}
-	/* Weitere Fotos und Videos: eine Reihe gleich hoher Kacheln, auf dem Handy zum Wischen */
+	/* Weitere Fotos, darunter die Videos: je eine Reihe gleich hoher Kacheln. Passt eine Reihe nicht in die Breite,
+	   scrollt sie seitlich (auf dem Handy mit Einrasten). Innenabstand, damit gekippte Karten und Schatten nicht abgeschnitten werden. */
 	.weitere {
 		--hoehe: clamp(220px, 26vw, 300px);
 		display: flex;
-		flex-wrap: wrap;
+		flex-wrap: nowrap;
 		align-items: flex-start;
 		gap: 24px;
+		overflow-x: auto;
+		margin: -14px -16px;
+		padding: 14px 16px 22px;
+		scroll-snap-type: x proximity;
+	}
+	.weitere > * {
+		flex: none;
+		scroll-snap-align: start;
 	}
 	.foto.klein :global(img) {
 		height: var(--hoehe);
@@ -168,14 +181,9 @@ const knopf = (f: Foto) => ({ 'data-gross': gross.get(f.bild.src), 'data-alt': f
 	}
 	@media (max-width: 759px) {
 		.weitere {
-			flex-wrap: nowrap;
-			overflow-x: auto;
 			scroll-snap-type: x mandatory;
-			margin: 0 -16px;
-			padding: 8px 16px 16px;
 		}
 		.weitere > * {
-			flex: none;
 			scroll-snap-align: center;
 		}
 	}

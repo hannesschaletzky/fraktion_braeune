@@ -37,7 +37,7 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 					<h2 class="titel marker">{c.titel}</h2>
 					{c.vonAnderen && <p class="geschenk">💜 Nicht von uns, sondern von anderen Fans für uns</p>}
 				</header>
-				{/* Immer gleich: die Choreo groß, darunter weitere Fotos und Videos in einer Reihe */}
+				{/* Immer gleich: die Choreo groß, darunter eine Reihe Fotos und eine Reihe Videos */}
 				<button
 								type="button"
 								class="foto haupt"
@@ -49,7 +49,7 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 							>
 								<Picture src={c.fotos[0].bild} formats={['avif', 'webp']} widths={[480, 800, 1200, 1600]} sizes="(min-width: 1100px) 1068px, 92vw" alt={c.fotos[0].alt} loading={i < 2 ? 'eager' : 'lazy'} />
 							</button>
-				{(c.fotos.length > 1 || c.clips) && (
+				{c.fotos.length > 1 && (
 					<div class="weitere">
 						{c.fotos.slice(1).map((f, j) => (
 							<button
@@ -64,7 +64,11 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 								<Picture src={f.bild} formats={['avif', 'webp']} widths={[480, 800, 1200, 1600]} sizes="(min-width: 760px) 400px, 70vw" alt={f.alt} loading={i < 2 ? 'eager' : 'lazy'} />
 							</button>
 						))}
-						{c.clips?.map((k, j) => <div class="handy-platz"><Handy clip={k} r={neigungen[(i + j + 2) % neigungen.length]} /></div>)}
+					</div>
+				)}
+				{c.clips && (
+					<div class="weitere">
+						{c.clips.map((k, j) => <div class="handy-platz"><Handy clip={k} r={neigungen[(i + j + 2) % neigungen.length]} /></div>)}
 					</div>
 				)}
 			</article>
@@ -106,13 +110,22 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 		max-height: 78vh;
 		object-fit: contain;
 	}
-	/* Weitere Fotos und Videos: eine Reihe gleich hoher Kacheln, auf dem Handy zum Wischen */
+	/* Weitere Fotos, darunter die Videos: je eine Reihe gleich hoher Kacheln. Passt eine Reihe nicht in die Breite,
+	   scrollt sie seitlich (auf dem Handy mit Einrasten). Innenabstand, damit gekippte Karten und Schatten nicht abgeschnitten werden. */
 	.weitere {
 		--hoehe: clamp(220px, 26vw, 300px);
 		display: flex;
-		flex-wrap: wrap;
+		flex-wrap: nowrap;
 		align-items: flex-start;
 		gap: 24px;
+		overflow-x: auto;
+		margin: -14px -16px;
+		padding: 14px 16px 22px;
+		scroll-snap-type: x proximity;
+	}
+	.weitere > * {
+		flex: none;
+		scroll-snap-align: start;
 	}
 	.foto.klein :global(img) {
 		height: var(--hoehe);
@@ -125,14 +138,9 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 	}
 	@media (max-width: 759px) {
 		.weitere {
-			flex-wrap: nowrap;
-			overflow-x: auto;
 			scroll-snap-type: x mandatory;
-			margin: 0 -16px;
-			padding: 8px 16px 16px;
 		}
 		.weitere > * {
-			flex: none;
 			scroll-snap-align: center;
 		}
 	}
