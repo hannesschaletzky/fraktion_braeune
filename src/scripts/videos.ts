@@ -1,6 +1,6 @@
 // Gemeinsame Steuerung für alle Videos der Seite (Fernseher und Handys):
-// eine kleine stumme Vorschau-Schleife läuft, solange das Video sichtbar ist (bei Datensparmodus nicht); Tipp aufs Bild hält an; 🔇 spielt einmal mit Ton von vorn
-// (immer nur ein Video mit Ton), 🔊 schaltet nur den Ton ab und lässt das Video weiterlaufen; Vollbild mit Bedienelementen. Vorschaubilder werden erst kurz vorher geladen.
+// eine kleine stumme Vorschau-Schleife läuft, solange das Video sichtbar ist (bei Datensparmodus nicht); Tipp aufs Bild hält an; „Mit Ton“ spielt einmal mit Ton von vorn
+// (immer nur ein Video mit Ton); der Lautsprecher-Knopf schaltet nur den Ton um und ändert nie, ob das Video läuft; Vollbild mit Bedienelementen. Vorschaubilder werden erst kurz vorher geladen.
 import { ruhigGewuenscht } from './bewegung';
 
 const ruhig = ruhigGewuenscht();
@@ -43,14 +43,32 @@ export function tonAus(ausser?: HTMLElement) {
 	}
 }
 
-/** Ton aus, aber weiterlaufen lassen: stumm an derselben Stelle weiter, danach in der Schleife.
- *  (Nur die anderen Videos werden bei tonAus() je nach Einstellung angehalten.) */
+/** 🔊 → 🔇: nur den Ton abschalten. Läuft das Video, läuft es stumm weiter (danach in der Schleife);
+ *  ist es angehalten, bleibt es angehalten. */
 function stumm(s: HTMLElement) {
 	const v = vid(s);
 	v.muted = true;
 	v.loop = true;
 	anzeigen(s, false);
-	if (v.paused && !angehalten.has(v)) v.play().catch(() => {});
+}
+
+/** 🔇 → 🔊: nur den Ton einschalten, Abspielen oder Anhalten bleibt wie es ist. Läuft gerade die stumme
+ *  Vorschau (ohne Tonspur), wird das volle Video geladen und beginnt am Anfang; sonst an derselben Stelle.
+ *  Andere Videos werden stumm (immer nur eins mit Ton). */
+function tonAn(s: HTMLElement) {
+	const v = vid(s);
+	const lief = !v.paused;
+	tonAus(s);
+	const istVoll = !!v.dataset.voll && v.currentSrc.endsWith(v.dataset.voll);
+	const stelle = istVoll ? v.currentTime : 0;
+	voll(v);
+	v.muted = false;
+	// Mit Ton nur einmal durch: in der Schleife setzt der Kommentar mitten im Satz neu ein
+	v.loop = false;
+	v.currentTime = stelle;
+	anzeigen(s, true);
+	if (lief) v.play().catch(() => {});
+	else v.pause();
 }
 
 /** Vom Vorschau-Schnipsel auf das volle Video wechseln (lädt erst jetzt) */
@@ -124,7 +142,7 @@ export function spieler(s: HTMLElement) {
 
 	s.querySelector('.ton')?.addEventListener('click', (e) => {
 		e.stopPropagation();
-		if (v.muted) mitTon(s);
+		if (v.muted) tonAn(s);
 		else stumm(s);
 	});
 
