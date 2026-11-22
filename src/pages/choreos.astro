@@ -1,11 +1,11 @@
 ---
-import { Image, Picture } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import Lightbox from '../components/Lightbox.astro';
 import Fuss from '../components/Fuss.astro';
 import Handy from '../components/Handy.astro';
-import logo from '../assets/logo-bunt.png';
-import { choreos, jahre, slug } from '../data/choreos';
+import { choreos, slug } from '../data/choreos';
+import SeitenKopf from '../components/SeitenKopf.astro';
 import { grossUrl } from '../data/fotos';
 
 const gross = new Map<string, string>();
@@ -22,29 +22,11 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 	bild={choreos[0].fotos[0].bild}
 	bildAlt={choreos[0].fotos[0].alt}
 >
-	<header class="kopf">
-		<div class="wrap">
-			<a href="/" class="heim" aria-label="Zur Startseite">
-				<Image src={logo} widths={[300, 600]} sizes="200px" alt="Fraktion Bräune" class="logo" />
-			</a>
-			<h1>Unsere <span class="bunt">{[...'Choreos'].map((c) => <span>{c}</span>)}</span></h1>
-			<div class="filter" role="group" aria-label="Nach Jahr filtern">
-				<button type="button" data-jahr="alle" aria-pressed="true">Alle</button>
-				{jahre.map((j) => <button type="button" data-jahr={j} aria-pressed="false">{j}</button>)}
-			</div>
-			<nav class="inhalt" aria-label="Choreos">
-				{choreos.map((c) => (
-					<a href={`#${slug(c)}`} data-jahr={c.jahr}>
-						{c.titel}<span class="kurzjahr" aria-label={String(c.jahr)}>’{String(c.jahr).slice(2)}</span>
-					</a>
-				))}
-			</nav>
-		</div>
-	</header>
+	<SeitenKopf wort="Choreos" eintraege={choreos.map((c) => ({ href: `#${slug(c)}`, text: c.titel, jahr: c.jahr }))} />
 
 	<main class="wrap liste">
 		{choreos.map((c, i) => (
-			<article id={slug(c)} class="choreo" data-jahr={c.jahr} style={`--schatten: ${farben[i % farben.length]}`}>
+			<article id={slug(c)} class="choreo" data-eintrag data-jahr={c.jahr} style={`--schatten: ${farben[i % farben.length]}`}>
 				<header class="info">
 					<p class="wann">
 						<span class="datum">{monate[c.monat - 1]} {c.jahr}</span>
@@ -93,98 +75,8 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 	<Lightbox />
 </Layout>
 
-<script>
-	// Jahres-Filter: blendet Pillen und Choreos anderer Jahre aus
-	const knoepfe = [...document.querySelectorAll<HTMLButtonElement>('.filter button')];
-	const eintraege = [...document.querySelectorAll<HTMLElement>('.inhalt a[data-jahr], .choreo[data-jahr]')];
-	knoepfe.forEach((k) =>
-		k.addEventListener('click', () => {
-			const jahr = k.dataset.jahr!;
-			knoepfe.forEach((x) => x.setAttribute('aria-pressed', String(x === k)));
-			eintraege.forEach((e) => (e.hidden = jahr !== 'alle' && e.dataset.jahr !== jahr));
-		}),
-	);
-</script>
 
 <style>
-	.kopf {
-		padding: 32px 0 56px;
-		background:
-			radial-gradient(ellipse at 20% 0%, rgb(255 46 77 / 0.2), transparent 55%),
-			radial-gradient(ellipse at 90% 30%, rgb(47 212 122 / 0.14), transparent 50%),
-			var(--nacht);
-	}
-	.heim {
-		display: inline-block;
-	}
-	.logo {
-		width: 180px;
-		height: auto;
-		filter: drop-shadow(3px 4px 0 var(--tinte));
-		transition: transform 0.25s cubic-bezier(0.3, 1.8, 0.5, 1);
-	}
-	.heim:hover .logo {
-		transform: rotate(-3deg) scale(1.05);
-	}
-	h1 {
-		font-family: var(--display);
-		font-weight: 400;
-		text-transform: uppercase;
-		font-size: clamp(3.2rem, 12vw, 7rem);
-		line-height: 0.95;
-		margin: 40px 0 28px;
-	}
-	.inhalt {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10px;
-	}
-	.inhalt a {
-		font-size: 0.9rem;
-		font-weight: 700;
-		padding: 0.35em 0.9em;
-		border-radius: 999px;
-		border: 2px solid rgb(248 242 231 / 0.3);
-		text-decoration: none;
-		transition: background 0.2s, color 0.2s;
-	}
-	.kurzjahr {
-		margin-left: 0.45em;
-		font-size: 0.75em;
-		font-weight: 800;
-		opacity: 0.55;
-	}
-	.filter {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10px;
-		margin-bottom: 18px;
-	}
-	.filter button {
-		padding: 0.35em 1em;
-		border-radius: 999px;
-		border: 2px solid var(--sonne);
-		background: transparent;
-		color: var(--sonne);
-		font-family: var(--display);
-		font-size: 1.05rem;
-		letter-spacing: 0.03em;
-		cursor: pointer;
-		transition: background 0.2s, color 0.2s;
-	}
-	.filter button:hover,
-	.filter button[aria-pressed='true'] {
-		background: var(--sonne);
-		color: var(--tinte);
-	}
-	[data-jahr][hidden] {
-		display: none !important;
-	}
-	.inhalt a:hover {
-		background: var(--papier);
-		color: var(--tinte);
-	}
-
 	.liste {
 		display: grid;
 		gap: clamp(80px, 12vw, 140px);

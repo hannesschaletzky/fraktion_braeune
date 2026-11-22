@@ -75,12 +75,13 @@ export const stationen: Station[] = [
 		stopp: 1,
 		motto: 'Es geht loooos 🎉',
 		fotos: [
+			foto('2026-berlin-feuerwerk', 'Feuerwerk über der Fackelwand zum fünfjährigen Jubiläum, Spieler auf dem Court bei Nacht'),
 			foto('2026-berlin-1', 'Feuerwand aus Fackeln am Spielfeldrand bei Nacht'),
 			foto('2026-berlin-4', 'Die Gruppe in weißen Shirts jubelt hinter dem Fraktion-Bräune-Banner'),
 			foto('2026-berlin-3', 'Nahaufnahme einer Fackel in dichtem rotem Rauch'),
 			foto('2026-berlin-5', 'Der Center Court von oben bei Nacht, Fackeln leuchten im Block'),
 		],
-		clips: ['berlin26-pyrobts', 'berlin26-trommel'],
+		clips: ['berlin26-feuerwerk', 'berlin26-pyrobts', 'berlin26-trommel'],
 	},
 	{
 		jahr: 2025,
@@ -282,3 +283,17 @@ export const stationen: Station[] = [
 		],
 	},
 ];
+
+export const monate = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+
+/** Ort mit Stopp-Nummer, z. B. "Berlin 2" */
+export const ortName = (s: Station) => (s.stopp ? `${s.ort} ${s.stopp}` : s.ort);
+
+/** Anker auf der Stationen-Seite */
+export function slug(s: Station) {
+	return `station-${s.jahr}-${ortName(s)}${s.zusatz ? `-${s.zusatz}` : ''}`
+		.toLowerCase()
+		.replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/^-|-$/g, '');
+}

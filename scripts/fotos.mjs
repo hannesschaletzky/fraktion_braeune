@@ -37,6 +37,7 @@ const auswahl = {
 	'2025-timmendorf-3': '2025_Timmendorf/@justus.fotos-20250906-DSC05146.jpg',
 	'2025-timmendorf-4': '2025_Timmendorf/@justus.fotos-20250906-DSC04497.jpg',
 	'2025-timmendorf-5': '2025_Timmendorf/@kevinmtg.fotos_DSC4275.jpg',
+	'2026-berlin-feuerwerk': '2026_Berlin/@kevinmtg.fotos_260606-212110__DSC5521.jpg',
 	'2026-berlin-1': '2026_Berlin/@kevinmtg.fotos_260606-212106_DSC03337.jpg',
 	'2026-berlin-2': '2026_Berlin/2ad8936e-4eab-45f5-8f65-2a7304bd44a8.JPG',
 	'2026-berlin-3': '2026_Berlin/@kevinmtg.fotos_260606-222916__DSC9607.jpg',

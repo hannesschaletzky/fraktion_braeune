@@ -62,6 +62,7 @@ const clips = {
 	'muenchen26-chenoa': { teile: [[IG('18086029685138250'), 0, 18]], hoch: true, poster: 3 },
 	'berlin26-pyrobts': { teile: [[IG('17890284264378149'), 0, null]], hoch: true, poster: 3 },
 	'berlin26-fackelreihe': { teile: [[IG('18046417976571310'), 0, null]], hoch: true, poster: 12 },
+	'berlin26-feuerwerk': { teile: [[IG('18117450868692699'), 0, null]], hoch: true, poster: 33 },
 	'berlin26-trommel': { teile: [[IG('18095074781223588'), 0, null]], hoch: true, poster: 4 },
 	'berlin26-fahnen': { teile: [[IG('17911485870223540'), 0, null]], hoch: true, poster: 3 },
 	'berlin25-hey': { teile: [[IG('18078541817312463'), 0, null]], hoch: true, poster: 4 },

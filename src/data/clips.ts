@@ -24,6 +24,7 @@ export const clips = {
 	'muenchen26-goated': c('muenchen26-goated', 'Rote Fackelwand bei Nacht in München', true, 'München jetzt schon GOATED'),
 	'berlin26-pyrobts': c('berlin26-pyrobts', 'Fackeln vor dem Regenbogen-Banner', true, 'pyro bts'),
 	'berlin26-fackelreihe': c('berlin26-fackelreihe', 'Fackeln an der Bande in Berlin', true, 'Let’s goooooo 🔥'),
+	'berlin26-feuerwerk': c('berlin26-feuerwerk', 'Einlauf mit 5-Jahre-Banner, Fackelwand und Feuerwerk', true, 'Legendärster Einlauf'),
 	'berlin26-trommel': c('berlin26-trommel', 'Trommel und Sprechchor für Sven Winter', true),
 	'berlin26-fahnen': c('berlin26-fahnen', 'Fahnen wehen über dem Block in Berlin', true, 'die Fahnen wehen wieder 😍'),
 	'berlin25-hey': c('berlin25-hey', 'Der Block klatscht und ruft für Eric und King', true),

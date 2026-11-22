@@ -199,9 +199,6 @@ export const choreos: Choreo[] = [
 	},
 ];
 
-/** Alle Jahre mit Choreos, neueste zuerst (für den Filter) */
-export const jahre = [...new Set(choreos.map((c) => c.jahr))].sort((a, b) => b - a);
-
 export function slug(c: Choreo) {
 	return `choreo-${c.jahr}-${c.titel}`
 		.toLowerCase()
