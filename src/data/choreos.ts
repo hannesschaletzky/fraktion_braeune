@@ -15,6 +15,8 @@ export interface Choreo {
 	/** Was dazugehörte, als kurze Schlagworte */
 	zutaten: string[];
 	fotos: Foto[];
+	/** Nicht von uns: eine Choreo, die andere Fans für uns gemacht haben */
+	vonAnderen?: boolean;
 	/** Videos aus Stories und Reels */
 	clips?: ClipName[];
 }
@@ -170,7 +172,7 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2024,
-		monat: 8,
+		monat: 9,
 		ort: 'Timmendorfer Strand',
 		titel: 'Christ · Grüne · Abfaaahrt',
 		zutaten: ['Side-Court-Choreo', 'Banner am Oberrang', 'Rauch'],
@@ -178,12 +180,13 @@ export const choreos: Choreo[] = [
 	},
 	{
 		jahr: 2024,
-		monat: 8,
+		monat: 9,
 		ort: 'Timmendorfer Strand',
-		titel: 'Purple Party',
-		zutaten: ['Banner', 'Lila Rauch'],
+		titel: 'Purple Party People grüßen die Fraktion Bräune',
+		vonAnderen: true,
+		zutaten: ['Drei Banner', 'Lila Rauch'],
 		fotos: [
-			foto('choreo-2024-purple', 'Lila Banner „Purple Party“ in der vollen Tribüne'),
+			foto('choreo-2024-purple', 'Drei lila Banner „Purple Party People grüßen die Fraktion Bräune“ in der vollen Tribüne'),
 			foto('2024-timmendorf-6', 'Fackeln und lila Rauch im Block'),
 		],
 	},

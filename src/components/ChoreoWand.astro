@@ -15,7 +15,7 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 				<li class:list={{ mehr: i >= sichtbar }} style={`--r: ${neigungen[i % neigungen.length]}deg; --schatten: ${farben[i % farben.length]}`}>
 					<a href={`/choreos/#${slug(c)}`} class="stoff">
 						<span class="text marker">{c.titel}</span>
-						<span class="wo">{c.ort} {c.jahr}</span>
+						<span class="wo">{c.ort} {c.jahr}{c.vonAnderen && ' · für uns 💜'}</span>
 					</a>
 				</li>
 			))}

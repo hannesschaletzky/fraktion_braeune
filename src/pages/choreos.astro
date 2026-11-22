@@ -44,6 +44,7 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 						{c.zusatz && <span class="zusatz">{c.zusatz}</span>}
 					</p>
 					<h2 class="titel marker">{c.titel}</h2>
+					{c.vonAnderen && <p class="geschenk">💜 Nicht von uns, sondern von anderen Fans für uns</p>}
 					<ul class="zutaten" role="list">
 						{c.zutaten.map((z) => <li>{z}</li>)}
 					</ul>
@@ -248,6 +249,11 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 		line-height: 1.15;
 		transform: rotate(-2deg);
 		box-shadow: 6px 6px 0 var(--schatten);
+	}
+	.geschenk {
+		margin: 18px 0 0;
+		font-weight: 800;
+		color: var(--lila);
 	}
 	.zutaten {
 		list-style: none;
