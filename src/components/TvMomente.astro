@@ -19,7 +19,7 @@ const erster = sender[0];
 				<div class="schirm">
 					<video
 						src={`/videos/${erster.name}.mp4`}
-						poster={`/videos/${erster.name}.webp`}
+						data-poster={`/videos/${erster.name}.webp`}
 						playsinline
 						preload="none"
 						aria-label={`${erster.titel}, ${wannText(erster)}`}
@@ -66,51 +66,16 @@ const erster = sender[0];
 </section>
 
 <script>
-	// Ganz normaler Player: ▶ bzw. Tipp aufs Bild spielt/pausiert (mit Ton, an der aktuellen Stelle),
-	// Lautsprecher schaltet nur den Ton um, ⛶ Vollbild. Kein Autoplay, keine Vorschau-Schleife.
-	import { tonAus } from '../scripts/videos';
+	// Bedienung wie alle Videos (src/scripts/videos.ts); hier nur die Senderwahl
+	import { spieler } from '../scripts/videos';
 	import { sender, wannText } from '../data/clips';
 
 	const tv = document.querySelector<HTMLElement>('.fernseher')!;
 	const video = tv.querySelector('video')!;
-	const ton = tv.querySelector<HTMLButtonElement>('.ton')!;
 	const knoepfe = [...document.querySelectorAll<HTMLButtonElement>('.programm button')];
 	const nr = (i: number) => String(i + 1).padStart(2, '0');
-
-	function zeigen() {
-		tv.classList.toggle('laeuft', !video.paused);
-		ton.textContent = video.muted ? '🔇' : '🔊';
-		ton.setAttribute('aria-label', video.muted ? 'Ton an' : 'Ton aus');
-		ton.setAttribute('aria-pressed', String(!video.muted));
-	}
-	for (const ereignis of ['play', 'pause', 'ended', 'volumechange']) video.addEventListener(ereignis, zeigen);
-
-	// Immer nur ein Video mit Ton: läuft der Fernseher, werden die Handys stumm; bekommt ein Handy Ton, pausiert der Fernseher
-	video.addEventListener('play', () => tonAus());
-	const fremd = (e: Event) => {
-		const v = e.target as HTMLVideoElement;
-		if (v !== video && v instanceof HTMLVideoElement && !v.muted && !v.paused) video.pause();
-	};
-	document.addEventListener('play', fremd, true);
-	document.addEventListener('volumechange', fremd, true);
-
+	spieler(tv);
 	const abspielen = () => video.play().catch(() => {});
-	tv.querySelector('.schirm')!.addEventListener('click', () => (video.paused ? abspielen() : video.pause()));
-	tv.querySelector('.abspielen')!.addEventListener('click', (e) => {
-		e.stopPropagation();
-		abspielen();
-	});
-	ton.addEventListener('click', (e) => {
-		e.stopPropagation();
-		video.muted = !video.muted;
-	});
-	tv.querySelector('.gross')!.addEventListener('click', (e) => {
-		e.stopPropagation();
-		abspielen();
-		const ios = video as HTMLVideoElement & { webkitEnterFullscreen?: () => void };
-		if (video.requestFullscreen) video.requestFullscreen().catch(() => ios.webkitEnterFullscreen?.());
-		else ios.webkitEnterFullscreen?.();
-	});
 
 	/** Sender wechseln. Lief der Fernseher (oder spielen = true), läuft der neue Sender gleich weiter. */
 	function schalten(i: number, spielen = false) {
@@ -137,7 +102,6 @@ const erster = sender[0];
 		void tv.offsetWidth;
 		tv.classList.add('wechsel');
 		if (lief || spielen) abspielen();
-		zeigen();
 	}
 	const jetzt = () => Number(tv.dataset.kanal);
 
@@ -152,51 +116,12 @@ const erster = sender[0];
 		tv.scrollIntoView({ behavior: 'smooth', block: 'center' });
 		schalten(i, true);
 	});
-	zeigen();
 </script>
 
 <style>
 	/* Hochkant-Clips: ganz zeigen, links und rechts schwarz */
 	.fernseher:global(.hochkant) video {
 		object-fit: contain;
-	}
-	/* Großer Play-Knopf mitten im Bild */
-	.abspielen {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		z-index: 2;
-		display: grid;
-		justify-items: center;
-		gap: 2px;
-		padding: 18px;
-		border-radius: 999px;
-		border: 3px solid var(--tinte);
-		background: var(--sonne);
-		color: var(--tinte);
-		font-family: var(--display);
-		text-transform: uppercase;
-		font-size: 0.95rem;
-		letter-spacing: 0.04em;
-		box-shadow: 4px 4px 0 var(--tinte);
-		cursor: pointer;
-		transform: translate(-50%, -50%);
-		transition:
-			opacity 0.25s,
-			transform 0.2s cubic-bezier(0.3, 1.8, 0.5, 1);
-	}
-	.abspielen svg {
-		width: clamp(28px, 6vw, 44px);
-		height: clamp(28px, 6vw, 44px);
-		margin-left: 3px;
-	}
-	.abspielen:hover {
-		transform: translate(-50%, -50%) scale(1.08);
-	}
-	/* Der große ▶ steht da, solange nichts läuft */
-	.fernseher:global(.laeuft) .abspielen {
-		opacity: 0;
-		pointer-events: none;
 	}
 	.tv {
 		background:

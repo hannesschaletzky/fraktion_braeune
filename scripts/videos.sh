@@ -6,7 +6,6 @@
 # Schnitte möglichst an Satzgrenzen des Livestream-Kommentars (geprüft mit whisper-cli), sonst klingt
 # der Anfang abgehackt. Biertaufe und Aufm Pferd sind schon im Original nur Satzfetzen.
 set -euo pipefail
-# Danach die Vorschau-Schleifen erneuern: node scripts/clips.mjs --vorschau
 cd "$(dirname "$0")/.."
 
 quelle=assets/2023_09_Timmendorf

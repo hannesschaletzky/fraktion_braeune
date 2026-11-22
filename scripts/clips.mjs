@@ -146,29 +146,9 @@ async function poster(video, sekunde, ziel) {
 	await sharp(png).resize({ width: 640, withoutEnlargement: true }).webp({ quality: 72 }).toFile(ziel);
 }
 
-// Vorschau-Schleife: 4 s ohne Ton in kleiner Auflösung, läuft automatisch, solange das Video sichtbar ist.
-// Das volle Video lädt erst beim Tippen auf Ton oder Vollbild (spart mobil den Großteil der Daten).
-function vorschau(name, c = {}) {
-	const quelle = `public/videos/${name}.mp4`;
-	const len = dauer(quelle);
-	const L = Math.min(4, len);
-	const start = Math.max(0, Math.min((c.poster ?? 1) - 1.5, len - L));
-	const hoch = c.hoch ?? false;
-	fs.mkdirSync('public/videos/vorschau', { recursive: true });
-	const r = spawnSync('ffmpeg', ['-nostdin', '-v', 'error', '-y', '-ss', String(start), '-t', String(L), '-i', quelle,
-		'-vf', `scale=${hoch ? 320 : 480}:-2,fps=24`, '-an', '-c:v', 'libx264', '-preset', 'slow', '-crf', '32', '-profile:v', 'high',
-		'-pix_fmt', 'yuv420p', '-movflags', '+faststart', '-map_metadata', '-1', `public/videos/vorschau/${name}.mp4`], { encoding: 'utf8' });
-	if (r.status !== 0) console.error(`${name} (Vorschau): FEHLER\n${r.stderr}`);
-}
 
 // Nur beim direkten Aufruf schneiden; scripts/sortiere.mjs liest bloß die Liste
 if (import.meta.main) {
-	if (process.argv[2] === '--vorschau') {
-		// Nur Vorschau-Schleifen neu, für alle Videos (auch die aus scripts/videos.sh): node scripts/clips.mjs --vorschau
-		for (const f of fs.readdirSync('public/videos').filter((f) => f.endsWith('.mp4'))) vorschau(f.slice(0, -4), clips[f.slice(0, -4)]);
-		process.exit(0);
-	}
-
 	if (process.argv[2] === '--poster') {
 		// Nur Vorschaubilder neu: node scripts/clips.mjs --poster
 		for (const [name, c] of Object.entries(clips)) await poster(`public/videos/${name}.mp4`, c.poster ?? 1, `public/videos/${name}.webp`);
@@ -220,7 +200,6 @@ if (import.meta.main) {
 			continue;
 		}
 		await poster(ziel, c.poster ?? 1, `public/videos/${name}.webp`);
-		vorschau(name, c);
 		console.log(`${name}: ${dauer(ziel).toFixed(1)} s, ${Math.round(fs.statSync(ziel).size / 1024)} KB`);
 	}
 }

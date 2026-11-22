@@ -19,19 +19,19 @@ const titel = mitTitel ? c.titel : undefined;
 	<div class="geraet">
 		<div class="schirm">
 			<video
-				src={`/videos/vorschau/${c.name}.mp4`}
-				data-voll={`/videos/${c.name}.mp4`}
+				src={`/videos/${c.name}.mp4`}
 				data-poster={`/videos/${c.name}.webp`}
-				muted
-				loop
+				muted={!c.ton}
 				playsinline
 				preload="none"
 				aria-label={c.titel ? `${c.titel}: ${c.beschreibung}` : c.beschreibung}
 			></video>
-			<span class="pausezeichen" aria-hidden="true">▶</span>
+			<button type="button" class="abspielen" aria-label={`${c.titel ?? c.beschreibung} abspielen`}>
+				<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+			</button>
 			<span class="knoepfe">
 				{c.ton && (
-					<button type="button" class="ton" aria-label={`${c.titel ?? c.beschreibung} mit Ton abspielen`} aria-pressed="false">🔇</button>
+					<button type="button" class="ton" aria-label="Ton aus" aria-pressed="true">🔊</button>
 				)}
 				<button type="button" class="gross" aria-label={`${c.titel ?? c.beschreibung} im Vollbild abspielen`}>
 					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
@@ -55,7 +55,7 @@ const titel = mitTitel ? c.titel : undefined;
 		transition: transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1);
 	}
 	.handy:hover,
-	.handy:global(.an) {
+	.handy:global(.laeuft) {
 		transform: rotate(0) scale(1.03);
 	}
 	.geraet {

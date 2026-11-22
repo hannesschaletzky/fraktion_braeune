@@ -67,16 +67,13 @@ const sticker = [
 </section>
 
 <script>
-	import { tonAus } from '../scripts/videos';
+	import { alleAnhalten } from '../scripts/videos';
 	const dialog = document.querySelector<HTMLDialogElement>('dialog.award')!;
 	document.querySelector('#wir .pokal')!.addEventListener('click', () => dialog.showModal());
 	dialog.querySelector('.zu')!.addEventListener('click', () => dialog.close());
 	// Klick neben den Inhalt schließt
 	dialog.addEventListener('click', (e) => e.target === dialog && dialog.close());
-	dialog.addEventListener('close', () => {
-		tonAus();
-		dialog.querySelectorAll('video').forEach((v) => v.pause());
-	});
+	dialog.addEventListener('close', () => alleAnhalten());
 </script>
 
 <style>
