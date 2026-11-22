@@ -9,9 +9,11 @@ export interface Clip {
 	/** Nur für Screenreader, wenn kein Titel angezeigt wird */
 	beschreibung: string;
 	ton: boolean;
+	/** Querformat: das Handy wird quer gedreht gezeigt */
+	quer?: boolean;
 }
 
-const c = (name: string, beschreibung: string, ton: boolean, titel?: string): Clip => ({ name, beschreibung, ton, titel });
+const c = (name: string, beschreibung: string, ton: boolean, titel?: string, quer?: boolean): Clip => ({ name, beschreibung, ton, titel, quer });
 
 export const clips = {
 	// Aus dem Block (Stories)
@@ -58,10 +60,10 @@ export const clips = {
 	'timmendorf23-gekommen': c('timmendorf23-gekommen', 'Sprechchor „Er ist gekommen“ im Block', true),
 	'hamburg23-support': c('hamburg23-support', 'Anfeuern im Stadion am Rothenbaum', true, 'Natürlich ist der Support am Start!'),
 	'timmendorf24-mvp': c('timmendorf24-mvp', 'Rote Fackeln bei Nacht, der Block feiert den MVP', true, 'MVP!!!'),
-	'kw21-poniewaz': c('kw21-poniewaz', 'Interview mit den Poniewaz-Brüdern im Livestream, es geht um die Fans hinter dem Feld', true),
+	'kw21-poniewaz': c('kw21-poniewaz', 'Interview mit den Poniewaz-Brüdern im Livestream, es geht um die Fans hinter dem Feld', true, undefined, true),
 	'kw21-story': c('kw21-story', 'Story eines Spielers nach dem Sieg: „Die Gang auf unserer Seite hat ordentlich gepusht“', true),
-	'kw21-kommentar': c('kw21-kommentar', 'Die Kamera zeigt unsere Reihe, der Kommentar nennt die Fraktion Bräune', true),
-	'muenchen24-ben': c('muenchen24-ben', 'Pinker Rauch im Block, der Hallensprecher fragt nach Ben und bittet um Applaus für die Fraktion Bräune', true),
+	'kw21-kommentar': c('kw21-kommentar', 'Die Kamera zeigt unsere Reihe, der Kommentar nennt die Fraktion Bräune', true, undefined, true),
+	'muenchen24-ben': c('muenchen24-ben', 'Pinker Rauch im Block, der Hallensprecher fragt nach Ben und bittet um Applaus für die Fraktion Bräune', true, undefined, true),
 	'em22-tv': c('em22-tv', 'Unser Block mit dem Schild „Fraktion Bräune“ in der TV-Übertragung der EM', true),
 	'em22-court': c('em22-court', 'Blick vom Block auf den Court am Königsplatz, vorne wird ein Schild hochgehalten', true),
 	'bremen23-block': c('bremen23-block', 'Der Block feuert Eric Stadie direkt an der Bande an', true),

@@ -137,6 +137,10 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 		width: calc(var(--hoehe) * 0.6);
 		flex: none;
 	}
+	/* Quer gedrehtes Handy: gleiche Höhe, entsprechend breiter */
+	.handy-platz:has(:global(.handy.quer)) {
+		width: calc(var(--hoehe) * 1.7);
+	}
 	@media (max-width: 759px) {
 		.weitere {
 			scroll-snap-type: x mandatory;

@@ -15,7 +15,7 @@ const c = clips[name];
 const titel = mitTitel ? c.titel : undefined;
 ---
 
-<figure class="handy" data-spieler style={`--r: ${r}deg`}>
+<figure class:list={["handy", { quer: c.quer }]} data-spieler style={`--r: ${r}deg`}>
 	<div class="geraet">
 		<div class="schirm">
 			<video
@@ -86,6 +86,15 @@ const titel = mitTitel ? c.titel : undefined;
 	.schirm {
 		aspect-ratio: 9 / 16;
 		border-radius: 19px;
+	}
+	/* Querformat-Clip: Handy quer gedreht, Kamera-Loch links in der Mitte */
+	.quer .schirm {
+		aspect-ratio: 16 / 9;
+	}
+	.quer .geraet::before {
+		top: 50%;
+		left: 14px;
+		margin: -4.5px 0 0;
 	}
 	figcaption {
 		margin-top: 12px;
