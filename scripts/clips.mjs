@@ -105,6 +105,7 @@ export const clips = {
 	'timmendorf23-gekommen': { teile: [['assets/2023_09_Timmendorf/2023-09-01_02-33_insta-story_17922140525775157.mp4', 0, null]], hoch: true, poster: 5 },
 	'hamburg23-support': { teile: [['assets/2023_08_Elite_Hamburg/2023-08-17_05-17_insta-story_17989915973488514.mp4', 0, null]], hoch: true, poster: 18 },
 	'timmendorf24-mvp': { teile: [['assets/2024_09_Timmendorf/2024-08-31_10-23_insta-story_17934347210913264.mp4', 0, null]], hoch: true, poster: 4 },
+	'timmendorf21-clipit': { teile: [['assets/2021_09_Timmendorf/eingang_WhatsApp Video 2026-11-22 at 12.05.41.mp4', 0, null]], crop: '1142:592:72:0', poster: 20 },
 	'em22-tv': { teile: [['assets/2022_08_München_EM/eingang_WhatsApp Video 2026-11-22 at 18.01.10.mp4', 0, null]], hoch: true, poster: 5 },
 	'em22-court': { teile: [['assets/2022_08_München_EM/eingang_WhatsApp Video 2026-11-22 at 17.45.30.mp4', 0, null]], poster: 11 },
 	'bremen23-abfahrt': { teile: [['assets/2023_05_Bremen1/2023-05-13_23-54_insta-story_17893895657750574.mp4', 0, null]], hoch: true, poster: 4 },
