@@ -21,7 +21,7 @@ const knopf = (f: Foto) => ({ 'data-gross': gross.get(f.bild.src), 'data-alt': f
 		<li class="station" id={slug(s)} data-eintrag data-jahr={s.jahr} style={`--schatten: ${farben[i % farben.length]}`}>
 			<header class="kopf">
 				<h2 class="wann">
-					<span class="datum">{s.jahr}<span class="monat">{monate[s.monat - 1].slice(0, 3)}</span></span>
+					<span class="datum">{s.jahr}<span class="strich" aria-hidden="true">|</span><span class="monat">{monate[s.monat - 1].slice(0, 3)}</span><span class="strich" aria-hidden="true">|</span></span>
 					<span class="ort">{ortName(s)}</span>
 					{s.zusatz && <span class="zusatz">{s.zusatz}</span>}
 				</h2>
@@ -75,13 +75,19 @@ const knopf = (f: Foto) => ({ 'data-gross': gross.get(f.bild.src), 'data-alt': f
 		text-transform: uppercase;
 		line-height: 1.05;
 	}
-	/* Jahr vorne, Monat daneben (drei Buchstaben), beides weiß; der Ort ist gelb */
+	/* Jahr | Monat (drei Buchstaben) | Ort; Datum weiß, Ort gelb */
 	.datum {
 		font-size: clamp(1.6rem, 4vw, 2.3rem);
 		font-variant-numeric: tabular-nums;
 	}
-	.monat {
-		margin-left: 0.3em;
+	/* Dezente Striche zwischen Jahr, Monat und Ort */
+	.strich {
+		margin: 0 0.35em;
+		opacity: 0.35;
+	}
+	/* Nach dem letzten Strich sorgt schon der Abstand der Zeile für Luft */
+	.strich:last-child {
+		margin-right: 0;
 	}
 	/* Der Tourstopp ist das Wichtigste: gelb */
 	.ort {

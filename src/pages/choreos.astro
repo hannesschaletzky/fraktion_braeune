@@ -30,7 +30,7 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 			<article id={slug(c)} class="choreo" data-eintrag data-jahr={c.jahr} style={`--schatten: ${farben[i % farben.length]}`}>
 				<header class="info">
 					<p class="wann">
-						<span class="datum">{c.jahr}<span class="monat">{monate[c.monat - 1].slice(0, 3)}</span></span>
+						<span class="datum">{c.jahr}<span class="strich" aria-hidden="true">|</span><span class="monat">{monate[c.monat - 1].slice(0, 3)}</span><span class="strich" aria-hidden="true">|</span></span>
 						<span class="ort">{c.ort}{c.stopp && ` ${c.stopp}`}</span>
 						{c.zusatz && <span class="zusatz">{c.zusatz}</span>}
 					</p>
@@ -172,13 +172,19 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 		text-transform: uppercase;
 		line-height: 1.05;
 	}
-	/* Jahr vorne, Monat daneben (drei Buchstaben), beides weiß; der Ort ist gelb */
+	/* Jahr | Monat (drei Buchstaben) | Ort; Datum weiß, Ort gelb */
 	.datum {
 		font-size: clamp(1.6rem, 4vw, 2.3rem);
 		font-variant-numeric: tabular-nums;
 	}
-	.monat {
-		margin-left: 0.3em;
+	/* Dezente Striche zwischen Jahr, Monat und Ort */
+	.strich {
+		margin: 0 0.35em;
+		opacity: 0.35;
+	}
+	/* Nach dem letzten Strich sorgt schon der Abstand der Zeile für Luft */
+	.strich:last-child {
+		margin-right: 0;
 	}
 	/* Der Tourstopp ist das Wichtigste: gelb */
 	.ort {
