@@ -12,8 +12,6 @@ export interface Choreo {
 	zusatz?: string;
 	/** Text auf dem Banner */
 	titel: string;
-	/** Was dazugehörte, als kurze Schlagworte */
-	zutaten: string[];
 	fotos: Foto[];
 	/** Nicht von uns: eine Choreo, die andere Fans für uns gemacht haben */
 	vonAnderen?: boolean;
@@ -29,7 +27,6 @@ export const choreos: Choreo[] = [
 		ort: 'Dortmund',
 		zusatz: 'GBC',
 		titel: 'Jetzt brennt der Pott',
-		zutaten: ['Banner mit Förderturm', 'Pyro-Wand'],
 		fotos: [foto('2026-dortmund-1', 'Pyro-Wand vor dem Banner „Jetzt brennt der Pott“')],
 		clips: ['dortmund26-brennt', 'reel-dortmund-pov'],
 	},
@@ -39,7 +36,6 @@ export const choreos: Choreo[] = [
 		ort: 'Hamburg',
 		zusatz: 'Elite16',
 		titel: 'Elite Sieg',
-		zutaten: ['Banner', 'Fackeln'],
 		fotos: [foto('choreo-2026-elitesieg', 'Banner „Elite Sieg“ zwischen Fackeln und Rauch')],
 	},
 	{
@@ -48,7 +44,6 @@ export const choreos: Choreo[] = [
 		ort: 'Hamburg',
 		zusatz: 'Elite16',
 		titel: 'Living Legends',
-		zutaten: ['Unsere erste Choreo für ein internationales Team', 'Norge-Fahne mit Wikingerhelm', 'Fackeln'],
 		fotos: [
 			foto('choreo-hamburg-legends', 'Banner „Living Legends“ und Norge-Fahne hinter rotem Rauch'),
 			foto('2026-hamburg-2', 'Norge-Fahne mit Wikingerhelm über der Bande'),
@@ -61,7 +56,6 @@ export const choreos: Choreo[] = [
 		stopp: 2,
 		ort: 'Berlin',
 		titel: 'Unser Wunsch: Toursieg',
-		zutaten: ['Schilder'],
 		fotos: [foto('choreo-berlin-toursieg', 'Schilder „Unser Wunsch: Toursieg“ an der Bande')],
 	},
 	{
@@ -70,7 +64,6 @@ export const choreos: Choreo[] = [
 		stopp: 1,
 		ort: 'Berlin',
 		titel: 'Alles Gute, Eric ♥',
-		zutaten: ['Buchstabentafeln'],
 		fotos: [foto('choreo-berlin-eric', 'Buchstabentafeln „Alles Gute Eric“ mit Herz auf der leeren Tribüne')],
 	},
 	{
@@ -79,7 +72,6 @@ export const choreos: Choreo[] = [
 		stopp: 1,
 		ort: 'Berlin',
 		titel: 'Fünf Jahre Fraktion Bräune',
-		zutaten: ['Unser Lieblingsbanner, recycelt', 'Fackeln'],
 		fotos: [foto('choreo-2026-fuenf', 'Fackeln rund um das Fraktion-Banner auf dem Sand bei Nacht')],
 		clips: ['reel-choreo-bts', 'berlin26-pyrobts'],
 	},
@@ -88,7 +80,6 @@ export const choreos: Choreo[] = [
 		monat: 9,
 		ort: 'Timmendorfer Strand',
 		titel: '33 Jahre – Danke Timmendorf – One Last Dance',
-		zutaten: ['Riesenbanner', 'Grüne Papptafeln', 'Grüner Rauch'],
 		fotos: [
 			foto('2025-timmendorf-1', 'Grüner Rauch über der Choreo „33 Jahre – Danke Timmendorf – One Last Dance“'),
 			foto('2025-timmendorf-3', 'Das „33 Jahre“-Banner wird über die Tribüne gezogen, dahinter grüne Tafeln'),
@@ -100,7 +91,6 @@ export const choreos: Choreo[] = [
 		monat: 9,
 		ort: 'Timmendorfer Strand',
 		titel: 'Auf geht’s, kämpfen und siegen',
-		zutaten: ['Banner', 'Fahnen', 'Fackeln'],
 		fotos: [{ bild: aufGehts, alt: 'Banner „Auf geht’s kämpfen und siegen“, davor zwei Fackeln im Sand', credit: null }],
 		clips: ['timmendorf25-abfahrt'],
 	},
@@ -110,7 +100,6 @@ export const choreos: Choreo[] = [
 		stopp: 2,
 		ort: 'Berlin',
 		titel: 'Wir regieren die Hauptstadt',
-		zutaten: ['Für die Hauptstadt Beacher', 'Banner', 'Rauch'],
 		fotos: [foto('choreo-2025-regieren', 'Banner „Wir regieren die Hauptstadt – Hauptstadt Beacher“ mit Rauch')],
 	},
 	{
@@ -119,7 +108,6 @@ export const choreos: Choreo[] = [
 		stopp: 1,
 		ort: 'Berlin',
 		titel: 'Die Bärenhorde stürmt das Feld – für den geilsten Club der Welt',
-		zutaten: ['Unsere bislang aufwendigste Choreo', 'Bären-Banner', 'Rauch'],
 		fotos: [foto('choreo-2025-baerenhorde', 'Choreo „Die Bärenhorde stürmt das Feld – für den geilsten Club der Welt“ mit Bären-Banner')],
 	},
 	{
@@ -128,7 +116,6 @@ export const choreos: Choreo[] = [
 		stopp: 1,
 		ort: 'Berlin',
 		titel: 'Wir brenn’ für euch – aus BER, für BER',
-		zutaten: ['Bären-Banner', 'Fackeln'],
 		fotos: [foto('choreo-2025-brenn', 'Banner „Wir brenn’ für euch“ und „Fraktion Bräune aus BER – für BER“ mit Fackeln')],
 		clips: ['berlin25-pyro'],
 	},
@@ -138,7 +125,6 @@ export const choreos: Choreo[] = [
 		stopp: 2,
 		ort: 'München',
 		titel: 'Wir sind eure Hauptstadt – ihr Bayern!',
-		zutaten: ['Banner', 'Rauch'],
 		fotos: [foto('choreo-2025-bayern', 'Banner „Wir sind eure Hauptstadt – ihr Bayern!“ an der Bande')],
 	},
 	{
@@ -147,7 +133,6 @@ export const choreos: Choreo[] = [
 		stopp: 1,
 		ort: 'Düsseldorf',
 		titel: 'Unser Pott hat richtig Dampf',
-		zutaten: ['Banner', 'Blauer Rauch'],
 		fotos: [
 			foto('choreo-2025-pott', 'Banner „Unser Pott hat richtig Dampf“ mit blauem Rauch'),
 			foto('choreo-2025-pott-2', 'Banner „Unser Pott dampft immer noch“ an der Bande'),
@@ -159,7 +144,6 @@ export const choreos: Choreo[] = [
 		stopp: 1,
 		ort: 'Düsseldorf',
 		titel: 'Der König ist zurück',
-		zutaten: ['Banner', 'Fahnen', 'Rauch'],
 		fotos: [foto('choreo-2025-koenig', 'Banner „Der König ist zurück“ unter Fahnen und weißem Rauch')],
 	},
 	{
@@ -167,7 +151,6 @@ export const choreos: Choreo[] = [
 		monat: 9,
 		ort: 'Timmendorfer Strand',
 		titel: 'Unsere Helden aus Paris',
-		zutaten: ['Banner mit olympischen Ringen', 'Konfetti'],
 		fotos: [foto('2024-timmendorf-2', 'Banner „Unsere Helden aus Paris“ mit olympischen Ringen')],
 	},
 	{
@@ -175,7 +158,6 @@ export const choreos: Choreo[] = [
 		monat: 9,
 		ort: 'Timmendorfer Strand',
 		titel: 'Christ · Grüne · Abfaaahrt',
-		zutaten: ['Side-Court-Choreo', 'Banner am Oberrang', 'Rauch'],
 		fotos: [foto('choreo-2024-abfahrt', 'Banner „Christ · Grüne · Abfaaahrt“ am Oberrang mit orangem Rauch')],
 	},
 	{
@@ -184,7 +166,6 @@ export const choreos: Choreo[] = [
 		ort: 'Timmendorfer Strand',
 		titel: 'Purple Party People grüßen die Fraktion Bräune',
 		vonAnderen: true,
-		zutaten: ['Drei Banner'],
 		fotos: [
 			foto('choreo-2024-purple', 'Drei lila Banner „Purple Party People grüßen die Fraktion Bräune“ in der vollen Tribüne'),
 		],
@@ -195,7 +176,6 @@ export const choreos: Choreo[] = [
 		stopp: 1,
 		ort: 'München',
 		titel: 'Auf geht’s, kämpfen und siegen',
-		zutaten: ['Banner', 'Grüner Rauch'],
 		fotos: [foto('choreo-2024-aufgehts', 'Banner „Auf geht’s, kämpfen und siegen“ im grünen Rauch')],
 	},
 	{
@@ -204,7 +184,6 @@ export const choreos: Choreo[] = [
 		stopp: 1,
 		ort: 'Düsseldorf',
 		titel: 'Dieses Jahr wieder Vollgas',
-		zutaten: ['Banner', 'Fahnen', 'Rosa Rauch'],
 		fotos: [foto('2024-duesseldorf-vollgas', 'Banner „Dieses Jahr wieder Vollgas“ über der Bande, dazu Fahnen und rosa Rauch')],
 		clips: ['duesseldorf24-huette'],
 	},
@@ -213,7 +192,6 @@ export const choreos: Choreo[] = [
 		monat: 9,
 		ort: 'Timmendorfer Strand',
 		titel: 'Fraktion Bräune',
-		zutaten: ['Banner mit Regenbogen-Buchstaben', 'Pappschilder'],
 		fotos: [
 			foto('2023-timmendorf-2', 'Das Banner „Fraktion Bräune“ mit bunten Buchstaben'),
 			foto('2023-timmendorf-4', 'Pappschilder wie „Ballern“ über dem Banner'),

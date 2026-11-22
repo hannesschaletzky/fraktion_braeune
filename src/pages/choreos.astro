@@ -53,9 +53,6 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 					</p>
 					<h2 class="titel marker">{c.titel}</h2>
 					{c.vonAnderen && <p class="geschenk">💜 Nicht von uns, sondern von anderen Fans für uns</p>}
-					<ul class="zutaten" role="list">
-						{c.zutaten.map((z) => <li>{z}</li>)}
-					</ul>
 				</header>
 				{/* Immer gleich: die Choreo groß, darunter weitere Fotos und Videos in einer Reihe */}
 				<button
@@ -314,22 +311,6 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 		margin: 18px 0 0;
 		font-weight: 800;
 		color: var(--lila);
-	}
-	.zutaten {
-		list-style: none;
-		margin: 24px 0 0;
-		padding: 0;
-		display: flex;
-		flex-wrap: wrap;
-		gap: 8px;
-	}
-	.zutaten li {
-		font-size: 0.85rem;
-		font-weight: 700;
-		padding: 0.3em 0.8em;
-		border-radius: 999px;
-		background: rgb(248 242 231 / 0.1);
-		border: 1px solid rgb(248 242 231 / 0.25);
 	}
 	.zurueck a {
 		font-family: var(--marker);
