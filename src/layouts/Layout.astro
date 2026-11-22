@@ -61,7 +61,10 @@ const jsonLd = {
 		<title>{titel}</title>
 		<meta name="description" content={beschreibung} />
 		{nichtIndexieren ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={seite} />}
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<!-- Favicon „FB“ in Anton (erzeugt von scripts/favicon.mjs) -->
+		<link rel="icon" href="/favicon.ico" sizes="48x48" />
+		<link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
+		<link rel="icon" type="image/png" href="/icon-192.png" sizes="192x192" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<meta name="theme-color" content="#140d16" />
