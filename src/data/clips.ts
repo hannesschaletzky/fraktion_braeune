@@ -88,9 +88,15 @@ export interface Sender {
 // Neueste zuerst, wie die Stationen
 export const sender: Sender[] = [
 	{ name: 'hamburg26-elitesieg', titel: 'Elite-Sieg', wann: 'Hamburg 2026' },
-	{ name: 'hamburg26-bilder', titel: 'Schaut euch diese Bilder an', wann: 'Hamburg 2026' },
+	{ name: 'hamburg26-respekt', titel: 'Respekt fürs Banner', wann: 'Hamburg 2026' },
+	{ name: 'hamburg26-bilder', titel: 'Diese Bilder!', wann: 'Hamburg 2026' },
+	{ name: 'wdr4-dortmund', titel: 'Live bei WDR 4', wann: 'Dortmund 2026', hoch: true },
+	{ name: 'twitch-aura', titel: 'Aura-Moment', wann: 'Twitch-Stream · Berlin 2026', hoch: true },
+	{ name: 'gbt-allstars', titel: 'Fraktion vs. Allstars', wann: 'GBT-Interview · Berlin 2 2025', hoch: true },
 	{ name: 'br24-ultras', titel: 'Beachvolleyball-Ultras', wann: 'BR24 Sport · München 2025', hoch: true },
 	{ name: 'gbt-eltern', titel: 'Fraktion oder Eltern?', wann: 'GBT-Interview · München 2025', hoch: true },
+	{ name: 'gbt-geheim', titel: 'Choreo? Geheim!', wann: 'GBT-Interview · München 2025', hoch: true },
+	{ name: 'gbt-ericdani', titel: 'Eric & Dani fordern', wann: 'GBT-Interview · Düsseldorf 2025', hoch: true },
 	{ name: 'muenchen24-traum', titel: 'Riesenbanner', wann: 'München 2024' },
 	{ name: 'duesseldorf24-zuendeln', titel: 'Schon wieder am Zündeln', wann: 'Düsseldorf 2024' },
 	{ name: 'duesseldorf24-shirts', titel: 'Fan-Shirts', wann: 'Düsseldorf 2024' },
@@ -109,4 +115,5 @@ export const stimmen = [
 	{ text: 'Es gibt Fan-Shirts mit der Fraktion Bräune. … Das ist insane. Viel Liebe für die Fraktion.', wann: 'Düsseldorf 2024', sender: 'duesseldorf24-shirts' },
 	{ text: 'Nebenan die Fraktion Bräune. Das sind Beachvolleyball-Ultras. Sie kommen aus Berlin und fahren von Turnier zu Turnier.', wann: 'München 2025', quelle: 'BR24 Sport', sender: 'br24-ultras' },
 	{ text: 'Fraktion Bräune oder Eltern im Publikum? – Boah, das ist ja richtig unfair … Äh, Fraktion Bräune. – Der kam schnell.', wann: 'München 2025', quelle: 'Interview der German Beach Tour', sender: 'gbt-eltern' },
+	{ text: 'Die sind hier mit einem Elite-Sieg-Banner hergekommen, für Lui und für Nils. … Und wenn sie den durchbringen, dann sag ich auch Respekt.', wann: 'Hamburg 2026', sender: 'hamburg26-respekt' },
 ];

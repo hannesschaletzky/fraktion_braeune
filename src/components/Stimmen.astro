@@ -2,8 +2,8 @@
 // Was im Livestream über uns gesagt wurde. Ein Klick schaltet den Fernseher auf den Mitschnitt (mit Ton).
 import { sender, stimmen } from '../data/clips';
 
-const farben = ['var(--lila)', 'var(--gruen)', 'var(--fackel)', 'var(--sonne)', 'var(--blau)'];
-const neigung = [-2, 1.5, -1, 2, -1.5];
+const farben = ['var(--lila)', 'var(--gruen)', 'var(--fackel)', 'var(--sonne)', 'var(--blau)', 'var(--glut)'];
+const neigung = [-2, 1.5, -1, 2, -1.5, 1];
 const kanal = (name: string) => String(sender.findIndex((s) => s.name === name) + 1).padStart(2, '0');
 ---
 

@@ -63,7 +63,7 @@ const erster = sender[0];
 				</li>
 			))}
 		</ol>
-		<p class="quelle">Mitschnitte aus dem Livestream der German Beach Tour und von BR24 Sport.</p>
+		<p class="quelle">Mitschnitte aus dem Livestream und den Stories der German Beach Tour, von BR24 Sport, WDR 4 und Twitch.</p>
 	</div>
 </section>
 
@@ -328,8 +328,13 @@ const erster = sender[0];
 		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 		gap: 10px;
 	}
+	/* Alle Kästen gleich: je eine Zeile Titel und Untertitel, Überlänge endet mit … */
+	.programm li {
+		min-width: 0;
+	}
 	.programm button {
 		width: 100%;
+		height: 100%;
 		display: grid;
 		grid-template-columns: auto 1fr;
 		grid-template-rows: auto auto;
@@ -338,7 +343,7 @@ const erster = sender[0];
 		text-align: left;
 		padding: 10px 14px;
 		border-radius: 14px;
-		border: 2px solid rgb(248 242 231 / 0.25);
+		border: 1px solid rgb(248 242 231 / 0.16);
 		background: transparent;
 		color: var(--papier);
 		font: inherit;
@@ -358,15 +363,26 @@ const erster = sender[0];
 		grid-row: span 2;
 		font-family: monospace;
 		font-weight: 700;
-		font-size: 1.3rem;
+		font-size: 1.05rem;
+		opacity: 0.6;
+	}
+	[aria-current='true'] .pnr {
+		opacity: 1;
+	}
+	.ptitel,
+	.pwann {
+		min-width: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 	.ptitel {
 		font-weight: 800;
-		line-height: 1.2;
+		line-height: 1.25;
 	}
 	.pwann {
-		font-size: 0.85rem;
-		opacity: 0.75;
+		font-size: 0.8rem;
+		opacity: 0.6;
 	}
 	/* Handy: einzeilige Wisch-Leiste direkt unter dem Fernseher statt langer Liste */
 	@media (max-width: 759px) {

@@ -34,10 +34,17 @@ const clips = {
 		],
 	},
 	'hamburg26-bilder': { teile: [[R + 'Screen Recording 2026-08-10 at 00.10.56.mov', 0, null]], crop: '2750:1547:8:330' },
+	'hamburg26-respekt': { teile: [[R + 'Screen Recording 2026-08-10 at 00.50.33.mov', 0, null]], crop: '2288:1287:304:388', poster: 20 },
 	'hamburg26-elitesieg': { teile: [[R + 'Screen Recording 2026-08-10 at 01.32.06.mov', 0, null]], crop: '2270:1277:262:84' },
 
 	// Fernsehbeitrag BR24 Sport über uns (als Story geteilt, hochkant)
 	'br24-ultras': { teile: [[IG('18082518853888070'), 0, null]], hoch: true, poster: 3 },
+	// Interviews und Reaktionen aus Stories (hochkant)
+	'wdr4-dortmund': { teile: [[IG('18113633092959950'), 0, null]], hoch: true, poster: 5 },
+	'twitch-aura': { teile: [[IG('18114120593061089'), 6.5, null]], hoch: true, poster: 3 },
+	'gbt-allstars': { teile: [[IG('17857239621484690'), 0, null]], hoch: true, poster: 3 },
+	'gbt-geheim': { teile: [[IG('18044394341297957'), 0, null]], hoch: true, poster: 30 },
+	'gbt-ericdani': { teile: [[IG('18005394017768097'), 9, null]], hoch: true, poster: 32 },
 	// GBT-Interview Entweder-oder (Story, hochkant)
 	'gbt-eltern': { teile: [[IG('18081912094848707'), 4.4, 24.8]], hoch: true, poster: 12 },
 
