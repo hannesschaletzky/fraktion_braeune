@@ -7,6 +7,7 @@ import { getImage } from 'astro:assets';
 import heroBild from '../assets/hero.jpg';
 import logo from '../assets/logo-bunt.png';
 import NachOben from '../components/NachOben.astro';
+import Kopfleiste from '../components/Kopfleiste.astro';
 
 interface Props {
 	titel?: string;
@@ -77,6 +78,7 @@ const jsonLd = {
 		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 	</head>
 	<body>
+		<Kopfleiste />
 		<slot />
 		<NachOben />
 	</body>

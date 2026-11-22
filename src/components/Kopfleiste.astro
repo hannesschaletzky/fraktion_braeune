@@ -1,0 +1,130 @@
+---
+// Schmale Leiste oben: gleitet beim Scrollen herein, damit "Fraktion Bräune" immer klein mitfliegt
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-bunt.png';
+
+const links = [
+	{ href: '/#wir', text: 'Wir' },
+	{ href: '/#stimmen', text: 'Stimmen' },
+	{ href: '/#tv', text: 'TV' },
+	{ href: '/choreos/', text: 'Choreos', immer: true },
+	{ href: '/#stationen', text: 'Stationen' },
+];
+---
+
+<header class="kopfleiste" aria-label="Fraktion Bräune">
+	<a href="/" class="marke" aria-label="Fraktion Bräune, zur Startseite">
+		<Image src={logo} widths={[120, 240]} sizes="80px" alt="" class="logo" />
+	</a>
+	<nav aria-label="Abschnitte">
+		{links.map((l) => <a href={l.href} class:list={{ immer: l.immer }}>{l.text}</a>)}
+		<a href="https://www.instagram.com/fraktion_braeune/" target="_blank" rel="noopener noreferrer" class="insta immer" aria-label="Instagram">
+			<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2.2" /><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2.2" /><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor" /></svg>
+		</a>
+	</nav>
+</header>
+
+<script>
+	const leiste = document.querySelector<HTMLElement>('.kopfleiste')!;
+	let da = false;
+	let wartet = false;
+	function pruefen() {
+		wartet = false;
+		// Erst nach gut einer halben Bildschirmhöhe, damit der Hero frei bleibt
+		const soll = scrollY > innerHeight * 0.6;
+		if (soll !== da) {
+			da = soll;
+			leiste.classList.toggle('da', soll);
+		}
+	}
+	addEventListener(
+		'scroll',
+		() => {
+			if (wartet) return;
+			wartet = true;
+			requestAnimationFrame(pruefen);
+		},
+		{ passive: true },
+	);
+	pruefen();
+	// Auf der Startseite führt das Logo sanft nach oben statt neu zu laden
+	leiste.querySelector('.marke')!.addEventListener('click', (e) => {
+		if (location.pathname !== '/') return;
+		e.preventDefault();
+		scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+	});
+</script>
+
+<style>
+	.kopfleiste {
+		position: fixed;
+		inset: 0 0 auto;
+		z-index: 60;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		height: 56px;
+		padding: 0 max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+		background: rgb(20 13 22 / 0.86);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		border-bottom: 3px solid var(--tinte);
+		box-shadow: 0 3px 0 rgb(255 46 77 / 0.5);
+		transform: translateY(calc(-100% - 6px));
+		transition: transform 0.3s cubic-bezier(0.3, 1.3, 0.5, 1);
+	}
+	.kopfleiste.da {
+		transform: none;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.kopfleiste {
+			transition: none;
+		}
+	}
+	.marke {
+		display: block;
+	}
+	.logo {
+		display: block;
+		height: 40px;
+		width: auto;
+		transition: transform 0.25s cubic-bezier(0.3, 1.8, 0.5, 1);
+	}
+	.marke:hover .logo {
+		transform: rotate(-4deg) scale(1.06);
+	}
+	nav {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+	}
+	nav a {
+		padding: 0.35em 0.75em;
+		border-radius: 999px;
+		font-family: var(--display);
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+		font-size: 1rem;
+		text-decoration: none;
+		transition: background 0.2s, color 0.2s;
+	}
+	nav a:hover {
+		background: var(--papier);
+		color: var(--tinte);
+	}
+	.insta {
+		display: grid;
+		place-items: center;
+		padding: 0.35em;
+	}
+	.insta svg {
+		width: 22px;
+		height: 22px;
+	}
+	@media (max-width: 640px) {
+		nav a:not(.immer) {
+			display: none;
+		}
+	}
+</style>

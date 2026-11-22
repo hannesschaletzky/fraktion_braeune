@@ -21,6 +21,8 @@
 
 html {
 	scroll-behavior: smooth;
+	/* Sprungziele nicht unter der Kopfleiste verstecken */
+	scroll-padding-top: 72px;
 	/* Schräge Ticker ragen über den Rand: abschneiden, ohne einen Scroll-Container zu erzeugen */
 	overflow-x: clip;
 }
