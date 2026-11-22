@@ -23,7 +23,7 @@ const IG = (id) => {
  * poster: Sekunde im fertigen Clip für das Vorschaubild (Standard 1)
  * stumm: ohne Tonspur (Reels und Stories mit unterlegter Musik: die Rechte daran haben wir nicht)
  */
-const clips = {
+export const clips = {
 	// Im Fernsehen: Kommentar über die Fraktion
 	'duesseldorf24-zuendeln': { teile: [[R + 'Screen Recording 2024-05-14 at 20.29.00.mov', 8, 40]], crop: '3448:1940:0:108', poster: 22 },
 	'duesseldorf24-shirts': { teile: [[R + 'Screen Recording 2024-05-13 at 15.01.52.mov', 11.2, 44]], crop: '3448:1940:0:108', poster: 14 },
@@ -154,58 +154,61 @@ function vorschau(name, c = {}) {
 	if (r.status !== 0) console.error(`${name} (Vorschau): FEHLER\n${r.stderr}`);
 }
 
-if (process.argv[2] === '--vorschau') {
-	// Nur Vorschau-Schleifen neu, für alle Videos (auch die aus scripts/videos.sh): node scripts/clips.mjs --vorschau
-	for (const f of fs.readdirSync('public/videos').filter((f) => f.endsWith('.mp4'))) vorschau(f.slice(0, -4), clips[f.slice(0, -4)]);
-	process.exit(0);
-}
-
-if (process.argv[2] === '--poster') {
-	// Nur Vorschaubilder neu: node scripts/clips.mjs --poster
-	for (const [name, c] of Object.entries(clips)) await poster(`public/videos/${name}.mp4`, c.poster ?? 1, `public/videos/${name}.webp`);
-	process.exit(0);
-}
-
-const auswahl = process.argv.slice(2);
-fs.mkdirSync('public/videos', { recursive: true });
-
-for (const [name, c] of Object.entries(clips)) {
-	if (auswahl.length && !auswahl.includes(name)) continue;
-	const dateien = [...new Set(c.teile.map((t) => t[0]))];
-	const eingaben = dateien.flatMap((d) => ['-i', d]);
-	const breite = c.hoch ? 432 : 854;
-	const rate = c.hoch ? ['-crf', '30', '-maxrate', '800k', '-bufsize', '1600k'] : ['-crf', '28', '-maxrate', '1300k', '-bufsize', '2600k'];
-	const filter = [];
-	c.teile.forEach(([datei, start, ende], i) => {
-		const n = dateien.indexOf(datei);
-		const bis = ende ?? dauer(datei);
-		const len = bis - start;
-		const bild = [`trim=${start}:${bis}`, 'setpts=PTS-STARTPTS', c.crop && `crop=${c.crop}`, `scale=${breite}:-2`, 'setsar=1', 'fps=30']
-			.filter(Boolean)
-			.join(',');
-		filter.push(`[${n}:v]${bild}[v${i}]`);
-		if (!c.stumm) filter.push(
-			`[${n}:a]atrim=${start}:${bis},asetpts=PTS-STARTPTS,aresample=48000,aformat=channel_layouts=stereo,` +
-				`afade=t=in:d=0.25,afade=t=out:st=${Math.max(0, len - 0.4).toFixed(2)}:d=0.4[a${i}]`,
-		);
-	});
-	const n = c.teile.length;
-	const a = c.stumm ? 0 : 1;
-	filter.push(`${c.teile.map((_, i) => `[v${i}]` + (a ? `[a${i}]` : '')).join('')}concat=n=${n}:v=1:a=${a}[v]` + (a ? '[a]' : ''));
-
-	const ziel = `public/videos/${name}.mp4`;
-	const r = spawnSync(
-		'ffmpeg',
-		['-nostdin', '-v', 'error', '-y', ...eingaben, '-filter_complex', filter.join(';'), '-map', '[v]', ...(a ? ['-map', '[a]'] : []),
-			'-c:v', 'libx264', '-preset', 'slow', ...rate, '-profile:v', 'high', '-pix_fmt', 'yuv420p',
-			...(a ? ['-c:a', 'aac', '-b:a', '96k'] : ['-an']), '-movflags', '+faststart', '-map_metadata', '-1', ziel],
-		{ encoding: 'utf8' },
-	);
-	if (r.status !== 0) {
-		console.error(`${name}: FEHLER\n${r.stderr}`);
-		continue;
+// Nur beim direkten Aufruf schneiden; scripts/sortiere.mjs liest bloß die Liste
+if (import.meta.main) {
+	if (process.argv[2] === '--vorschau') {
+		// Nur Vorschau-Schleifen neu, für alle Videos (auch die aus scripts/videos.sh): node scripts/clips.mjs --vorschau
+		for (const f of fs.readdirSync('public/videos').filter((f) => f.endsWith('.mp4'))) vorschau(f.slice(0, -4), clips[f.slice(0, -4)]);
+		process.exit(0);
 	}
-	await poster(ziel, c.poster ?? 1, `public/videos/${name}.webp`);
-	vorschau(name, c);
-	console.log(`${name}: ${dauer(ziel).toFixed(1)} s, ${Math.round(fs.statSync(ziel).size / 1024)} KB`);
+
+	if (process.argv[2] === '--poster') {
+		// Nur Vorschaubilder neu: node scripts/clips.mjs --poster
+		for (const [name, c] of Object.entries(clips)) await poster(`public/videos/${name}.mp4`, c.poster ?? 1, `public/videos/${name}.webp`);
+		process.exit(0);
+	}
+
+	const auswahl = process.argv.slice(2);
+	fs.mkdirSync('public/videos', { recursive: true });
+
+	for (const [name, c] of Object.entries(clips)) {
+		if (auswahl.length && !auswahl.includes(name)) continue;
+		const dateien = [...new Set(c.teile.map((t) => t[0]))];
+		const eingaben = dateien.flatMap((d) => ['-i', d]);
+		const breite = c.hoch ? 432 : 854;
+		const rate = c.hoch ? ['-crf', '30', '-maxrate', '800k', '-bufsize', '1600k'] : ['-crf', '28', '-maxrate', '1300k', '-bufsize', '2600k'];
+		const filter = [];
+		c.teile.forEach(([datei, start, ende], i) => {
+			const n = dateien.indexOf(datei);
+			const bis = ende ?? dauer(datei);
+			const len = bis - start;
+			const bild = [`trim=${start}:${bis}`, 'setpts=PTS-STARTPTS', c.crop && `crop=${c.crop}`, `scale=${breite}:-2`, 'setsar=1', 'fps=30']
+				.filter(Boolean)
+				.join(',');
+			filter.push(`[${n}:v]${bild}[v${i}]`);
+			if (!c.stumm) filter.push(
+				`[${n}:a]atrim=${start}:${bis},asetpts=PTS-STARTPTS,aresample=48000,aformat=channel_layouts=stereo,` +
+					`afade=t=in:d=0.25,afade=t=out:st=${Math.max(0, len - 0.4).toFixed(2)}:d=0.4[a${i}]`,
+			);
+		});
+		const n = c.teile.length;
+		const a = c.stumm ? 0 : 1;
+		filter.push(`${c.teile.map((_, i) => `[v${i}]` + (a ? `[a${i}]` : '')).join('')}concat=n=${n}:v=1:a=${a}[v]` + (a ? '[a]' : ''));
+
+		const ziel = `public/videos/${name}.mp4`;
+		const r = spawnSync(
+			'ffmpeg',
+			['-nostdin', '-v', 'error', '-y', ...eingaben, '-filter_complex', filter.join(';'), '-map', '[v]', ...(a ? ['-map', '[a]'] : []),
+				'-c:v', 'libx264', '-preset', 'slow', ...rate, '-profile:v', 'high', '-pix_fmt', 'yuv420p',
+				...(a ? ['-c:a', 'aac', '-b:a', '96k'] : ['-an']), '-movflags', '+faststart', '-map_metadata', '-1', ziel],
+			{ encoding: 'utf8' },
+		);
+		if (r.status !== 0) {
+			console.error(`${name}: FEHLER\n${r.stderr}`);
+			continue;
+		}
+		await poster(ziel, c.poster ?? 1, `public/videos/${name}.webp`);
+		vorschau(name, c);
+		console.log(`${name}: ${dauer(ziel).toFixed(1)} s, ${Math.round(fs.statSync(ziel).size / 1024)} KB`);
+	}
 }

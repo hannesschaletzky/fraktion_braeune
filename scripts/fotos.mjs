@@ -21,7 +21,7 @@ function exifFotograf(datei) {
 
 const IG = 'insta_export/instagram-fraktion_braeune-2026-11-21-sxfKHv2S/media/posts/';
 
-const auswahl = {
+export const auswahl = {
 	'2023-timmendorf-1': '2023_09_Timmendorf/@justus.fotos-20230902-DSC04185.jpg',
 	'2023-timmendorf-2': '2023_09_Timmendorf/@justus.fotos-20230902-DSC09514.jpg',
 	'2023-timmendorf-3': '2023_09_Timmendorf/@kevinmtg.fotos-Timmendorf23--444.jpg',
@@ -104,29 +104,32 @@ const auswahl = {
 	'2024-kuehlungsborn-4': 'shared_album_apple/IMG_9502.jpeg',
 };
 
-const ziel = 'src/assets/fotos';
-fs.mkdirSync(ziel, { recursive: true });
+// Nur beim direkten Aufruf verarbeiten; scripts/sortiere.mjs liest bloß die Auswahl
+if (import.meta.main) {
+	const ziel = 'src/assets/fotos';
+	fs.mkdirSync(ziel, { recursive: true });
 
-const credits = {};
-for (const [name, quelle] of Object.entries(auswahl)) {
-	const datei = path.join(ziel, `${name}.jpg`);
-	// HEIC (iPhone) kann sharp nicht lesen: vorher mit sips (macOS) nach JPEG wandeln
-	let eingabe = path.join('assets', quelle);
-	if (/\.heic$/i.test(quelle)) {
-		const tmp = path.join(os.tmpdir(), `${name}.jpg`);
-		execFileSync('sips', ['-s', 'format', 'jpeg', eingabe, '--out', tmp], { stdio: 'ignore' });
-		eingabe = tmp;
+	const credits = {};
+	for (const [name, quelle] of Object.entries(auswahl)) {
+		const datei = path.join(ziel, `${name}.jpg`);
+		// HEIC (iPhone) kann sharp nicht lesen: vorher mit sips (macOS) nach JPEG wandeln
+		let eingabe = path.join('assets', quelle);
+		if (/\.heic$/i.test(quelle)) {
+			const tmp = path.join(os.tmpdir(), `${name}.jpg`);
+			execFileSync('sips', ['-s', 'format', 'jpeg', eingabe, '--out', tmp], { stdio: 'ignore' });
+			eingabe = tmp;
+		}
+		await sharp(eingabe)
+			.rotate()
+			.resize({ width: 2000, height: 2000, fit: 'inside', withoutEnlargement: true })
+			.jpeg({ quality: 80, mozjpeg: true })
+			.toFile(datei);
+		// Fotograf steht im Dateinamen (@justus.fotos …), GBT_ = Pressefoto der Tour
+		const basis = path.basename(quelle);
+		credits[name] =
+			basis.match(/^@([a-z0-9._]+?)[-_]/i)?.[1]?.replace(/\.$/, '') ??
+			(basis.startsWith('GBT_') ? 'German Beach Tour' : exifFotograf(path.join('assets', quelle)));
+		console.log(name, (fs.statSync(datei).size / 1024).toFixed(0), 'KB', credits[name] ?? '');
 	}
-	await sharp(eingabe)
-		.rotate()
-		.resize({ width: 2000, height: 2000, fit: 'inside', withoutEnlargement: true })
-		.jpeg({ quality: 80, mozjpeg: true })
-		.toFile(datei);
-	// Fotograf steht im Dateinamen (@justus.fotos …), GBT_ = Pressefoto der Tour
-	const basis = path.basename(quelle);
-	credits[name] =
-		basis.match(/^@([a-z0-9._]+?)[-_]/i)?.[1]?.replace(/\.$/, '') ??
-		(basis.startsWith('GBT_') ? 'German Beach Tour' : exifFotograf(path.join('assets', quelle)));
-	console.log(name, (fs.statSync(datei).size / 1024).toFixed(0), 'KB', credits[name] ?? '');
+	fs.writeFileSync(path.join(ziel, 'credits.json'), JSON.stringify(credits, null, '\t') + '\n');
 }
-fs.writeFileSync(path.join(ziel, 'credits.json'), JSON.stringify(credits, null, '\t') + '\n');
