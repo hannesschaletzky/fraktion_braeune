@@ -36,6 +36,7 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 					</p>
 					<h2 class="titel marker">{c.titel}</h2>
 					{c.vonAnderen && <p class="geschenk">💜 Nicht von uns, sondern von anderen Fans für uns</p>}
+					{c.hinweis && <p class="hinweis">{c.hinweis}</p>}
 				</header>
 				{/* Immer gleich: die Choreo groß, darunter eine Reihe Fotos und eine Reihe Videos */}
 				<button
@@ -224,6 +225,12 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 		margin: 18px 0 0;
 		font-weight: 800;
 		color: var(--lila);
+	}
+	.hinweis {
+		margin: 18px 0 0;
+		max-width: 60ch;
+		font-size: 0.95rem;
+		opacity: 0.7;
 	}
 	.zurueck a {
 		font-family: var(--marker);

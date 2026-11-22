@@ -15,6 +15,8 @@ export interface Choreo {
 	fotos: Foto[];
 	/** Nicht von uns: eine Choreo, die andere Fans für uns gemacht haben */
 	vonAnderen?: boolean;
+	/** Kurzer Hinweis unter dem Titel, z. B. warum das Bild schlecht ist */
+	hinweis?: string;
 	/** Videos aus Stories und Reels */
 	clips?: ClipName[];
 }
@@ -217,6 +219,7 @@ export const choreos: Choreo[] = [
 		stopp: 1,
 		ort: 'München',
 		titel: 'Gute Besserung, Ben',
+		hinweis: 'Sorry für die Qualität: Die Choreo war spontan, ein besseres Bild haben wir nicht 😄',
 		fotos: [foto('choreo-2024-ben', 'Standbild aus dem Livestream: pinker Rauch im Block, dahinter das Schild für Ben')],
 		clips: ['muenchen24-ben'],
 	},
