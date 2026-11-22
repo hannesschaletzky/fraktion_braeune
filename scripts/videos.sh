@@ -9,7 +9,7 @@ set -euo pipefail
 # Danach die Vorschau-Schleifen erneuern: node scripts/clips.mjs --vorschau
 cd "$(dirname "$0")/.."
 
-quelle=assets/2023_Timmendorf
+quelle=assets/2023_09_Timmendorf
 ziel=public/videos
 mkdir -p "$ziel"
 
