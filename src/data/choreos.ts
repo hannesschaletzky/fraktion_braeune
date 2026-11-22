@@ -184,10 +184,9 @@ export const choreos: Choreo[] = [
 		ort: 'Timmendorfer Strand',
 		titel: 'Purple Party People grüßen die Fraktion Bräune',
 		vonAnderen: true,
-		zutaten: ['Drei Banner', 'Lila Rauch'],
+		zutaten: ['Drei Banner'],
 		fotos: [
 			foto('choreo-2024-purple', 'Drei lila Banner „Purple Party People grüßen die Fraktion Bräune“ in der vollen Tribüne'),
-			foto('2024-timmendorf-6', 'Fackeln und lila Rauch im Block'),
 		],
 	},
 	{

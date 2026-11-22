@@ -148,13 +148,20 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 		scroll-margin-top: 32px;
 	}
 	/* Hauptfoto der Choreo über die ganze Breite, nicht höher als der Bildschirm */
+	/* Ganzes Foto zeigen, nie zuschneiden (sonst fällt das Banner am Rand weg); Hochformate werden schmaler */
 	.foto.haupt {
 		display: block;
+		width: fit-content;
+		max-width: 100%;
 		/* groß nur leicht schräg, sonst kippt die ganze Seite */
 		transform: rotate(calc(var(--r) * 0.35));
 	}
 	.foto.haupt :global(img) {
+		width: auto;
+		max-width: 100%;
+		height: auto;
 		max-height: 78vh;
+		object-fit: contain;
 	}
 	/* Weitere Fotos und Videos: eine Reihe gleich hoher Kacheln, auf dem Handy zum Wischen */
 	.weitere {
