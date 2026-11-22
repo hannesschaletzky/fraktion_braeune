@@ -92,12 +92,14 @@ const erster = sender[0];
 		tv.querySelector('.kanal')!.textContent = `CH ${nr(i)}`;
 		tv.querySelector('.nummer')!.textContent = nr(i);
 		knoepfe.forEach((k, j) => (j === i ? k.setAttribute('aria-current', 'true') : k.removeAttribute('aria-current')));
-		// Handy: aktiven Sender in der Wisch-Leiste in die Mitte holen (nur seitlich, die Seite springt nicht)
+		// Aktiven Sender in der Liste in die Mitte holen: am Handy seitlich in der Wisch-Leiste, am Rechner
+		// senkrecht in der Liste neben dem Fernseher. Nur die Liste scrollt, die Seite springt nicht.
 		const leiste = knoepfe[i].closest('.programm') as HTMLElement;
-		if (leiste.scrollWidth > leiste.clientWidth) {
-			const li = knoepfe[i].parentElement!;
+		const li = knoepfe[i].parentElement!;
+		if (leiste.scrollWidth > leiste.clientWidth)
 			leiste.scrollTo({ left: li.offsetLeft - (leiste.clientWidth - li.offsetWidth) / 2, behavior: 'smooth' });
-		}
+		else if (leiste.scrollHeight > leiste.clientHeight)
+			leiste.scrollTo({ top: li.offsetTop - (leiste.clientHeight - li.offsetHeight) / 2, behavior: 'smooth' });
 		// Kurzes Rauschen beim Umschalten
 		tv.classList.remove('wechsel');
 		void tv.offsetWidth;
@@ -320,6 +322,7 @@ const erster = sender[0];
 	}
 
 	.programm {
+		position: relative;
 		list-style: none;
 		padding: 0;
 		margin: 48px auto 0;
@@ -413,6 +416,46 @@ const erster = sender[0];
 		max-width: 860px;
 		font-size: 0.85rem;
 		opacity: 0.6;
+	}
+	/* Rechner: Programm als Liste rechts neben dem Fernseher, genau so hoch wie er und in sich scrollbar,
+	   damit man zum Umschalten nie vom Bildschirm weg muss. height: 0 + min-height: 100% lässt die Liste
+	   die Zeilenhöhe nicht mitbestimmen, sondern nur ausfüllen. */
+	@media (min-width: 1000px) {
+		.tv .wrap {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) 320px;
+			column-gap: 44px;
+			align-items: start;
+		}
+		.tv h2,
+		.einleitung,
+		.quelle {
+			grid-column: 1 / -1;
+		}
+		.fernseher {
+			grid-column: 1;
+			max-width: none;
+			margin: 0;
+		}
+		.programm {
+			grid-column: 2;
+			align-self: stretch;
+			height: 0;
+			min-height: 100%;
+			margin: 0;
+			max-width: none;
+			grid-template-columns: 1fr;
+			grid-auto-rows: min-content;
+			gap: 8px;
+			overflow-y: auto;
+			overscroll-behavior: contain;
+			padding: 2px 8px 32px 2px;
+			mask-image: linear-gradient(#000 88%, transparent);
+		}
+		.quelle {
+			max-width: none;
+			margin-left: 0;
+		}
 	}
 	@keyframes blinken {
 		50% { opacity: 0; }
