@@ -112,7 +112,7 @@ export const sender: Sender[] = [
 	{ name: 'aufmpferd', titel: 'Aufm Pferd', wann: 'Timmendorf 2023' },
 	{ name: 'biertaufe', titel: 'Biertaufe', wann: 'Timmendorf 2023' },
 	{ name: 'friesenjung', titel: 'Friesenjung', wann: 'Timmendorf 2023' },
-	{ name: 'timmendorf21-clipit', titel: 'Clip it!', wann: 'Timmendorf 2021' },
+	{ name: 'timmendorf22-clipit', titel: 'Clip it!', wann: 'Timmendorf 2022' },
 ];
 
 /** Was im Livestream über uns gesagt wurde (wörtlich, gekürzt), mit Verweis auf den Sender */
