@@ -13,6 +13,7 @@ import sharp from 'sharp';
  * crop:  ffmpeg-crop "w:h:x:y" in Pixeln der Quelle (für Bildschirmaufnahmen)
  * hoch:  Hochkant-Video vom Handy
  * poster: Sekunde im fertigen Clip für das Vorschaubild (Standard 1)
+ * nachlauf: Sekunden Standbild + Stille am Ende (wenn die Aufnahme direkt nach dem letzten Wort endet)
  * stumm: ohne Tonspur (nur im Ausnahmefall: Stories und Reels behalten ihren Ton, auch mit Musik, so will es Hannes)
  */
 export const clips = {
@@ -34,7 +35,7 @@ export const clips = {
 		poster: 37,
 	},
 	'hamburg26-bilder': { teile: [['assets/2026_08_Elite_Hamburg/2026-08-10_00-10_stream_Screen Recording 2026-08-10 at 00.10.56.mov', 0, null]], crop: '2750:1547:8:330' },
-	'hamburg26-respekt': { teile: [['assets/2026_08_Elite_Hamburg/2026-08-10_00-50_stream_Screen Recording 2026-08-10 at 00.50.33.mov', 0, null]], crop: '2288:1287:304:388', poster: 20 },
+	'hamburg26-respekt': { teile: [['assets/2026_08_Elite_Hamburg/2026-08-10_00-50_stream_Screen Recording 2026-08-10 at 00.50.33.mov', 0, null]], crop: '2288:1287:304:388', poster: 20, nachlauf: 1.2 },
 	'hamburg26-elitesieg': { teile: [['assets/2026_08_Elite_Hamburg/2026-08-10_01-32_stream_Screen Recording 2026-08-10 at 01.32.06.mov', 0, null]], crop: '2270:1277:262:84' },
 
 	// Fernsehbeitrag BR24 Sport über uns (als Story geteilt, hochkant)
@@ -187,13 +188,18 @@ if (import.meta.main) {
 		c.teile.forEach(([datei, start, ende], i) => {
 			const n = dateien.indexOf(datei);
 			const bis = ende ?? dauer(datei);
-			const len = bis - start;
-			const bild = [`trim=${start}:${bis}`, 'setpts=PTS-STARTPTS', c.crop && `crop=${c.crop}`, `scale=${breite}:-2`, 'setsar=1', 'fps=30']
+			// nachlauf: am Ende des letzten Teils das Schlussbild stehen lassen und Stille anhängen, damit das
+			// Ausblenden kein letztes Wort verschluckt (Aufnahme endet direkt nach dem Satz)
+			const extra = i === c.teile.length - 1 ? (c.nachlauf ?? 0) : 0;
+			const len = bis - start + extra;
+			const bild = [`trim=${start}:${bis}`, 'setpts=PTS-STARTPTS', c.crop && `crop=${c.crop}`, `scale=${breite}:-2`, 'setsar=1', 'fps=30',
+				extra && `tpad=stop_mode=clone:stop_duration=${extra}`]
 				.filter(Boolean)
 				.join(',');
 			filter.push(`[${n}:v]${bild}[v${i}]`);
 			if (!c.stumm) filter.push(
 				`[${n}:a]atrim=${start}:${bis},asetpts=PTS-STARTPTS,aresample=48000,aformat=channel_layouts=stereo,` +
+					(extra ? `apad=pad_dur=${extra},` : '') +
 					`afade=t=in:d=0.25,afade=t=out:st=${Math.max(0, len - 0.4).toFixed(2)}:d=0.4[a${i}]`,
 			);
 		});
