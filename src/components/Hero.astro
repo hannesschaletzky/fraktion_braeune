@@ -240,6 +240,13 @@ import logo from '../assets/logo-bunt.png';
 		object-position: 50% 55%;
 		z-index: -2;
 	}
+	/* Hochformat: nur ein Drittel der Bildbreite sichtbar. Die Trommel (bei ~39 %) in die Mitte,
+	   dann sind Henning mit der Fahne links und der Bandana rechts daneben im Bild */
+	@media (max-aspect-ratio: 4 / 5) {
+		.hero :global(.hero-bild) {
+			object-position: 34% 55%;
+		}
+	}
 	.verlauf {
 		position: absolute;
 		inset: 0;
