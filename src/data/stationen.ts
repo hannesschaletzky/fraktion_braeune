@@ -26,6 +26,7 @@ export const stationen: Station[] = [
 		motto: 'Long story short, das Wochenende war eine 10/10.',
 		fotos: [
 			foto('2026-dortmund-3', 'Fackeln und weißer Rauch hinter der Bande, der Block jubelt'),
+			foto('2026-dortmund-drohne', 'Die Arena im Wald von oben, aus unserem Block steigt roter Rauch'),
 			foto('2026-dortmund-1', 'Rote Fackelwand und Rauch vor dem Banner „Jetzt brennt der Pott“ am Spielfeldrand'),
 		],
 		clips: ['dortmund26-brennt', 'dortmund26-nele', 'dortmund26-angezuendet'],

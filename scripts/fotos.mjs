@@ -54,6 +54,7 @@ export const auswahl = {
 	'2026-hamburg-1': '2026_08_Elite_Hamburg/2026-08-08_21-30_ordner_pwa2026080820592.jpg',
 	'2026-hamburg-2': '2026_08_Elite_Hamburg/2026-08-09_13-31_ordner_pwa202608094188.jpg',
 	'2026-hamburg-3': '2026_08_Elite_Hamburg/2026-08-08_21-30_ordner_pwa2026080820523.jpg',
+	'2026-dortmund-drohne': '2026_08_Dortmund/2026-08-29_20-07_ordner_@justus.fotos-20260829-DJI_20260829200701_0213_D.jpg',
 	'2026-dortmund-1': '2026_08_Dortmund/2026-08-29_20-00_ordner_@kevinmtg.fotos_260829_200002_04664.jpg',
 	'2026-dortmund-2': '2026_08_Dortmund/2026-08-27_21-11_ordner_@justus.fotos-20260827-DSC02124.jpg',
 	'2026-dortmund-3': '2026_08_Dortmund/2026-08-27_15-10_ordner_@justus.fotos-20260827-DSC08365.jpg',
