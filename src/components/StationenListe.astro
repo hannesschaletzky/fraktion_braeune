@@ -21,7 +21,7 @@ const knopf = (f: Foto) => ({ 'data-gross': gross.get(f.bild.src), 'data-alt': f
 		<li class="station" id={slug(s)} data-eintrag data-jahr={s.jahr} style={`--schatten: ${farben[i % farben.length]}`}>
 			<header class="kopf">
 				<h2 class="wann">
-					<span class="datum">{s.jahr}<span class="trenner" aria-hidden="true">/</span><span class="monat">{monate[s.monat - 1].slice(0, 3)}</span></span>
+					<span class="datum">{s.jahr}<span class="monat">{monate[s.monat - 1].slice(0, 3)}</span></span>
 					<span class="ort">{ortName(s)}</span>
 					{s.zusatz && <span class="zusatz">{s.zusatz}</span>}
 				</h2>
@@ -75,27 +75,24 @@ const knopf = (f: Foto) => ({ 'data-gross': gross.get(f.bild.src), 'data-alt': f
 		text-transform: uppercase;
 		line-height: 1.05;
 	}
-	/* Jahr zuerst, dann blasser der Monat: Einträge lassen sich so schnell vergleichen */
+	/* Jahr vorne, Monat daneben (drei Buchstaben), beides weiß; der Ort ist gelb */
 	.datum {
 		font-size: clamp(1.6rem, 4vw, 2.3rem);
-		color: var(--sonne);
 		font-variant-numeric: tabular-nums;
 	}
-	.trenner {
-		margin: 0 0.25em;
-		opacity: 0.4;
-	}
 	.monat {
-		opacity: 0.7;
+		margin-left: 0.3em;
 	}
+	/* Der Tourstopp ist das Wichtigste: gelb */
 	.ort {
 		font-size: clamp(1.6rem, 4vw, 2.3rem);
+		color: var(--sonne);
 	}
 	.zusatz {
 		align-self: center;
 		padding: 0.15em 0.55em;
-		background: var(--sonne);
-		color: var(--tinte);
+		border: 2px solid var(--sonne);
+		color: var(--sonne);
 		font-size: clamp(0.95rem, 2.2vw, 1.15rem);
 		letter-spacing: 0.04em;
 		transform: rotate(-3deg);
