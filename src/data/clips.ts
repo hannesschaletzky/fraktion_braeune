@@ -55,6 +55,8 @@ export const clips = {
 	'timmendorf23-gekommen': c('timmendorf23-gekommen', 'Sprechchor „Er ist gekommen“ im Block', true),
 	'hamburg23-support': c('hamburg23-support', 'Anfeuern im Stadion am Rothenbaum', true, 'Natürlich ist der Support am Start!'),
 	'timmendorf24-mvp': c('timmendorf24-mvp', 'Rote Fackeln bei Nacht, der Block feiert den MVP', true, 'MVP!!!'),
+	'em22-tv': c('em22-tv', 'Unser Block mit dem Schild „Fraktion Bräune“ in der TV-Übertragung der EM', true),
+	'em22-court': c('em22-court', 'Blick vom Block auf den Court am Königsplatz, vorne wird ein Schild hochgehalten', true),
 	'bremen23-block': c('bremen23-block', 'Der Block feuert Eric Stadie direkt an der Bande an', true),
 	'bremen23-abfahrt': c('bremen23-abfahrt', 'Im Zug nach Bremen: Bier und Pappschilder malen', true, 'Auswärtsfahrt'),
 	'bremen24-tim': c('bremen24-tim', 'Moderator Tim wärmt sich im Fraktion-Bräune-Shirt auf', true, 'Tim im neuen Fraktions-Shirt'),

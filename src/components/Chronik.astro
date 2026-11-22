@@ -17,7 +17,7 @@ const karten = startStationen.map((s) => ({
 <section class="abschnitt chronik" id="stationen">
 	<div class="wrap">
 		<h2>Unsere <span class="bunt">{[...'Stationen'].map((c) => <span>{c}</span>)}</span></h2>
-		<p class="einleitung">Von den ersten Pappschildern in Timmendorf 2022 bis zur Pyro-Wand im Pott. {stationen.length} Turniere, zum Beispiel:</p>
+		<p class="einleitung">Von den ersten Pappschildern bei der EM in München 2022 bis zur Pyro-Wand im Pott. {stationen.length} Turniere, zum Beispiel:</p>
 		<Karten karten={karten} mehr={{ href: '/stationen/', text: `Alle ${stationen.length} Stationen mit Fotos und Videos →` }} />
 	</div>
 </section>

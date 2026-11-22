@@ -68,7 +68,8 @@ function exifDaten(dateien) {
 function namensDatum(name) {
 	let m = name.match(/(20\d{2})-(\d{2})-(\d{2})-(\d{2})-(\d{2})/); // WhatsApp
 	if (m) return `${m[1]}-${m[2]}-${m[3]} ${m[4]}:${m[5]}`;
-	m = name.match(/(20\d{2}-\d{2}-\d{2}) at (\d{2})\.(\d{2})/); // Screen Recording
+	if (/^WhatsApp (Image|Video)/.test(name)) return null; // Datum im Namen = Tag des Teilens, nicht der Aufnahme
+	m = name.match(/^Screen Recording (20\d{2}-\d{2}-\d{2}) at (\d{2})\.(\d{2})/);
 	if (m) return `${m[1]} ${m[2]}:${m[3]}`;
 	m = name.match(/(?<!\d)(20\d{2})(\d{2})(\d{2})[_-]?(\d{2})(\d{2})(\d{2})(?!\d)/); // 20260606212108
 	if (m) return `${m[1]}-${m[2]}-${m[3]} ${m[4]}:${m[5]}`;
@@ -78,13 +79,17 @@ function namensDatum(name) {
 /** { quelle, datum, herkunft, stopp, name? } – name gesetzt = Dateiname bleibt (nur Ordner wechselt) */
 const eintraege = [];
 
-// 1. _Eingang
+// 1. _Eingang; liegt eine Datei in einem Unterordner, der wie ein Stopp-Ordner heißt (z. B. _Eingang/2022_08_München_EM/),
+//    gehört sie zu diesem Stopp, sonst entscheidet das Datum
 {
 	const neu = dateienIn(path.join(A, '_Eingang'), true);
 	const daten = exifDaten(neu);
+	const ordner = new Set(fs.readdirSync(A).filter((d) => /^\d{4}_\d{2}_/.test(d)).map((d) => d.normalize('NFC')));
 	for (const f of neu) {
 		const datum = daten[f] ?? namensDatum(path.basename(f));
-		eintraege.push({ quelle: f, datum, herkunft: 'eingang', stopp: datum && stoppZu(datum, 'eingang') });
+		const unter = path.relative(path.join(A, '_Eingang'), f).split(path.sep)[0].normalize('NFC');
+		const stopp = ordner.has(unter) ? unter : datum && stoppZu(datum, 'eingang');
+		eintraege.push({ quelle: f, datum, herkunft: 'eingang', stopp });
 	}
 }
 // 2. direkt in Stopp-Ordner gelegt

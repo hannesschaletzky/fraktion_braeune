@@ -304,6 +304,21 @@ export const stationen: Station[] = [
 			foto('2022-timmendorf-leidergeil', 'Pappschilder „Leider geil“ und „Fraktion Bräune“ in der vollen Tribüne'),
 		],
 	},
+	{
+		jahr: 2022,
+		monat: 8,
+		ort: 'München',
+		zusatz: 'EM',
+		motto: 'Schmeckt ♥',
+		fotos: [
+			foto('2022-em-schilder', 'Pappschilder „Schmeckt ♥“ und „Fraktion Bräune“ im Block am Königsplatz'),
+			foto('2022-em-zelt', 'Die Gruppe oben ohne mit dem Schild „Fraktion Bräune“ vor einem weißen Zelt'),
+			foto('2022-em-bodypainting', 'Drei Fans oben ohne mit aufgemalten Buchstaben und Herz'),
+			foto('2022-em-selfie', 'Selfie mitten im Block'),
+			foto('2022-em-schmeckt', 'Zwei Fans mit Dosen und dem Schild „Schmeckt“'),
+		],
+		clips: ['em22-tv', 'em22-court'],
+	},
 ];
 
 export const monate = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];

@@ -79,6 +79,20 @@
 	},
 	{
 		"jahr": 2022,
+		"ort": "München",
+		"art": "Beachvolleyball-EM (European Championships)",
+		"von": "2022-08-15",
+		"bis": "2022-08-21",
+		"key": "2022-muenchen-em",
+		"ordner": "2022_08_München_EM",
+		"fenster": [
+			"2022-08-14",
+			"2022-08-22"
+		],
+		"quelle": "Königsplatz; Termine von Hannes 2026-11-22"
+	},
+	{
+		"jahr": 2022,
 		"ort": "Timmendorfer Strand",
 		"art": "DM",
 		"von": "2022-09-01",

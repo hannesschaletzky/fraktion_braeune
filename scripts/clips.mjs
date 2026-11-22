@@ -104,6 +104,8 @@ export const clips = {
 	'timmendorf23-gekommen': { teile: [['assets/2023_09_Timmendorf/2023-09-01_02-33_insta-story_17922140525775157.mp4', 0, null]], hoch: true, poster: 5 },
 	'hamburg23-support': { teile: [['assets/2023_08_Elite_Hamburg/2023-08-17_05-17_insta-story_17989915973488514.mp4', 0, null]], hoch: true, poster: 18 },
 	'timmendorf24-mvp': { teile: [['assets/2024_09_Timmendorf/2024-08-31_10-23_insta-story_17934347210913264.mp4', 0, null]], hoch: true, poster: 4 },
+	'em22-tv': { teile: [['assets/2022_08_München_EM/eingang_WhatsApp Video 2026-11-22 at 18.01.10.mp4', 0, null]], hoch: true, poster: 5 },
+	'em22-court': { teile: [['assets/2022_08_München_EM/eingang_WhatsApp Video 2026-11-22 at 17.45.30.mp4', 0, null]], poster: 11 },
 	'bremen23-abfahrt': { teile: [['assets/2023_05_Bremen1/2023-05-13_23-54_insta-story_17893895657750574.mp4', 0, null]], hoch: true, poster: 4 },
 	'bremen23-block': { teile: [['assets/2023_05_Bremen1/2023-05-14_06-44_insta-story_17986052834029717.mp4', 0, null]], hoch: true, poster: 12 },
 	'bremen24-tim': { teile: [['assets/2024_06_Bremen/ordner_037d3652-6598-4984-a00e-8222ac1271c0.MP4', 0, null]], hoch: true, poster: 6 },
@@ -129,7 +131,7 @@ function dauer(datei) {
 
 // Vorschaubild: ffmpeg liefert ein PNG (nicht jedes ffmpeg kann WebP), sharp macht WebP daraus
 async function poster(video, sekunde, ziel) {
-	const png = spawnSync('ffmpeg', ['-nostdin', '-v', 'error', '-ss', String(sekunde), '-i', video, '-frames:v', '1', '-f', 'image2pipe', '-c:v', 'png', '-']).stdout;
+	const png = spawnSync('ffmpeg', ['-nostdin', '-v', 'error', '-ss', String(sekunde), '-i', video, '-frames:v', '1', '-f', 'image2pipe', '-c:v', 'png', '-'], { maxBuffer: 1e8 }).stdout;
 	await sharp(png).resize({ width: 640, withoutEnlargement: true }).webp({ quality: 72 }).toFile(ziel);
 }
 
