@@ -48,8 +48,8 @@ const extern = { target: '_blank', rel: 'noopener noreferrer' };
 		isolation: isolate;
 		overflow: hidden;
 		padding: 120px 0 28px;
-		background: var(--nacht);
-		border-top: 4px solid var(--tinte);
+		/* oben nahtlos aus dem FAQ (--nacht-2) kommen, keine Kante */
+		background: linear-gradient(180deg, var(--nacht-2), var(--nacht) 60%);
 	}
 	/* Fackel-Foto hinter dem Footer, oben weich ins Dunkel verlaufend */
 	.fuss :global(picture) {
@@ -81,7 +81,7 @@ const extern = { target: '_blank', rel: 'noopener noreferrer' };
 		position: absolute;
 		inset: 0;
 		z-index: -1;
-		background: linear-gradient(180deg, rgb(20 13 22 / 1) 0%, rgb(20 13 22 / 0.55) 30%, rgb(20 13 22 / 0.35) 60%, rgb(20 13 22 / 0.85) 100%);
+		background: linear-gradient(180deg, var(--nacht-2) 0%, rgb(31 20 32 / 0.85) 10%, rgb(31 20 32 / 0.6) 22%, rgb(20 13 22 / 0.4) 40%, rgb(20 13 22 / 0.35) 60%, rgb(20 13 22 / 0.85) 100%);
 	}
 	.oben {
 		display: grid;

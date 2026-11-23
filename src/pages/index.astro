@@ -10,6 +10,9 @@ import Zwischenbild from '../components/Zwischenbild.astro';
 import Faq from '../components/Faq.astro';
 import Fuss from '../components/Fuss.astro';
 import fackel from '../assets/fotos/zwischen-fackel.jpg';
+import r2 from '../assets/fotos/zwischen-r2.jpg';
+import r4 from '../assets/fotos/zwischen-r4.jpg';
+import s2 from '../assets/fotos/zwischen-s2.jpg';
 import Lightbox from '../components/Lightbox.astro';
 ---
 
@@ -18,9 +21,10 @@ import Lightbox from '../components/Lightbox.astro';
 	<main>
 		<WerWirSind />
 		<Stimmen />
-		<Zwischenbild bild={fackel} alt="Einer von uns steht nachts auf der Bande und hält eine rote Fackel weit von sich, ringsum roter Rauch" pos="55% 45%" posHandy="38% 45%" oben="var(--nacht-2)" unten="var(--nacht)" />
+		<Zwischenbild bild={s2} bildHandy={r4} alt="München 2026: die ganze Tribüne glüht rot, mittendrin reckt einer eine Fackel hoch" pos="50% 50%" posHandy="50% 50%" versatz="-16%" versatzHandy="8%" oben="var(--nacht-2)" unten="var(--nacht)" />
 		<TvMomente />
 		<ChoreoWand />
+		<Zwischenbild bild={r2} bildHandy={fackel} alt="Der Block bei Nacht: einer reckt eine rote Fackel in die Höhe, ringsum jubeln alle" pos="50% 0%" posHandy="38% 50%" versatz="13%" versatzHandy="0%" oben="var(--nacht-2)" unten="var(--nacht)" />
 		<Chronik />
 		<Faq />
 	</main>

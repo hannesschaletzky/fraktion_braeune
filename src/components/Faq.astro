@@ -53,7 +53,9 @@ const farben = ['var(--fackel)', 'var(--sonne)', 'var(--gruen)', 'var(--blau)', 
 <style>
 	/* Hintergrund im Wechsel mit dem Abschnitt davor (Stationen: dunkel) */
 	.faq {
+		/* Oben weich aus dem dunkleren Abschnitt davor (--nacht) einlaufen, keine Kante */
 		background:
+			linear-gradient(180deg, var(--nacht) 0, rgb(20 13 22 / 0.6) 90px, rgb(20 13 22 / 0.25) 170px, rgb(20 13 22 / 0) 260px),
 			radial-gradient(ellipse at 85% 0%, rgb(47 212 122 / 0.12), transparent 55%),
 			var(--nacht-2);
 	}

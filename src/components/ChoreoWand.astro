@@ -26,7 +26,9 @@ const karten = startChoreos.map((c) => ({
 
 <style>
 	.wand {
+		/* Oben weich aus dem dunkleren Abschnitt davor (--nacht) einlaufen, keine Kante */
 		background:
+			linear-gradient(180deg, var(--nacht) 0, rgb(20 13 22 / 0.6) 90px, rgb(20 13 22 / 0.25) 170px, rgb(20 13 22 / 0) 260px),
 			radial-gradient(ellipse at 80% 0%, rgb(47 212 122 / 0.12), transparent 50%),
 			var(--nacht-2);
 	}

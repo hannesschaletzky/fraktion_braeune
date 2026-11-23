@@ -73,7 +73,9 @@ const klappbar = stimmen.length > 3;
 <style>
 	/* Hintergrund wechselt von Abschnitt zu Abschnitt: hier der hellere */
 	.stimmen {
+		/* Oben weich aus dem dunkleren Abschnitt davor (--nacht) einlaufen, keine Kante */
 		background:
+			linear-gradient(180deg, var(--nacht) 0, rgb(20 13 22 / 0.6) 90px, rgb(20 13 22 / 0.25) 170px, rgb(20 13 22 / 0) 260px),
 			radial-gradient(ellipse at 15% 0%, rgb(255 210 63 / 0.1), transparent 55%),
 			var(--nacht-2);
 	}

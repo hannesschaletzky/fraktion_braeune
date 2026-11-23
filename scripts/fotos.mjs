@@ -223,7 +223,9 @@ export const auswahl = {
 	'karte-2026-berlin1-arme': '2026_06_Berlin1/2026-06-06_17-44_apple_IMG_6941.jpeg',
 	'fuss-fackel': '2026_06_Berlin1/2026-06-06_22-29_ordner_@kevinmtg.fotos_260606-222917__DSC9628.jpg',
 	'zwischen-fackel': '2025_09_Timmendorf/2025-09-06_21-06_ordner_@kevinmtg.fotos_DSC4326.jpg',
-	'zwischen-33': '2025_09_Timmendorf/2025-09-06_16-14_ordner_@justus.fotos-20250906-DSC02287.jpg',
+	'zwischen-r2': '2025_09_Timmendorf/2025-09-06_21-06_ordner_@kevinmtg.fotos_DSC4275.jpg',
+	'zwischen-r4': '2026_06_Berlin1/2026-06-06_22-29_apple_IMG_6940.jpeg',
+	'zwischen-s2': '2026_07_München1/2026-07-04_16-05_ordner_@justus.fotos-20260704-DSC03254.jpg',
 	'choreo-2026-legends-a': '2026_08_Elite_Hamburg/2026-08-09_13-23_ordner_@kevinmtg.fotos_1323_3052.jpg',
 	'choreo-2026-legends-b': '2026_08_Elite_Hamburg/2026-08-09_13-23_apple_IMG_7832.jpeg',
 	'choreo-2026-fuenf-2': '2026_06_Berlin1/2026-06-06_21-20_apple_IMG_6947.jpeg',
@@ -251,7 +253,7 @@ export const auswahl = {
 
 // Nur beim direkten Aufruf verarbeiten; scripts/sortiere.mjs liest bloß die Auswahl
 /** Fotos über die ganze Bildschirmbreite: werden größer und in höherer Qualität abgelegt */
-const vollbreit = { 'zwischen-fackel': true, 'zwischen-33': true, 'fuss-fackel': true };
+const vollbreit = { 'zwischen-fackel': true, 'zwischen-r2': true, 'zwischen-r4': true, 'zwischen-s2': true, 'fuss-fackel': true };
 
 if (import.meta.main) {
 	const ziel = 'src/assets/fotos';
