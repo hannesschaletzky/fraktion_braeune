@@ -131,7 +131,7 @@ export const stationen: Station[] = [
 			foto('2025-timmendorf-abklatschen', 'Ein Spieler klatscht mit den Fans an der Bande ab'),
 			foto('2025-timmendorf-z60', 'Die Spieler kommen nach dem Sieg zum Block an die Bande'),
 		],
-		clips: ['timmendorf25-fackel', 'timmendorf25-fahne', 'timmendorf25-6a', 'timmendorf25-6b', 'timmendorf25-6c', 'timmendorf25-6d', 'timmendorf25-6e'],
+		clips: ['timmendorf25-fackel', 'timmendorf25-fahne', 'timmendorf25-6a', 'timmendorf25-6c', 'timmendorf25-6d'],
 	},
 	{
 		jahr: 2025,
@@ -286,7 +286,7 @@ export const stationen: Station[] = [
 		fotos: [
 			foto('2024-bremen-1', 'Gruppenfoto in Fraktion-Shirts mit Medaillen vor dem Gelände in Bremen'),
 		],
-		clips: ['bremen24-schalala', 'bremen24-tim', 'bremen24-jubel', 'bremen24-15a', 'bremen24-15b', 'bremen24-15c', 'bremen24-15d'],
+		clips: ['bremen24-schalala', 'bremen24-tim', 'bremen24-jubel', 'bremen24-15b', 'bremen24-15c', 'bremen24-15d'],
 	},
 	{
 		jahr: 2024,

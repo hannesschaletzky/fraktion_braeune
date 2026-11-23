@@ -1,20 +1,93 @@
 ---
-import { Image, Picture } from 'astro:assets';
-import foto from '../assets/hero.jpg';
+import { Image, getImage } from 'astro:assets';
+import foto from '../assets/hero-muenchen.jpg';
 import logo from '../assets/logo-bunt.png';
+import m2 from '../assets/hero-handy/M2.jpg';
+import m3 from '../assets/hero-handy/M3.jpg';
+import p7 from '../assets/hero-handy/P7.jpg';
+import n2 from '../assets/hero-handy/N2.jpg';
+import n5 from '../assets/hero-handy/N5.jpg';
+import n6 from '../assets/hero-handy/N6.jpg';
+import d4 from '../assets/hero-rechner/D4.jpg';
+import e10 from '../assets/hero-rechner/E10.jpg';
+import d7 from '../assets/hero-rechner/D7.jpg';
+import d11 from '../assets/hero-rechner/D11.jpg';
+import d5 from '../assets/hero-rechner/D5.jpg';
+
+// Feste Reihenfolge: wer zum ersten Mal kommt, sieht das erste Foto; danach pro Besuch das nächste (siehe Skript unten).
+// Rechner (Querformat) und Handy (Hochformat) haben je sechs Fotos und denselben Zähler.
+// Pro Foto: Abstand des Schriftzugs oben, Bildausschnitt, und ob Banner + Untertitel (banner) bzw. nur der Untertitel (claim)
+// nach unten über den Fackel-Hinweis wandern. posKurz: Ausschnitt für flache Laptop-Fenster.
+const rechnerRoh = [
+	{ bild: foto, oben: 'clamp(90px, 14vh, 170px)', pos: '50% 60%', posKurz: '50% 30%', teilen: '' },
+	{ bild: d4, oben: '6vh', pos: '50% 50%', teilen: 'banner' },
+	{ bild: d7, oben: '5vh', pos: '50% 50%', teilen: 'banner' },
+	{ bild: d11, oben: '6vh', pos: '50% 50%', teilen: 'banner' },
+	{ bild: d5, oben: '7vh', pos: '50% 50%', teilen: 'banner' },
+	{ bild: e10, oben: '5vh', pos: '50% 50%', teilen: 'banner' },
+];
+const handyRoh = [
+	{ bild: n6, oben: '60px', pos: '72% 50%', teilen: 'banner' },
+	{ bild: m2, oben: '60px', pos: '40% 50%', teilen: 'claim' },
+	{ bild: m3, oben: '29svh', pos: '50% 50%', teilen: 'claim' },
+	{ bild: p7, oben: '60px', pos: '75% 50%', teilen: 'banner' },
+	{ bild: n2, oben: '60px', pos: '45% 50%', teilen: 'banner' },
+	{ bild: n5, oben: '60px', pos: '55% 50%', teilen: 'banner' },
+];
+// Je Foto AVIF und WebP in mehreren Breiten; das Skript baut daraus beim Laden ein einziges <picture>
+const aufbereiten = (liste: typeof handyRoh, breiten: number[]) =>
+	Promise.all(
+		liste.map(async ({ bild, ...rest }) => {
+			const w = breiten.filter((b) => b <= bild.width);
+			const [a, b] = await Promise.all((['avif', 'webp'] as const).map((format) => getImage({ src: bild, widths: w, format })));
+			return { ...rest, avif: a.srcSet.attribute, webp: b.srcSet.attribute, src: b.src };
+		}),
+	);
+const [rechner, handy] = await Promise.all([aufbereiten(rechnerRoh, [960, 1440, 1920, 2400]), aufbereiten(handyRoh, [640, 1080])]);
+const handyFormat = '(max-aspect-ratio: 4 / 5)';
+const laptopFormat = '(min-aspect-ratio: 16 / 10) and (max-height: 820px)';
 ---
 
 <header class="hero" id="hero">
-	<Picture
-		src={foto}
-		formats={['avif', 'webp']}
-		widths={[640, 1024, 1600, 2400]}
-		sizes="100vw"
-		alt="Fraktion Bräune im Block bei der German Beach Tour in Dortmund 2026: Fans jubeln hinter ihrem Banner im Licht roter Fackeln"
-		class="hero-bild"
-		loading="eager"
-		fetchpriority="high"
-	/>
+	<!-- Vor dem ersten Zeichnen das Foto wählen (nur dieses wird geladen): erster Besuch das erste, danach jeweils das nächste -->
+	<script is:inline define:vars={{ rechner, handy, handyFormat, laptopFormat }}>
+		let i;
+		try {
+			const alt = localStorage.getItem('fb-hero');
+			if (alt !== null && Number.isInteger(Number(alt))) i = (Number(alt) + 1) % handy.length;
+		} catch {}
+		if (!Number.isInteger(i)) i = 0;
+		try {
+			localStorage.setItem('fb-hero', String(i));
+		} catch {}
+		const liste = matchMedia(handyFormat).matches ? handy : rechner;
+		const v = liste[i % liste.length];
+		const r = document.documentElement;
+		r.style.setProperty('--hero-oben', v.oben);
+		if (v.teilen) r.dataset.heroTeilen = v.teilen;
+		// Das Foto als echtes Bild mit höchster Priorität einsetzen; Schriftzug & Co. warten, bis es da ist (höchstens 4 s)
+		const bild = document.createElement('img');
+		bild.className = 'hero-bild';
+		bild.alt = 'Fraktion Bräune im Block bei der German Beach Tour: Fackeln, Fahnen und Jubel';
+		bild.fetchPriority = 'high';
+		bild.style.objectPosition = v.posKurz && matchMedia(laptopFormat).matches ? v.posKurz : v.pos;
+		const pic = document.createElement('picture');
+		for (const [typ, satz] of [['image/avif', v.avif], ['image/webp', v.webp]]) {
+			const q = document.createElement('source');
+			q.type = typ;
+			q.srcset = satz;
+			q.sizes = '100vw';
+			pic.append(q);
+		}
+		bild.src = v.src;
+		pic.append(bild);
+		r.classList.add('hero-wartet');
+		const zeigen = () => r.classList.remove('hero-wartet');
+		bild.addEventListener('load', zeigen);
+		bild.addEventListener('error', zeigen);
+		setTimeout(zeigen, 4000);
+		document.currentScript.after(pic);
+	</script>
 	<div class="verlauf" aria-hidden="true"></div>
 	<canvas class="rauch" id="rauch" aria-hidden="true"></canvas>
 
@@ -23,7 +96,7 @@ import logo from '../assets/logo-bunt.png';
 			<Image src={logo} widths={[500, 900, 1400, 2000]} sizes="(min-width: 900px) 760px, 88vw" alt="Fraktion Bräune" class="logo" loading="eager" />
 		</h1>
 		<p class="banner marker">Der Support endet nie … 🫶</p>
-		<p class="claim">Europas lauteste Beachvolleyball-Fans</p>
+		<p class="claim">Europas lauteste Beachvolleyball&#8209;Fans</p>
 	</div>
 
 	<p class="tipp marker" id="tipp">Tipp ins Bild und zünde eine Fackel 🔥</p>
@@ -223,13 +296,20 @@ import logo from '../assets/logo-bunt.png';
 	.hero {
 		position: relative;
 		min-height: 100svh;
-		display: grid;
-		place-items: center;
+		background: var(--nacht);
+		/* Inhalt oben beginnen (Abstand siehe .inhalt), Bild, Verlauf und Fackeln liegen absolut dahinter */
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		overflow: hidden;
 		isolation: isolate;
 		cursor: crosshair;
 		touch-action: manipulation;
 		user-select: none;
+	}
+	/* Foto, vom Skript eingesetzt (ohne JavaScript bleibt der Grund dunkel) */
+	.hero :global(picture) {
+		display: contents;
 	}
 	.hero :global(.hero-bild) {
 		position: absolute;
@@ -237,15 +317,37 @@ import logo from '../assets/logo-bunt.png';
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		object-position: 50% 55%;
 		z-index: -2;
 	}
-	/* Hochformat: nur ein Drittel der Bildbreite sichtbar. Die Trommel (bei ~39 %) in die Mitte,
-	   dann sind Henning mit der Fahne links und der Bandana rechts daneben im Bild */
-	@media (max-aspect-ratio: 4 / 5) {
-		.hero :global(.hero-bild) {
-			object-position: 34% 55%;
-		}
+	/* Bis das Foto da ist: Schriftzug, Hinweise und Animationen warten, dann erscheint alles zusammen */
+	.inhalt,
+	.tipp,
+	.runter {
+		transition: opacity 0.35s ease;
+	}
+	:global(html.hero-wartet) .inhalt,
+	:global(html.hero-wartet) .tipp,
+	:global(html.hero-wartet) .runter {
+		opacity: 0;
+	}
+	:global(html.hero-wartet) .hero :global(*) {
+		animation-play-state: paused;
+	}
+	/* Schriftzug je nach Foto: Abstand oben, und ggf. Banner/Untertitel nach unten über den Fackel-Hinweis */
+	.hero .inhalt {
+		padding-top: var(--hero-oben, clamp(72px, 9vh, 110px));
+	}
+	:global(html[data-hero-teilen]) .inhalt {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		box-sizing: border-box;
+		min-height: 100svh;
+		padding-bottom: 120px;
+	}
+	:global(html[data-hero-teilen='banner']) .banner,
+	:global(html[data-hero-teilen='claim']) .claim {
+		margin-top: auto;
 	}
 	.verlauf {
 		position: absolute;
@@ -265,14 +367,14 @@ import logo from '../assets/logo-bunt.png';
 	.inhalt {
 		position: relative;
 		text-align: center;
-		padding: 96px 16px 140px;
+		padding: clamp(72px, 9vh, 110px) 16px 140px;
 		pointer-events: none;
 	}
 	h1 {
 		margin: 0;
 	}
 	.logo {
-		width: min(760px, 88vw);
+		width: min(580px, 84vw);
 		height: auto;
 		margin: 0 auto;
 		filter: drop-shadow(5px 6px 0 rgb(26 18 24 / 0.9)) drop-shadow(0 0 30px rgb(0 0 0 / 0.45));
