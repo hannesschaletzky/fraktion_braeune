@@ -40,7 +40,7 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 				<button
 								type="button"
 								class="foto haupt"
-								style={`--r: ${neigungen[(i + 0) % neigungen.length]}deg`}
+								style={`--r: ${neigungen[(i + 0) % neigungen.length]}deg; --ar: ${c.fotos[0].bild.width / c.fotos[0].bild.height}`}
 								data-gross={gross.get(c.fotos[0].bild.src)}
 								data-alt={c.fotos[0].alt}
 								data-credit={c.fotos[0].credit ?? ''}
@@ -54,7 +54,7 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 							<button
 								type="button"
 								class="foto klein"
-								style={`--r: ${neigungen[(i + j + 1) % neigungen.length]}deg`}
+								style={`--r: ${neigungen[(i + j + 1) % neigungen.length]}deg; --ar: ${f.bild.width / f.bild.height}`}
 								data-gross={gross.get(f.bild.src)}
 								data-alt={f.alt}
 								data-credit={f.credit ?? ''}
@@ -80,6 +80,11 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 </Layout>
 
 
+<script>
+	import { fotoreihenPruefen } from '../scripts/reihen';
+	fotoreihenPruefen();
+</script>
+
 <style>
 	.liste {
 		display: grid;
@@ -95,19 +100,20 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 	}
 	/* Hauptfoto der Choreo über die ganze Breite, nicht höher als der Bildschirm */
 	/* Ganzes Foto zeigen, nie zuschneiden (sonst fällt das Banner am Rand weg); Hochformate werden schmaler */
+	/* Größe steht schon vor dem Laden fest (Seitenverhältnis --ar): volle Breite, aber nie höher als 78vh.
+	   So springt die Seite nicht und Sprünge zu einer Choreo landen richtig. 20px = Rahmen (2 × 10px). */
 	.foto.haupt {
 		display: block;
-		width: fit-content;
-		max-width: 100%;
+		box-sizing: border-box;
+		width: min(100%, calc(78vh * var(--ar) + 20px));
 		/* groß nur leicht schräg, sonst kippt die ganze Seite */
 		transform: rotate(calc(var(--r) * 0.35));
 	}
 	.foto.haupt :global(img) {
-		width: auto;
-		max-width: 100%;
+		width: 100%;
 		height: auto;
-		max-height: 78vh;
-		object-fit: contain;
+		aspect-ratio: var(--ar);
+		object-fit: cover;
 	}
 	/* Weitere Fotos, darunter die Videos: je eine Reihe gleich hoher Kacheln. Passt eine Reihe nicht in die Breite,
 	   scrollt sie seitlich (auf dem Handy mit Einrasten). Innenabstand, damit gekippte Karten und Schatten nicht abgeschnitten werden. */
@@ -129,6 +135,7 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 	.foto.klein :global(img) {
 		height: var(--hoehe);
 		width: auto;
+		aspect-ratio: var(--ar);
 		max-width: 100%;
 	}
 	.handy-platz {
@@ -152,7 +159,7 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 			max-width: 78vw;
 		}
 		.foto.klein :global(img) {
-			height: calc(var(--hoehe) * 0.92);
+			height: calc(var(--hoehe) * 0.92 * var(--knapp, 1));
 		}
 	}
 	.foto {

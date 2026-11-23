@@ -101,6 +101,11 @@ const titel = mitTitel ? c.titel : undefined;
 		font-size: 1.05rem;
 		line-height: 1.2;
 		text-align: center;
-		overflow-wrap: anywhere;
+		/* lange Wörter nach deutscher Silbentrennung umbrechen (mit Bindestrich), nur im Notfall hart */
+		hyphens: auto;
+		-webkit-hyphens: auto;
+		/* keine Mini-Reste wie „flag-ge“: mindestens 3 Buchstaben vor und nach dem Trennstrich */
+		hyphenate-limit-chars: 7 3 3;
+		overflow-wrap: break-word;
 	}
 </style>

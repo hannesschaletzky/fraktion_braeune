@@ -418,7 +418,7 @@ export const stationen: Station[] = [
 	},
 ];
 
-export const monate = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+export { monate } from './monate';
 
 /** Ort mit Stopp-Nummer, z. B. "Berlin 2" */
 export const ortName = (s: Station) => (s.stopp ? `${s.ort} ${s.stopp}` : s.ort);

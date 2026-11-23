@@ -6,9 +6,15 @@ import credits from '../assets/fotos/credits.json';
 
 const fotografen = [...new Set(Object.values(credits).filter((c): c is string => !!c && !c.includes(' ')))];
 const extern = { target: '_blank', rel: 'noopener noreferrer' };
+
+interface Props {
+	/** Hintergrundfarbe des Abschnitts darüber, damit der Footer ohne Kante anschließt (Startseite: FAQ = --nacht-2) */
+	oben?: string;
+}
+const { oben = 'var(--nacht)' } = Astro.props;
 ---
 
-<footer class="fuss">
+<footer class="fuss" style={`--fuss-oben: ${oben}`}>
 	<!-- Rote Fackel im Dunkeln (Berlin 2026) als Abschied, lädt erst beim Runterscrollen -->
 	<Picture src={fackel} formats={['avif', 'webp']} widths={[640, 1024, 1600, 2200, 2880]} sizes="100vw" quality={85} alt="" class="fackel" loading="lazy" decoding="async" />
 	<div class="abdunkeln" aria-hidden="true"></div>
@@ -49,7 +55,7 @@ const extern = { target: '_blank', rel: 'noopener noreferrer' };
 		overflow: hidden;
 		padding: 120px 0 28px;
 		/* oben nahtlos aus dem FAQ (--nacht-2) kommen, keine Kante */
-		background: linear-gradient(180deg, var(--nacht-2), var(--nacht) 60%);
+		background: linear-gradient(180deg, var(--fuss-oben), var(--nacht) 60%);
 	}
 	/* Fackel-Foto hinter dem Footer, oben weich ins Dunkel verlaufend */
 	.fuss :global(picture) {
@@ -81,7 +87,7 @@ const extern = { target: '_blank', rel: 'noopener noreferrer' };
 		position: absolute;
 		inset: 0;
 		z-index: -1;
-		background: linear-gradient(180deg, var(--nacht-2) 0%, rgb(31 20 32 / 0.85) 10%, rgb(31 20 32 / 0.6) 22%, rgb(20 13 22 / 0.4) 40%, rgb(20 13 22 / 0.35) 60%, rgb(20 13 22 / 0.85) 100%);
+		background: linear-gradient(180deg, var(--fuss-oben) 0%, color-mix(in srgb, var(--fuss-oben) 85%, transparent) 10%, color-mix(in srgb, var(--fuss-oben) 60%, transparent) 22%, rgb(20 13 22 / 0.4) 40%, rgb(20 13 22 / 0.35) 60%, rgb(20 13 22 / 0.85) 100%);
 	}
 	.oben {
 		display: grid;

@@ -1,4 +1,4 @@
-import { monate } from './stationen';
+import { monate } from './monate';
 // Videos in public/videos/<name>.mp4 + .webp (geschnitten von scripts/clips.mjs bzw. scripts/videos.sh).
 // titel: unsere eigenen Worte aus der Instagram-Story bzw. dem Reel, wird unter dem Handy angezeigt.
 // ton: false = ohne Tonspur

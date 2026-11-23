@@ -28,14 +28,14 @@ const knopf = (f: Foto) => ({ 'data-gross': gross.get(f.bild.src), 'data-alt': f
 				<p class="motto marker">{s.motto}</p>
 			</header>
 			{s.fotos[0] && (
-				<button type="button" class="foto haupt" style={`--r: ${neigungen[i % neigungen.length]}deg`} {...knopf(s.fotos[0])}>
+				<button type="button" class="foto haupt" style={`--r: ${neigungen[i % neigungen.length]}deg; --ar: ${s.fotos[0].bild.width / s.fotos[0].bild.height}`} {...knopf(s.fotos[0])}>
 					<Picture src={s.fotos[0].bild} formats={['avif', 'webp']} widths={[480, 800, 1200, 1600]} sizes="(min-width: 1100px) 1068px, 92vw" alt={s.fotos[0].alt} loading="lazy" />
 				</button>
 			)}
 			{s.fotos.length > 1 && (
 				<div class="weitere">
 					{s.fotos.slice(1).map((f, j) => (
-						<button type="button" class="foto klein" style={`--r: ${neigungen[(i + j + 1) % neigungen.length]}deg`} {...knopf(f)}>
+						<button type="button" class="foto klein" style={`--r: ${neigungen[(i + j + 1) % neigungen.length]}deg; --ar: ${f.bild.width / f.bild.height}`} {...knopf(f)}>
 							<Picture src={f.bild} formats={['avif', 'webp']} widths={[360, 640, 960]} sizes="(min-width: 760px) 400px, 70vw" alt={f.alt} loading="lazy" />
 						</button>
 					))}
@@ -53,6 +53,11 @@ const knopf = (f: Foto) => ({ 'data-gross': gross.get(f.bild.src), 'data-alt': f
 		</li>
 	))}
 </ol>
+
+<script>
+	import { fotoreihenPruefen } from '../scripts/reihen';
+	fotoreihenPruefen();
+</script>
 
 <style>
 	.liste {
@@ -140,17 +145,19 @@ const knopf = (f: Foto) => ({ 'data-gross': gross.get(f.bild.src), 'data-alt': f
 		display: block;
 	}
 	/* Ganzes Foto zeigen, nie zuschneiden; höchstens so hoch wie der Bildschirm */
+	/* Größe steht schon vor dem Laden fest (Seitenverhältnis --ar): volle Breite, aber nie höher als 72vh.
+	   So springt die Seite nicht und Sprünge zu einer Station landen richtig. 20px = Rahmen (2 × 10px). */
 	.foto.haupt {
 		display: block;
-		width: fit-content;
-		max-width: 100%;
+		box-sizing: border-box;
+		width: min(100%, calc(72vh * var(--ar) + 20px));
 		transform: rotate(calc(var(--r) * 0.35));
 	}
 	.foto.haupt :global(img) {
-		width: auto;
-		max-width: 100%;
+		width: 100%;
 		height: auto;
-		max-height: 72vh;
+		aspect-ratio: var(--ar);
+		object-fit: cover;
 	}
 	/* Weitere Fotos, darunter die Videos: je eine Reihe gleich hoher Kacheln. Passt eine Reihe nicht in die Breite,
 	   scrollt sie seitlich (auf dem Handy mit Einrasten). Innenabstand, damit gekippte Karten und Schatten nicht abgeschnitten werden. */
@@ -172,6 +179,7 @@ const knopf = (f: Foto) => ({ 'data-gross': gross.get(f.bild.src), 'data-alt': f
 	.foto.klein :global(img) {
 		height: var(--hoehe);
 		width: auto;
+		aspect-ratio: var(--ar);
 		max-width: 100%;
 		object-fit: cover;
 	}
@@ -196,7 +204,7 @@ const knopf = (f: Foto) => ({ 'data-gross': gross.get(f.bild.src), 'data-alt': f
 			max-width: 78vw;
 		}
 		.foto.klein :global(img) {
-			height: calc(var(--hoehe) * 0.92);
+			height: calc(var(--hoehe) * 0.92 * var(--knapp, 1));
 		}
 	}
 </style>
