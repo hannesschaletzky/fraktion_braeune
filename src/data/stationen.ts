@@ -369,7 +369,7 @@ export const stationen: Station[] = [
 			foto('2023-hamburggbt-bande', 'Einer von uns schwingt das Bein über die Bande, daneben die Jungs oben ohne mit Daumen hoch'),
 			foto('2023-hamburggbt-selfie', 'Selfie auf der Tribüne mit den Schildern „Boom“, „Ballern“ und „Block“'),
 		],
-		clips: ['hamburg23gbt-fanclub', 'hamburg23gbt-achtelfinale', 'hamburg23gbt-sieg', 'hamburg23gbt-20a'],
+		clips: ['hamburg23gbt-fanclub', 'hamburg23gbt-achtelfinale', 'hamburg23gbt-sieg', 'hamburg23gbt-20a', 'hamburg23gbt-sand'],
 	},
 	{
 		jahr: 2023,
@@ -380,6 +380,8 @@ export const stationen: Station[] = [
 		fotos: [
 			foto('2023-bremen-2', 'Der Block schreit mit Schildern „Schmeckt“, „Ein’n drauf“ und „10/10“ über dem Banner'),
 			foto('2023-bremen-1', 'Zwei Spieler in Orange jubeln mit Pokalen vor dem Block, dahinter Schilder wie „Eric Stadie“'),
+			foto('2023-bremen-tribuene', 'Die Gruppe auf der Tribüne mit dem Schild „Hauptstadt Beacher“'),
+			foto('2023-bremen-schilder', 'Wir malen unsere Pappschilder auf dem Gehweg'),
 		],
 		clips: ['bremen23-block', 'bremen23-abfahrt'],
 	},
@@ -394,7 +396,9 @@ export const stationen: Station[] = [
 			foto('2022-timmendorf-2', 'Fans halten Schilder „Out“ und „10“ hoch'),
 			foto('2022-timmendorf-3', 'Fans mit Fahne und Schildern auf der Tribüne'),
 			foto('2022-timmendorf-leidergeil', 'Pappschilder „Leider geil“ und „Fraktion Bräune“ in der vollen Tribüne'),
+			foto('2022-timmendorf-monster', 'Drei von uns oben ohne mit Blumenbrillen und den Schildern „Monster Block“'),
 		],
+		clips: ['timmendorf22-bier'],
 	},
 	{
 		jahr: 2022,

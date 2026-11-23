@@ -241,6 +241,9 @@ export const auswahl = {
 	'choreo-2024-paris-3': '2024_09_Timmendorf/2024-09-01_17-24_ordner_GBT_Timmendorfer_Strand_077-3.jpg',
 	'choreo-2024-abfahrt-2': '2024_09_Timmendorf/2024-08-30_11-27_ordner_@kevinmtg.fotos-Beachvolleyballkollektion-3383.jpg',
 	'choreo-2024-abfahrt-3': '2024_09_Timmendorf/2024-08-31_13-17_ordner_@kevinmtg.fotos-Timmendorf24-2735.jpg',
+	'2022-timmendorf-monster': '2022_09_Timmendorf/zuschnitt_@tombloch.de_IMG_1208.jpg',
+	'2023-bremen-schilder': '2023_05_Bremen1/2023-05-14_11-41_eingang_IMG_3735.jpeg',
+	'2023-bremen-tribuene': '2023_05_Bremen1/2023-05-14_13-09_eingang_IMG_3745.jpeg',
 
 };
 

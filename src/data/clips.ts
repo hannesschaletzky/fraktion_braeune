@@ -162,6 +162,8 @@ export const clips = {
 	'berlin23-19b': c('berlin23-19b', 'Siegjubel mit Spielern an der Bande', true, 'Lukas und Robin gewinnen'),
 	'berlin23-19c': c('berlin23-19c', 'Gruppe mit Schildern an der Bande', true, 'Schilder am Court'),
 	'hamburg23gbt-20a': c('hamburg23gbt-20a', 'Gruppe jubelt mit Schild', true, 'Jubel am Center Court'),
+	'timmendorf22-bier': c('timmendorf22-bier', 'Die Dance Cam erwischt einen von uns beim Pennen im Block, der Kommentator: „Bringt dem Mann ein Bier“', true, 'Bringt dem Mann ein Bier', true),
+	'hamburg23gbt-sand': c('hamburg23gbt-sand', 'Drei von uns liegen im Sand der Arena', true),
 } satisfies Record<string, Clip>;
 
 export type ClipName = keyof typeof clips;
@@ -212,6 +214,7 @@ export const sender: Sender[] = [
 	{ name: 'hamburg23gbt-sehen', titel: 'Die muss man doch sehen', jahr: 2023, monat: 6, ort: 'Hamburg' },
 	{ name: 'hamburg23gbt-dancecam', titel: 'Shake that ass', jahr: 2023, monat: 6, ort: 'Hamburg' },
 	{ name: 'timmendorf22-clipit', titel: 'Clip it!', jahr: 2022, monat: 9, ort: 'Timmendorf' },
+	{ name: 'timmendorf22-bier', titel: 'Bringt dem Mann ein Bier', jahr: 2022, monat: 9, ort: 'Timmendorf' },
 	{ name: 'kw21-kommentar', titel: 'Die Fraktion Bräune', jahr: 2021, monat: 7, ort: 'Königs Wusterhausen' },
 ];
 

@@ -211,6 +211,9 @@ export const clips = {
 	'berlin23-19b': { teile: [['assets/2023_08_Berlin/2023-08-13_06-44_insta-story_18034546348539779.mp4', 0, null]], hoch: true, poster: 2 },
 	'berlin23-19c': { teile: [['assets/2023_08_Berlin/2023-08-13_08-21_insta-story_17860513694992517.mp4', 0, null]], hoch: true, poster: 2 },
 	'hamburg23gbt-20a': { teile: [['assets/2023_06_Hamburg/2023-06-04_07-05_insta-story_17984413466291017.mp4', 0, null]], hoch: true, poster: 2 },
+	// Livestream Timmendorf 2022: einer von uns wird beim Pennen von der Dance Cam erwischt (TV-Sender und Handy-Clip)
+	'timmendorf22-bier': { teile: [['assets/2022_09_Timmendorf/eingang_IMG_1206.mp4', 0, null]], crop: '704:400:74:0', poster: 8 },
+	'hamburg23gbt-sand': { teile: [['assets/2023_06_Hamburg/eingang_IMG_4137.mov', 0, null]], hoch: true, poster: 3 },
 
 };
 
