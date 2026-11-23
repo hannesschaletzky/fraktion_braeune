@@ -142,6 +142,10 @@ export const stationen: Station[] = [
 		fotos: [
 			foto('2025-berlin2-1', 'Ein Spieler klatscht mit dem jubelnden Block ab'),
 			foto('choreo-2025-regieren', 'Choreo „Hier regieren die Hauptstadt Beacher“ mit Fackeln und Rauch'),
+			foto('2025-berlin2-reihe', 'Die Jungs oben ohne in einer Reihe im Block, daneben das Schild „König in allen Stadien“'),
+			foto('2025-berlin2-lachen', 'Wir lachen über die Bande mit einem Spieler'),
+			foto('2025-berlin2-spieler', 'Zwei Spieler posieren vor unserem Block'),
+			foto('2025-berlin2-rauch', 'Die Choreo „Hier regieren die Hauptstadt Beacher“ im Rauch, ein Spieler davor'),
 		],
 		clips: ['berlin25-licht', 'berlin25-hey', 'berlin25-7a', 'berlin25-7b', 'berlin25-7c', 'berlin25-7d', 'berlin25-7e'],
 	},
