@@ -5,5 +5,5 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://fraktion-braeune.de',
-	integrations: [sitemap()],
+	integrations: [sitemap({ filter: (seite) => !seite.includes('/impressum') })],
 });
