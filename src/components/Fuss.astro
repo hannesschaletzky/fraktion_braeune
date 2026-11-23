@@ -3,6 +3,7 @@ import { Image, Picture } from 'astro:assets';
 import fackel from '../assets/fotos/fuss-fackel.jpg';
 import logo from '../assets/logo-bunt.png';
 import credits from '../assets/fotos/credits.json';
+import { creditLink, creditText, GBT_URL } from '../data/credits';
 
 const fotografen = [...new Set(Object.values(credits).filter((c): c is string => !!c && !c.includes(' ')))];
 const extern = { target: '_blank', rel: 'noopener noreferrer' };
@@ -38,8 +39,8 @@ const { oben = 'var(--nacht)' } = Astro.props;
 		<div class="unten">
 			<p>
 				📸 {fotografen.map((f, i) => (
-					<Fragment>{i > 0 && ', '}<a href={`https://www.instagram.com/${f}/`} {...extern}>@{f}</a></Fragment>
-				))}, German Beach Tour und Freund:innen. Danke! 💛
+					<Fragment>{i > 0 && ', '}<a href={creditLink(f)} {...extern}>{creditText(f)}</a></Fragment>
+				))}, <a href={GBT_URL} {...extern}>German Beach Tour</a> und Freund:innen. Danke! 💛
 			</p>
 			<p>
 				Website: <a href="https://hschaletzky.com" {...extern}>Hannes Schaletzky</a>{' · '}<a href="https://github.com/hannesschaletzky/fraktion_braeune" {...extern}>Code auf GitHub</a>

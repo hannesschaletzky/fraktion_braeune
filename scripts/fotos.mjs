@@ -100,7 +100,6 @@ export const auswahl = {
 	'2023-hamburggbt-selfie': '2023_06_Hamburg/2023-06-02_23-16_eingang_249f45de-2f0d-4f5d-9e37-c11a8369596b.JPG',
 	'2023-berlin-b6': '2023_08_Berlin/2023-08-13_15-35_eingang_@kevinmtg.fotos_GBT_Berlin_13082023--127.jpg',
 	'2023-berlin-b16': '2023_08_Berlin/2023-08-13_19-04_eingang_@kevinmtg.fotos_GBT_Berlin_13082023--87.jpg',
-	'2023-berlin-b18': '2023_08_Berlin/2023-08-13_19-04_eingang_@kevinmtg.fotos_GBT_Berlin_13082023--90.jpg',
 	'2023-timmendorf-t29': '2023_09_Timmendorf/2023-09-02_18-46_eingang_@kevinmtg.fotos-Timmendorf23--444.jpeg',
 	'2023-timmendorf-t47': '2023_09_Timmendorf/2023-09-03_11-02_eingang_@kevinmtg.fotos-Timmendorf23--7.jpeg',
 	'2023-timmendorf-t51': '2023_09_Timmendorf/2023-09-03_11-07_eingang_@kevinmtg.fotos-Timmendorf23--14.jpeg',
@@ -186,9 +185,6 @@ export const auswahl = {
 	'choreo-2024-ben': '2024_07_München/standbild_gute-besserung-ben.jpg',
 	'2026-berlin2-banner': '2026_06_Berlin2/2026-06-13_15-34_eingang_@kevinmtg.fotos_260613-153400__DSC1280.jpg',
 	'2023-berlin-sieg': '2023_08_Berlin/2023-08-13_19-18_eingang_@justus.fotos-20230813-DSC06651.jpg',
-	'2023-berlin-1': '2023_08_Berlin/2023-08-13_15-43_apple_2B1C7E1C-6227-4E7E-B8AB-06363DB59EDE.jpeg',
-	'2023-berlin-2': '2023_08_Berlin/2023-08-13_19-04_apple_0D1828ED-9D1B-42B9-913B-5B8D9BDCBB4B.jpeg',
-	'2023-berlin-3': '2023_08_Berlin/2023-08-13_14-59_apple_26CB0AB4-E6C0-44BC-9BAC-645B26416CD8.jpeg',
 	'2023-hamburg-shirts': '2023_08_Elite_Hamburg/2023-08-18_23-38_eingang_PHOTO-2023-08-18-23-38-06.jpg',
 	'2023-hamburg-netz': '2023_08_Elite_Hamburg/2023-08-18_23-42_eingang_PHOTO-2023-08-18-23-42-21.jpg',
 	'2023-hamburg-1': '2023_08_Elite_Hamburg/2023-08-18_17-17_apple_IMG_1958.jpeg',
@@ -244,6 +240,8 @@ export const auswahl = {
 	'2022-timmendorf-monster': '2022_09_Timmendorf/zuschnitt_@tombloch.de_IMG_1208.jpg',
 	'2023-bremen-schilder': '2023_05_Bremen1/2023-05-14_11-41_eingang_IMG_3735.jpeg',
 	'2023-bremen-tribuene': '2023_05_Bremen1/2023-05-14_13-09_eingang_IMG_3745.jpeg',
+	'2023-berlin-schilder': '2023_08_Berlin/2023-08-13_14-59_apple_52B16AC9-4B98-47F0-86F2-CEA59200948D.jpeg',
+	'choreo-berlin-eric-gruppe': '2026_06_Berlin1/2026-06-07_19-27_eingang_2d07aee0-c2db-491b-bb08-46327b6fc5dc.JPG',
 
 };
 

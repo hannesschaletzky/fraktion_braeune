@@ -18,6 +18,7 @@
 </dialog>
 
 <script>
+	import { creditLink, creditText } from '../data/credits';
 	const fotos = [...document.querySelectorAll<HTMLButtonElement>('button[data-gross]')];
 	const dialog = document.getElementById('lightbox') as HTMLDialogElement;
 	const bild = document.getElementById('lb-bild') as HTMLImageElement;
@@ -101,9 +102,9 @@
 		const c = f.credit;
 		credit.hidden = !c;
 		if (c) {
-			const handle = !c.includes(' ');
-			credit.textContent = `📸 ${handle ? '@' + c : c}`;
-			if (handle) credit.href = `https://www.instagram.com/${c}/`;
+			credit.textContent = `📸 ${creditText(c)}`;
+			const link = creditLink(c);
+			if (link) credit.href = link;
 			else credit.removeAttribute('href');
 		}
 	}

@@ -86,7 +86,10 @@ export const choreos: Choreo[] = [
 		stopp: 1,
 		ort: 'Berlin',
 		titel: 'Alles Gute, Eric ♥',
-		fotos: [foto('choreo-berlin-eric', 'Buchstabentafeln „Alles Gute Eric“ mit Herz auf der leeren Tribüne')],
+		fotos: [
+			foto('choreo-berlin-eric', 'Buchstabentafeln „Alles Gute Eric“ mit Herz auf der leeren Tribüne'),
+			foto('choreo-berlin-eric-gruppe', 'Gruppenfoto auf der leeren Tribüne hinter unserem Banner, oben das Herz'),
+		],
 	},
 	{
 		jahr: 2026,
@@ -96,6 +99,7 @@ export const choreos: Choreo[] = [
 		titel: 'Fünf Jahre Fraktion Bräune',
 		fotos: [
 			foto('choreo-2026-fuenf', 'Fackeln rund um das Fraktion-Banner auf dem Sand bei Nacht'),
+			foto('2026-berlin-5', 'Das ganze Stadion von oben bei Nacht, im Block leuchten die Fackeln'),
 			foto('choreo-2026-fuenf-2', 'Schild „5 Jahre“ und Regenbogen-Fahne über der Bande, volle Tribüne'),
 			foto('choreo-2026-fuenf-3', 'Spieler klatschen sich im orangen Rauch ab, dahinter „Fraktion“ und „5 Jahre“'),
 		],
