@@ -55,11 +55,16 @@ const knopf = (f: Foto) => ({ 'data-gross': gross.get(f.bild.src), 'data-alt': f
 </ol>
 
 <script>
-	import { fotoreihenPruefen } from '../scripts/reihen';
+	import { fotoreihenPruefen, ortUmbruchPruefen } from '../scripts/reihen';
 	fotoreihenPruefen();
+	ortUmbruchPruefen();
 </script>
 
 <style>
+	/* Ort in neuer Zeile: kein einzelner Strich am Ende der ersten Zeile */
+	:global(.wann.umbruch) .strich:last-child {
+		display: none;
+	}
 	.liste {
 		list-style: none;
 		margin: 0;

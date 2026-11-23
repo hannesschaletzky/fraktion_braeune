@@ -190,6 +190,19 @@ const { oben = 'var(--nacht)' } = Astro.props;
 	.unten a {
 		color: inherit;
 		text-underline-offset: 3px;
+		/* größere Tippfläche, ohne dass sich die Zeilen verschieben */
+		display: inline-block;
+		padding: 6px 0;
+		margin: -6px 0;
+	}
+	.unten p {
+		line-height: 2;
+	}
+	/* Handy: unten Platz lassen, damit der runde Nach-oben-Knopf keine Links verdeckt */
+	@media (max-width: 819px) {
+		.fuss {
+			padding-bottom: 88px;
+		}
 	}
 	.unten a:hover {
 		color: var(--sonne);

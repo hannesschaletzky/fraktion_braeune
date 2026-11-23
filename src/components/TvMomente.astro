@@ -375,11 +375,20 @@ const erster = sender[0];
 		}
 		.programm li {
 			flex: 0 0 auto;
-			width: min(64vw, 240px);
+			width: min(70vw, 260px);
 			scroll-snap-align: center;
 		}
 		.programm button {
 			height: 100%;
+		}
+		/* Handy: Titel ganz lesbar, bis zu zwei Zeilen statt „…“ */
+		.ptitel {
+			white-space: normal;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+			line-clamp: 2;
+			hyphens: auto;
 		}
 	}
 	.quelle {

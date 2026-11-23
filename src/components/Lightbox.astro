@@ -50,6 +50,10 @@
 		aktuell = (i + fotos.length) % fotos.length;
 		const knopf = fotos[aktuell];
 		const f = knopf.dataset;
+		// Blätterpfeile nur, wenn es in dieser Station/Choreo (bzw. auf der Seite) mehr als ein Foto gibt
+		const gruppe = knopf.closest('[data-eintrag]');
+		const anzahl = gruppe ? fotos.filter((x) => x.closest('[data-eintrag]') === gruppe).length : fotos.length;
+		dialog.querySelectorAll<HTMLElement>('.lb-zurueck, .lb-vor').forEach((k) => (k.hidden = anzahl < 2));
 		const gross = f.gross!;
 		const vorab = geladen.get(gross);
 		if (vorab?.complete && vorab.naturalWidth) bild.src = gross;
@@ -167,7 +171,8 @@
 		margin: 0;
 		padding: 0;
 		border: 0;
-		background: rgb(10 6 12 / 0.94);
+		/* deckend, damit die Kopfleiste der Seite nicht durchschimmert */
+		background: rgb(10 6 12);
 		color: var(--papier);
 	}
 	.lightbox:focus {
@@ -314,6 +319,7 @@
 		box-shadow: 3px 3px 0 var(--fackel);
 	}
 	.lb-zu { top: 12px; right: 12px; }
+	.lb-knopf[hidden] { display: none; }
 	.lb-zurueck { left: 12px; top: 50%; translate: 0 -50%; }
 	.lb-vor { right: 12px; top: 50%; translate: 0 -50%; }
 	@media (max-width: 640px) {

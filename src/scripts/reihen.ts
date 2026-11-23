@@ -26,3 +26,24 @@ export function fotoreihenPruefen() {
 		wartet = window.setTimeout(alle, 150);
 	});
 }
+
+/** Überschriften „Jahr | Monat | Ort“: bricht der Ort in die nächste Zeile, den Strich am Zeilenende ausblenden */
+export function ortUmbruchPruefen() {
+	const koepfe = [...document.querySelectorAll<HTMLElement>('[data-eintrag] .wann')];
+	const alle = () => {
+		for (const w of koepfe) {
+			const datum = w.querySelector<HTMLElement>('.datum');
+			const ort = w.querySelector<HTMLElement>('.ort');
+			if (!datum || !ort) continue;
+			w.classList.remove('umbruch');
+			w.classList.toggle('umbruch', ort.offsetTop > datum.offsetTop + 4);
+		}
+	};
+	alle();
+	document.fonts?.ready.then(alle);
+	let wartet = 0;
+	addEventListener('resize', () => {
+		clearTimeout(wartet);
+		wartet = window.setTimeout(alle, 150);
+	});
+}

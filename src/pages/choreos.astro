@@ -81,11 +81,16 @@ const farben = ['var(--fackel)', 'var(--gruen)', 'var(--lila)', 'var(--sonne)', 
 
 
 <script>
-	import { fotoreihenPruefen } from '../scripts/reihen';
+	import { fotoreihenPruefen, ortUmbruchPruefen } from '../scripts/reihen';
 	fotoreihenPruefen();
+	ortUmbruchPruefen();
 </script>
 
 <style>
+	/* Ort in neuer Zeile: kein einzelner Strich am Ende der ersten Zeile */
+	:global(.wann.umbruch) .strich:last-child {
+		display: none;
+	}
 	.liste {
 		display: grid;
 		gap: clamp(80px, 12vw, 140px);
