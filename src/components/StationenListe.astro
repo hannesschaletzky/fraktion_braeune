@@ -187,8 +187,16 @@ const knopf = (f: Foto) => ({ 'data-gross': gross.get(f.bild.src), 'data-alt': f
 		.weitere {
 			scroll-snap-type: x mandatory;
 		}
+		/* Ausrichten links, damit rechts schon das nächste Foto hervorschaut */
 		.weitere > * {
-			scroll-snap-align: center;
+			scroll-snap-align: start;
+		}
+		/* Querformat-Fotos nicht bildschirmbreit: rechts schaut das nächste Foto hervor, man sieht, dass es weitergeht */
+		.foto.klein {
+			max-width: 78vw;
+		}
+		.foto.klein :global(img) {
+			height: calc(var(--hoehe) * 0.92);
 		}
 	}
 </style>
