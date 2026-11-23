@@ -197,7 +197,7 @@ export const choreos: Choreo[] = [
 		stopp: 1,
 		ort: 'Düsseldorf',
 		titel: 'Unser Pott hat richtig Dampf',
-		hinweis: 'Der Pott hat auch am Sonntag noch gedampft, weil unser Team da immer noch gespielt hat 😄',
+		hinweis: 'Der Pott hat auch am Sonntag noch gedampft, weil unser Team da immer noch gespielt hat 😄 Sorry für die Qualität: Das große Bild ist ein Standbild aus einem Video, ein besseres haben wir nicht.',
 		fotos: [
 			foto('choreo-2025-pott', 'Banner „Unser Pott hat richtig Dampf“ mit blauem Rauch'),
 			foto('choreo-2025-pott-2', 'Banner „Unser Pott dampft immer noch“ an der Bande'),
