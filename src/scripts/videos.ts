@@ -55,7 +55,13 @@ export function spieler(s: HTMLElement) {
 	zeigen();
 
 	const abspielen = () => v.play().catch(() => {});
-	s.querySelector('.schirm')!.addEventListener('click', () => (v.paused ? abspielen() : v.pause()));
+	s.querySelector('.schirm')!.addEventListener('click', () => {
+		// Im Vollbild schaltet die Steuerung des Browsers selbst Pause/Weiter; nicht zusätzlich umschalten,
+		// sonst heben sich beide Klicks auf
+		if (document.fullscreenElement === v) return;
+		if (v.paused) abspielen();
+		else v.pause();
+	});
 	s.querySelector('.abspielen')?.addEventListener('click', (e) => {
 		e.stopPropagation();
 		abspielen();

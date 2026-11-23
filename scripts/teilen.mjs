@@ -1,5 +1,6 @@
 // Vorschaubild beim Teilen (WhatsApp, Instagram, Google): unser Gruppenfoto aus „Wir“ mit dem bunten Logo unten links.
 // 1200 × 630, wird von src/layouts/Layout.astro für alle Seiten benutzt. Aufruf: node scripts/teilen.mjs
+import fs from 'node:fs';
 import sharp from 'sharp';
 import { auswahl } from './fotos.mjs';
 
@@ -15,4 +16,6 @@ await sharp(foto)
 	.composite([{ input: verlauf }, { input: logo, left: 40, top: H - 40 - logoH }])
 	.jpeg({ quality: 88 })
 	.toFile('src/assets/teilen.jpg');
-console.log('src/assets/teilen.jpg erzeugt');
+// Feste Adresse für die Link-Vorschau (WhatsApp & Co. bekommen sie, solange die Seite ein Passwort hat)
+fs.copyFileSync('src/assets/teilen.jpg', 'public/vorschau.jpg');
+console.log('src/assets/teilen.jpg und public/vorschau.jpg erzeugt');
