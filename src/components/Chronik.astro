@@ -6,8 +6,8 @@ import { startStationen } from '../data/startseite';
 
 const karten = startStationen.map((s) => ({
 		href: `/stationen/#${slug(s)}`,
-		bild: s.fotos[0].bild,
-		alt: s.fotos[0].alt,
+		bild: (s.karte ?? s.fotos[0]).bild,
+		alt: (s.karte ?? s.fotos[0]).alt,
 		datum: `${monate[s.monat - 1]} ${s.jahr}`,
 		ort: `${ortName(s)}${s.zusatz ? ` · ${s.zusatz}` : ''}`,
 		text: s.motto,
@@ -24,7 +24,9 @@ const karten = startStationen.map((s) => ({
 
 <style>
 	.chronik {
+		/* Oben rein dunkel, damit der Bildstreifen darüber ohne Kante übergeht; der rote Schimmer blendet erst darunter ein */
 		background:
+			linear-gradient(180deg, var(--nacht) 0, rgb(20 13 22 / 0) 260px),
 			radial-gradient(ellipse at 10% 0%, rgb(255 46 77 / 0.12), transparent 50%),
 			radial-gradient(ellipse at 90% 60%, rgb(165 91 255 / 0.1), transparent 50%),
 			var(--nacht);

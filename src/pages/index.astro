@@ -6,8 +6,10 @@ import ChoreoWand from '../components/ChoreoWand.astro';
 import Chronik from '../components/Chronik.astro';
 import TvMomente from '../components/TvMomente.astro';
 import Stimmen from '../components/Stimmen.astro';
+import Zwischenbild from '../components/Zwischenbild.astro';
 import Faq from '../components/Faq.astro';
 import Fuss from '../components/Fuss.astro';
+import fackel from '../assets/fotos/zwischen-fackel.jpg';
 import Lightbox from '../components/Lightbox.astro';
 ---
 
@@ -16,6 +18,7 @@ import Lightbox from '../components/Lightbox.astro';
 	<main>
 		<WerWirSind />
 		<Stimmen />
+		<Zwischenbild bild={fackel} alt="Einer von uns steht nachts auf der Bande und hält eine rote Fackel weit von sich, ringsum roter Rauch" pos="55% 45%" posHandy="38% 45%" oben="var(--nacht-2)" unten="var(--nacht)" />
 		<TvMomente />
 		<ChoreoWand />
 		<Chronik />

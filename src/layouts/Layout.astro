@@ -4,7 +4,7 @@ import '@fontsource/permanent-marker';
 import '../styles/global.css';
 import type { ImageMetadata } from 'astro';
 import { getImage } from 'astro:assets';
-import heroBild from '../assets/hero.jpg';
+import teilenBild from '../assets/teilen.jpg';
 import logo from '../assets/logo-bunt.png';
 import NachOben from '../components/NachOben.astro';
 import Kopfleiste from '../components/Kopfleiste.astro';
@@ -23,8 +23,8 @@ interface Props {
 const {
 	titel = 'Fraktion Bräune – Europas lauteste Beachvolleyball-Fans',
 	beschreibung = 'Wir sind Fraktion Bräune, die Beachvolleyball-Fangruppe aus Berlin auf der German Beach Tour: Fahnen, Choreos, Pyro und gute Laune. Fan Group of the Year 2025.',
-	bild = heroBild,
-	bildAlt = 'Fraktion Bräune im Block: Fans jubeln im roten Licht brennender Fackeln',
+	bild = teilenBild,
+	bildAlt = 'Fraktion Bräune: unsere Gruppe jubelt vor dem Block an der Bande, dazu unser buntes Logo',
 	nichtIndexieren = false,
 	unterseite = false,
 } = Astro.props;

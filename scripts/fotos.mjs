@@ -131,7 +131,7 @@ export const auswahl = {
 	'2025-berlin-l56': '2025_08_Berlin1/2025-08-16_19-06_eingang_@kevinmtg.fotos-_DSC1277.jpeg',
 	'2025-berlin-l50': '2025_08_Berlin1/2025-08-16_18-59_eingang_@kevinmtg.fotos-_DSC4634.jpeg',
 	'2025-timmendorf-gruen': '2025_09_Timmendorf/2025-09-05_19-50_eingang_@kevinmtg.fotos_DSC7694.jpeg',
-	'2025-timmendorf-rauch': '2025_09_Timmendorf/2025-09-06_21-06_eingang_@kevinmtg.fotos_DSC4326.jpeg',
+	'2025-timmendorf-rauch': '2025_09_Timmendorf/2025-09-06_21-06_ordner_@kevinmtg.fotos_DSC4343.jpg',
 	'2025-timmendorf-abklatschen': '2025_09_Timmendorf/2025-09-05_15-29_eingang_@kevinmtg.fotos_DSC9985.jpeg',
 	'2025-timmendorf-kaempfen': '2025_09_Timmendorf/2025-09-05_18-40_eingang_@justus.fotos-20250905-DSC02024.jpeg',
 	'2025-timmendorf-z48': '2025_09_Timmendorf/2025-09-06_19-24_eingang_@kevinmtg.fotos_DSC2060.jpeg',
@@ -220,6 +220,10 @@ export const auswahl = {
 	'2024-kuehlungsborn-4': '2024_08_Kühlungsborn2/2024-08-18_18-18_apple_IMG_9502.jpeg',	'choreo-2026-pott-2': '2026_08_Dortmund/2026-08-29_20-59_apple_@kevinmtg.fotos_260829_195942_04449.jpeg',
 	'choreo-2026-pott-3': '2026_08_Dortmund/2026-08-29_20-00_apple_@justus.fotos-20260829-DSC03502.jpeg',
 	'choreo-2026-pott-drohne': '2026_08_Dortmund/2026-08-29_20-07_ordner_@justus.fotos-20260829-DJI_20260829200701_0213_D.jpg',
+	'karte-2026-berlin1-arme': '2026_06_Berlin1/2026-06-06_17-44_apple_IMG_6941.jpeg',
+	'fuss-fackel': '2026_06_Berlin1/2026-06-06_22-29_ordner_@kevinmtg.fotos_260606-222917__DSC9628.jpg',
+	'zwischen-fackel': '2025_09_Timmendorf/2025-09-06_21-06_ordner_@kevinmtg.fotos_DSC4326.jpg',
+	'zwischen-33': '2025_09_Timmendorf/2025-09-06_16-14_ordner_@justus.fotos-20250906-DSC02287.jpg',
 	'choreo-2026-legends-a': '2026_08_Elite_Hamburg/2026-08-09_13-23_ordner_@kevinmtg.fotos_1323_3052.jpg',
 	'choreo-2026-legends-b': '2026_08_Elite_Hamburg/2026-08-09_13-23_apple_IMG_7832.jpeg',
 	'choreo-2026-fuenf-2': '2026_06_Berlin1/2026-06-06_21-20_apple_IMG_6947.jpeg',
@@ -246,6 +250,9 @@ export const auswahl = {
 };
 
 // Nur beim direkten Aufruf verarbeiten; scripts/sortiere.mjs liest bloß die Auswahl
+/** Fotos über die ganze Bildschirmbreite: werden größer und in höherer Qualität abgelegt */
+const vollbreit = { 'zwischen-fackel': true, 'zwischen-33': true, 'fuss-fackel': true };
+
 if (import.meta.main) {
 	const ziel = 'src/assets/fotos';
 	fs.mkdirSync(ziel, { recursive: true });
@@ -271,10 +278,12 @@ if (import.meta.main) {
 			execFileSync('sips', ['-s', 'format', 'jpeg', eingabe, '--out', tmp], { stdio: 'ignore' });
 			eingabe = tmp;
 		}
+		// Bildschirmbreite Fotos (Streifen, Footer) größer und feiner, damit sie auch auf scharfen Bildschirmen scharf sind
+		const breit = name in vollbreit;
 		await sharp(eingabe)
 			.rotate()
-			.resize({ width: 2000, height: 2000, fit: 'inside', withoutEnlargement: true })
-			.jpeg({ quality: 80, mozjpeg: true })
+			.resize({ width: breit ? 3400 : 2000, height: breit ? 3400 : 2000, fit: 'inside', withoutEnlargement: true })
+			.jpeg({ quality: breit ? 90 : 80, mozjpeg: true })
 			.toFile(datei);
 		// Fotograf steht im Dateinamen (@justus.fotos …), GBT_ = Pressefoto der Tour
 		// Originalname ohne Datum und Herkunft davor (2025-08-16_17-26_apple_…, siehe assets/_werkzeug/einsortieren.mjs)

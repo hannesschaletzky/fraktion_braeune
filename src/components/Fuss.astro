@@ -1,5 +1,6 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, Picture } from 'astro:assets';
+import fackel from '../assets/fotos/fuss-fackel.jpg';
 import logo from '../assets/logo-bunt.png';
 import credits from '../assets/fotos/credits.json';
 
@@ -8,13 +9,15 @@ const extern = { target: '_blank', rel: 'noopener noreferrer' };
 ---
 
 <footer class="fuss">
+	<!-- Rote Fackel im Dunkeln (Berlin 2026) als Abschied, lädt erst beim Runterscrollen -->
+	<Picture src={fackel} formats={['avif', 'webp']} widths={[640, 1024, 1600, 2200, 2880]} sizes="100vw" quality={85} alt="" class="fackel" loading="lazy" decoding="async" />
+	<div class="abdunkeln" aria-hidden="true"></div>
 	<div class="wrap">
 		<div class="oben">
 			<a href="/" class="heim" aria-label="Zur Startseite">
 				<Image src={logo} widths={[300, 600]} sizes="170px" alt="Fraktion Bräune" class="logo" loading="lazy" />
 			</a>
 			<div class="gruss">
-				<p class="aufruf">Komm rüber und sag Hallo!</p>
 				<p class="sprueche">
 					<span class="spruch marker">Mit Liebe und LSF 50</span>
 					<span class="spruch marker seit">seit 2021</span>
@@ -41,11 +44,44 @@ const extern = { target: '_blank', rel: 'noopener noreferrer' };
 
 <style>
 	.fuss {
-		padding: 56px 0 28px;
-		background:
-			radial-gradient(ellipse at 50% 0%, rgb(255 46 77 / 0.16), transparent 60%),
-			var(--nacht);
+		position: relative;
+		isolation: isolate;
+		overflow: hidden;
+		padding: 120px 0 28px;
+		background: var(--nacht);
 		border-top: 4px solid var(--tinte);
+	}
+	/* Fackel-Foto hinter dem Footer, oben weich ins Dunkel verlaufend */
+	.fuss :global(picture) {
+		display: contents;
+	}
+	.fuss :global(.fackel) {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: 48% 22%;
+		z-index: -2;
+	}
+	/* Handy: kompakt. Oben das Logo, darunter frei die Glut der Fackel, dann die Sprüche und der Rest */
+	@media (max-width: 819px) {
+		.fuss {
+			padding-top: 40px;
+		}
+		.gruss {
+			margin-top: 110px;
+		}
+		.fuss :global(.fackel) {
+			top: 8%;
+			object-position: 36% 0%;
+		}
+	}
+	.abdunkeln {
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background: linear-gradient(180deg, rgb(20 13 22 / 1) 0%, rgb(20 13 22 / 0.55) 30%, rgb(20 13 22 / 0.35) 60%, rgb(20 13 22 / 0.85) 100%);
 	}
 	.oben {
 		display: grid;
@@ -74,20 +110,13 @@ const extern = { target: '_blank', rel: 'noopener noreferrer' };
 	.heim:hover .logo {
 		transform: rotate(-3deg) scale(1.05);
 	}
-	.aufruf {
-		margin: 0;
-		font-size: 1.15rem;
-		font-weight: 700;
-		line-height: 1.35;
-		max-width: 34ch;
-	}
 	/* Wie die Mottos in den Stationen: schräge Papierstreifen, „seit 2021“ als eigene Kachel */
 	.sprueche {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
 		gap: 12px 14px;
-		margin: 16px 0 0;
+		margin: 0;
 	}
 	@media (max-width: 819px) {
 		.sprueche {
